@@ -44,4 +44,34 @@ ylim
 
 
 
+exon_space
+----------
+
+clustering
+-----------
+
+clustering_mode 
+---------------
+
+select_exon
+------------
+
+threshold
+---------
+
+score_plot_width
+----------------
+
+score_plot_height
+-----------------
+
+limit_tau
+-----------
+
+limit_tau_low
+-------------
+
+silhouette_dintv
+----------------
+
 
