@@ -22,3 +22,20 @@ Sample Clustering
     각 그룹은 붉은색과 초록색으로 표시됩니다.
     알고리즘을 선택하고 설정을 바꾸어 최적의 결과를 표시할 수 있습니다.
     현재 3가지 알고리즘을 지원하고 있습니다.
+
+
+
+Inputs
+------
+
+Visbam을 실행시키려면 여러 Input이 필요합니다. 아래 문서에 그 설명이 들어있습니다.
+
+* **Inputs** :
+  :doc:`Inputs <test>`
+
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+   :caption: Inputs
+
+   test

@@ -118,6 +118,8 @@ context = {
 }
 
 master_doc = 'index'
+project = 'Visbam'
+
 
 
 if 'html_context' in globals():
@@ -140,7 +142,16 @@ else:
 if 'branch' == 'external':
     extensions.insert(1, "readthedocs_ext.external_version_warning")
 
-project_language = 'en'
+project_language = 'ko'
+
+notfound_context = {
+    'title': 'Page Not Found',
+    'body': '''
+<h1>Page Not Found</h1>
+<p>Sorry, we couldn't find that page.</p>
+<p>Try using the search box or go to the homepage.</p>
+''',
+}
 
 # User's Sphinx configurations
 language_user = globals().get('language', None)
@@ -161,6 +172,7 @@ japanese = any([
     language_user == 'ja',
     project_language == 'ja',
 ])
+
 
 if chinese:
     latex_engine = latex_engine_user or 'xelatex'
