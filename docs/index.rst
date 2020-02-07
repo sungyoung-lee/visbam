@@ -30,12 +30,14 @@ Inputs
 
 Visbam을 실행시키려면 여러 Input이 필요합니다. 아래 문서에 그 설명이 들어있습니다.
 
-* **Inputs** :
-  :doc:`Inputs <test>`
+* :doc:`Positional Arguments <input/positional>`
+* :doc:`Optional Arguments <input/optional>`
+
 
 .. toctree::
    :maxdepth: 2
    :hidden:
    :caption: Inputs
 
-   test
+   input/positional
+   input/optional
