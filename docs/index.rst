@@ -28,7 +28,11 @@ Sample Clustering
 Inputs
 ------
 
-Visbam을 실행시키려면 여러 Input이 필요합니다. 아래 문서에 그 설명이 들어있습니다.
+Visbam을 실행시키려면 여러 Input이 필요합니다.
+필수로 넣어야 하는 Positional Input와 선택 옵션인 Optional Input이 있습니다.
+Optional Input 중에서도 특정 Option을 입력할 시
+필수로 입력해야 하는 필드가 있으니 주의하시기 바랍니다.
+자세한 설명은 아래 문서를 참고하십시오.
 
 * :doc:`Positional Arguments <input/positional>`
 * :doc:`Optional Arguments <input/optional>`
@@ -47,9 +51,45 @@ Process
 --------
 
 Visbam의 실행 프로세스와 알고리즘을 적어 놓은 문서입니다.
+전체적인 과정을 정리하면 아래와 같습니다.
+
+(대충 과정을 설명한 그림)
+
+각 단계별로 개별적으로 문서를 정리하였습니다.
+
+* :doc:`Reading Files <process/read_files>`
+* :doc:`Select Graph Range <process/select_range>`
+* :doc:`Smoothing Graph <process/smoothing>`
+* :doc:`Clustering Samples <process/clustering>`
+* :doc:`Drawing Graph <process/draw_graph>`
 
 .. toctree::
    :maxdepth: 2
    :hidden:
    :caption: Process
 
+   process/read_files
+   process/select_range
+   process/smoothing
+   process/clustering
+   process/draw_graph
+
+
+Outputs
+--------
+
+Visbam의 출력 결과를 정리한 문서입니다.
+Clustering 과정에서 제공하는 중간 결과 그래프와
+최종적으로 그려지는 Coverage의 Line Plot이 있습니다.
+단계별로 나올 수 있는 Output들을 따로 정리하였습니다.
+
+* :doc:`In Clustering <output/clustering>`
+* :doc:`Final Graph <output/graph>`
+
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+   :caption: Outputs
+
+   output/clustering
+   output/graph
