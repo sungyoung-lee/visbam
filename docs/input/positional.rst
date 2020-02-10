@@ -75,7 +75,7 @@ draw_span
 .. note::
     곧 Optional로 수정될 Argument입니다.
 
-:ref:`input/optional:exon_sliced` 가 활성화 되지 않았을 때,
+옵션 중 :ref:`exon_sliced <input/optional:exon_sliced>` 가 활성화 되지 않았을 때,
 그래프를 나눌 bp의 크기를 정합니다.
 
 
@@ -95,8 +95,8 @@ output을 출력할 경로와 파일명을 지정합니다.
 
     .. code::
       
-       코드 경로가 ``user/unknown/code/visualize.py`` 이고,
+       코드 경로가 user/unknown/code/visualize.py 이고,
 
-       저장할 경로가 ``user/unknown/pdf/coverage.pdf`` 이면
+       저장할 경로가 user/unknown/pdf/coverage.pdf 이면
 
-       ``../pdf/coverage`` 를 적으면 됩니다.
+       ../pdf/coverage 를 적으면 됩니다.
