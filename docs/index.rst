@@ -53,7 +53,12 @@ Process
 Visbam의 실행 프로세스와 알고리즘을 적어 놓은 문서입니다.
 전체적인 과정을 정리하면 아래와 같습니다.
 
-(대충 과정을 설명한 그림)
+.. figure:: img/visbam_whole_process.png
+    :align: center
+    :figwidth: 750px
+    : img/visbam_whole_process.png
+
+    전체적인 Visbam Process 요약도
 
 각 단계별로 개별적으로 문서를 정리하였습니다.
 
