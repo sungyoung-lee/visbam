@@ -58,10 +58,10 @@ Visbam의 실행 프로세스와 알고리즘을 적어 놓은 문서입니다.
 각 단계별로 개별적으로 문서를 정리하였습니다.
 
 * :doc:`Reading Files <process/read_files>`
-* :doc:`Select Graph Range <process/select_range>`
-* :doc:`Smoothing Graph <process/smoothing>`
+* :doc:`Select Range to Display <process/select_range>`
+* :doc:`Smoothing the Graph <process/smoothing>`
 * :doc:`Clustering Samples <process/clustering>`
-* :doc:`Drawing Graph <process/draw_graph>`
+* :doc:`Drawing the Final Graph <process/draw_graph>`
 
 .. toctree::
    :maxdepth: 2
@@ -83,7 +83,7 @@ Clustering 과정에서 제공하는 중간 결과 그래프와
 최종적으로 그려지는 Coverage의 Line Plot이 있습니다.
 단계별로 나올 수 있는 Output들을 따로 정리하였습니다.
 
-* :doc:`In Clustering <output/clustering>`
+* :doc:`Result of Clustering <output/clustering>`
 * :doc:`Final Graph <output/graph>`
 
 .. toctree::
