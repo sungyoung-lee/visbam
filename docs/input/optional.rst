@@ -154,28 +154,100 @@ Sample들을 Clustering하는 것과 관련된 Option들입니다.
 clustering
 ~~~~~~~~~~
 
+주어진 샘플을 두 그룹으로 Clustering 합니다.
+
+.. note::
+
+    아래 옵션을 이용하려면 ``clustering`` 옵션이 활성화 되어있어야 합니다.
+
+
 clustering_mode 
 ~~~~~~~~~~~~~~~
+
+Clustering을 진행할 알고리즘을 결정합니다.
+알고리즘은 각각 ``silhouette`` , ``nmf`` , ``splice_site`` 가 있습니다.
+각 알고리즘에 대해서는 Process(링크) 문서를 참조하십시오.
+
+
+.. warning::
+
+    위 3개에 해당하지 않는 값을 입력할 시 에러가 뜨고 프로그램이 종료됩니다.
 
 select_exon
 ~~~~~~~~~~~
 
+Clustering을 진행할 두 엑손의 번호를 입력합니다.
+
+.. note::
+
+    Exon의 번호는 아래와 같이 입력합니다.
+
+    예 :
+
+    .. code::
+
+        1번과 7번 exon을 지정하고 싶다면 -> 1,7
+
+
 threshold
 ~~~~~~~~~~
+
+Clustering 된 그룹 중 평균이 threshold 이상인 값을 제외합니다.
+
 
 score_plot_width
 ~~~~~~~~~~~~~~~~
 
+.. note::
+
+    이 옵션을 이용하려면 ``clustering_mode`` 옵션이 ``silhouette`` 이어야 합니다.
+
+Silhouette 최적화 과정에서 중간 결과로 그려지는
+Score Plot의 Width를 결정합니다.
+단위는 inch입니다.
+Score Plot에 대해서는 Process(링크) 문서를 참조하십시오.
+
+
 score_plot_height
 ~~~~~~~~~~~~~~~~~
+
+.. note::
+
+    이 옵션을 이용하려면 ``clustering_mode`` 옵션이 ``silhouette`` 이어야 합니다.
+
+Silhouette 최적화 과정에서 중간 결과로 그려지는
+Score Plot의 height를 결정합니다.
+단위는 inch입니다.
+Score Plot에 대해서는 Process(링크) 문서를 참조하십시오.
+
 
 limit_tau
 ~~~~~~~~~~
 
+.. note::
+
+    이 옵션을 이용하려면 ``clustering_mode`` 옵션이 ``silhouette`` 이어야 합니다.
+
+Silhouette 최적화 과정에서 tau의 위쪽 limit를 결정합니다.
+
+
 limit_tau_low
 ~~~~~~~~~~~~~
+
+.. note::
+
+    이 옵션을 이용하려면 ``clustering_mode`` 옵션이 ``silhouette`` 이어야 합니다.
+
+Silhouette 최적화 과정에서 tau의 아래쪽 limit를 결정합니다.
+
 
 silhouette_dintv
 ~~~~~~~~~~~~~~~~
 
+.. note::
+
+    이 옵션을 이용하려면 ``clustering_mode`` 옵션이 ``silhouette`` 이어야 합니다.
+
+Silhouette Clustering 과정에서 계산할 Exon 앞뒤의 간격을 조정합니다.
+단위는 bp입니다.
 
