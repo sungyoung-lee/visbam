@@ -28,16 +28,26 @@ curated_genes
 
     이 옵션을 이용하려면 소스 코드와 같은 폴더 내에
     tsv형식으로 되어 있는 ``allCuratedGenes.txt`` 파일이 있어야 합니다.
-    ``allCuratedGenes.txt`` 에 대해서는 (링크)를 참조하시기 바랍니다.
+    ``allCuratedGenes.txt`` 에 대해서는 Reading_Files_ 를 참조하시기 바랍니다.
+
 
 Refseq 데이터 중 allCuratedGenes.txt에 포함되어 있는 Refseq 데이터만 표시합니다.
+
+.. _Reading_Files: https://visbam.readthedocs.io/en/latest/process/read_files.html#refseq
 
 
 draw_average_line
 ~~~~~~~~~~~~~~~~~
 
-전체 샘플의 bp별 평균을 Line Plot으로 표시합니다.
-(그림)
+전체 샘플의 bp별 평균을 붉은색 Line Plot으로 표시합니다.
+
+.. figure:: img/draw_average_line.png
+    :align: center
+    :figwidth: 100%
+    :target: img/draw_average_line.png
+
+    draw_average_line 적용시 나타나는 average line(붉은색)
+
 
 exclude_exon
 ~~~~~~~~~~~~~
@@ -64,7 +74,7 @@ exon_sliced
 그렇지 않으면, draw_span_ 에 따라 나누게 됩니다. 
 각 그래프의 차이는 (링크)에서 확인할 수 있습니다.
 
-.. _draw_span: positional.html#draw_span
+.. _draw_span: positional.html#draw-span
 
 
 exon_space
@@ -166,12 +176,14 @@ clustering_mode
 
 Clustering을 진행할 알고리즘을 결정합니다.
 알고리즘은 각각 ``silhouette`` , ``nmf`` , ``splice_site`` 가 있습니다.
-각 알고리즘에 대해서는 Process(링크) 문서를 참조하십시오.
+각 알고리즘에 대해서는 Clustering_Samples_ 문서를 참조하십시오. :doc:`input/optional:limit_tau`
 
 
 .. warning::
 
     위 3개에 해당하지 않는 값을 입력할 시 에러가 뜨고 프로그램이 종료됩니다.
+
+.. _Clustering_Samples: https://visbam.readthedocs.io/en/latest/process/clustering.html 
 
 select_exon
 ~~~~~~~~~~~
@@ -186,7 +198,8 @@ Clustering을 진행할 두 엑손의 번호를 입력합니다.
 
     .. code::
 
-        1번과 7번 exon을 지정하고 싶다면 -> 1,7
+        1번과 7번 exon을 지정하고 싶다면
+        -> --select_exon 1,7
 
 
 threshold
@@ -203,10 +216,11 @@ score_plot_width
     이 옵션을 이용하려면 ``clustering_mode`` 옵션이 ``silhouette`` 이어야 합니다.
 
 Silhouette 최적화 과정에서 중간 결과로 그려지는
-Score Plot의 Width를 결정합니다.
+CI/Tau/Score Plot의 Width를 결정합니다.
 단위는 inch입니다.
-Score Plot에 대해서는 Process(링크) 문서를 참조하십시오.
+CI/Tau/Score Plot에 대해서는 Result_of_Clustering_ 문서를 참조하십시오.
 
+.. _Result_of_Clustering: https://visbam.readthedocs.io/en/latest/output/clustering.html
 
 score_plot_height
 ~~~~~~~~~~~~~~~~~
@@ -218,7 +232,6 @@ score_plot_height
 Silhouette 최적화 과정에서 중간 결과로 그려지는
 Score Plot의 height를 결정합니다.
 단위는 inch입니다.
-Score Plot에 대해서는 Process(링크) 문서를 참조하십시오.
 
 
 limit_tau

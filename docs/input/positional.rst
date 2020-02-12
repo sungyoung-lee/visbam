@@ -3,6 +3,10 @@ Positional Arguments
 
 Visbam을 실행할 때 필수로 입력해야 하는 필드들입니다.
 이 필드들을 입력하지 않으면 실행이 되지 않습니다.
+그리고 반드시 아래와 같은 순서로 입력하셔야 합니다.
+
+python3 visualize.py ``bam_dir_path`` ``sample_list_path`` ``normal_dir_path``
+``refseq_path`` ``draw_span`` ``output_prefix``
 
 
 bam_dir_path
@@ -38,8 +42,11 @@ normal_dir_path
 
 그래프를 그릴 Bam 파일을 Normalize해줄 Normal Bam 파일들의 경로입니다.
 디렉토리 내의 폴더 안에 있는 Bam 파일들은 검색하지 않습니다.
-이 디렉토리에 있는 Bam파일들은 Coverage가 계산되지 않고
-그래프로 출력되지 않습니다.
+이 Bam 파일들은 ``sample_list_path`` Bam 파일의 Coverage를 Normalize 할 때 사용됩니다.
+따라서 이 디렉토리에 있는 Bam파일들은 그래프로 출력되지 않습니다.
+Normalize에 관한 내용은 Reading_Files_ 문서를 참조하십시오.
+
+.. _Reading_Files: https://visbam.readthedocs.io/en/latest/process/read_files.html#normal-bam
 
 
 refseq_path
@@ -76,9 +83,9 @@ draw_span
     곧 Optional로 수정될 Argument입니다.
 
 옵션 중 exon_sliced_ 가 활성화 되지 않았을 때,
-그래프를 나눌 bp의 크기를 정합니다. :doc:`input/optional:exon_sliced`
+그래프를 나눌 bp의 크기를 정합니다.
 
-.. _exon_sliced: optional.html#exon_sliced
+.. _exon_sliced: optional.html#exon-sliced
 
 
 output_prefix
