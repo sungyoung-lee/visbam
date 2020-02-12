@@ -25,6 +25,15 @@ Clustering을 할 시 각 Slice별로 좌측 상단에 Clustering Evaluation 그
 Clustering Evaluation은 Silhouette Score 기반으로 그려지며 값은 각각 -1 이상입니다.
 또 두 그룹으로 나누어서 해당하는 Group의 색으로 표시하여 줍니다.
 
+Coverage Line Plot 위에 Generic Variants를 표시합니다.
+각 Generic Variants의 Effect 별로 모양이 달라집니다.
+모양이 어떤 Effect를 의미하는 지는 우측 상단에 Legend를 통해서 확인 할 수 있습니다.
+또 색은 Generic Variants의 Bam이 어떤 Group에 Clustering 되었는지에 따라 달라집니다.
+
+그리고 그래프 하단에 Generic Variants가 존재하는 Position에 한해
+Position별로 Pie Graph가 표시됩니다.
+어떤 Group의 Bam의 Generic Variants가 그 Position에 있는지 한 눈에 확인할 수 있습니다.
+
 
 Refseq
 ------
