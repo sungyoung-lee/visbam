@@ -8,7 +8,9 @@ Generic Variants, Refseq 값을 이용하여 그래프에 표시합니다.
 그래프는 ``combine_slices`` 값의 활성화 여부에 따라 한 파일로 출력될 지
 여러 파일로 출력될 지 결정됩니다.
 
-Output 그림에 관한 자세한 설명은 Outputs 문서를 참조하십시오.
+Output 그림에 관한 자세한 설명은 Outputs_ 문서를 참조하십시오.
+
+.. _Outputs: https://visbam.readthedocs.io/en/latest/output/graph.html
 
 
 Coverages

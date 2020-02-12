@@ -18,8 +18,9 @@ combine_slices
 ~~~~~~~~~~~~~~
 
 엑손별로, 혹은 각 bp별로 나눠진 graph들을 합쳐주는 옵션입니다.
-합쳤을 때와 그렇지 않을 떄의 차이는 (링크)에서 확인할 수 있습니다.
+합쳤을 때와 그렇지 않을 떄의 차이는 Final_Graph_에서 확인할 수 있습니다.
 
+.. _Final_Graph: https://visbam.readthedocs.io/en/latest/output/graph.html
 
 curated_genes
 ~~~~~~~~~~~~~~
@@ -41,10 +42,10 @@ draw_average_line
 
 전체 샘플의 bp별 평균을 붉은색 Line Plot으로 표시합니다.
 
-.. figure:: img/draw_average_line.png
+.. figure:: ../img/draw_average_line.png
     :align: center
     :figwidth: 100%
-    :target: img/draw_average_line.png
+    :target: ../img/draw_average_line.png
 
     draw_average_line 적용시 나타나는 average line(붉은색)
 
@@ -105,7 +106,7 @@ ylim
 
 그래프를 표시할 Coverage의 최댓값을 설정합니다.
 이 옵션이 없으면 모든 Sample의 Coverage 중
-제일 높을 값으로 설정됩니다.
+제일 높은 값으로 설정됩니다.
 
 
 
@@ -127,8 +128,9 @@ smoothing
 
 * ``loess``
 
-Smoothing 속성에 대한 자세한 정보는 (Process 링크)를 참조하십시오.
+Smoothing 속성에 대한 자세한 정보는 Smoothing_ 을 참조하십시오.
 
+.. _Smoothing: https://visbam.readthedocs.io/en/latest/process/smoothing.html 
 
 average
 ~~~~~~~~
@@ -176,7 +178,7 @@ clustering_mode
 
 Clustering을 진행할 알고리즘을 결정합니다.
 알고리즘은 각각 ``silhouette`` , ``nmf`` , ``splice_site`` 가 있습니다.
-각 알고리즘에 대해서는 Clustering_Samples_ 문서를 참조하십시오. :doc:`input/optional:limit_tau`
+각 알고리즘에 대해서는 Clustering_Samples_ 문서를 참조하십시오.
 
 
 .. warning::

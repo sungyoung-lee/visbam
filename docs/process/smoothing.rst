@@ -3,7 +3,7 @@ Smoothing the Graph
 
 그래프를 더 간단히 볼 수 있도록 Smoothing 하는 과정입니다.
 Smoothing은 두 가지 알고리즘을 선택하여 진행합니다.
-``average``와 ``loess`` 입니다.
+``average`` 와 ``loess`` 입니다.
 
 
 Average
@@ -20,4 +20,6 @@ Loess
 ------
 
 Loess는 skmisc의 loess라이브러리를 이용하여 Smoothing하는 방식입니다.
-자세한 방식은 (링크)를 참조하십시오.
+자세한 방식은 skmisc_ 를 참조하십시오.
+
+.. _skmisc: https://has2k1.github.io/scikit-misc/loess.html
