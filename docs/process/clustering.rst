@@ -16,7 +16,11 @@ Clustering을 할 때, Exon을 두 개 선택하게 됩니다.
 ``Exon 7`` 을 선택했다고 가정합시다.
 
 
-(그림)
+.. figure:: ../img/clustering_silhouette.png
+    :align: center
+    :figwidth: 100%
+    :target: ../img/clustering_silhouette.png
+
 
 
 선택한 첫번째 Exon은 ``Exon 1`` 입니다.
