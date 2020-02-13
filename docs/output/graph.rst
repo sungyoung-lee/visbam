@@ -3,7 +3,7 @@ Final Graph
 
 최종 결과물 그래프에 대해서 설명을 하는 페이지입니다.
 
-.. figure:: ../img/combined_grph.png
+.. figure:: ../img/combined_graph.png
     :align: center
     :figwidth: 100%
     :target: ../img/combined_graph.png
@@ -73,6 +73,7 @@ direction
 ~~~~~~~~~
 
 Direction은 해당 Refseq의 전사 방향을 표시하여 줍니다.
+Left면 왼쪽, Right면 오른쪽으로 화살표 모양으로 표시됩니다.
 
 exon
 ~~~~
