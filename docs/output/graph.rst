@@ -3,7 +3,20 @@ Final Graph
 
 최종 결과물 그래프에 대해서 설명을 하는 페이지입니다.
 
+.. figure:: ../img/combined_grph.png
+    :align: center
+    :figwidth: 100%
+    :target: ../img/combined_graph.png
+
+
 ``combined_slices`` 옵션이 켜져 있을 시 하나의 PDF로 출력됩니다.
+
+
+.. figure:: ../img/sliced_graph.png
+    :align: center
+    :figwidth: 100%
+    :target: ../img/sliced_graph.png
+
 그렇지 않으면 각 Slice별로 출력됩니다.
 
 그래프는 크게 Coverage 부분, Refseq 부분으로 나누어집니다.
@@ -13,6 +26,11 @@ Refseq부분에서는 불러온 Refseq을 전부 표시합니다.
 
 Coverage
 --------
+
+.. figure:: ../img/coverage.png
+    :align: center
+    :figwidth: 100%
+    :target: ../img/coverage.png
 
 최종적으로 계산한 Coverage를 표시하는 부분입니다.
 여기에 Generic Variants도 함께 표시됩니다.
@@ -37,6 +55,11 @@ Position별로 Pie Graph가 표시됩니다.
 
 Refseq
 ------
+
+.. figure:: ../img/refseq.png
+    :align: center
+    :figwidth: 100%
+    :target: ../img/refseq.png
 
 선택된 Refseq들을 Coverage 부분의 Position에 따라 표시해 줍니다.
 tx, cds와 direction, exon을 그려줍니다.
