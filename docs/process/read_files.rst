@@ -41,7 +41,7 @@ Generic Variants
 ----------------
 
 ``variants_dir_path`` 폴더에 있는 모든 ``.txt`` 파일들을 불러옵니다.
-이때 txt는 Bam File의 파일명 중 온점 앞까지의 값과 같아야 합니다.
+이때 txt 파일명은 Bam File의 파일명 중 온점 앞까지의 값과 같아야 합니다.
 
 예 :
 
