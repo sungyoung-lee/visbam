@@ -101,6 +101,21 @@ Generic Variants를 Visualize할 때 Marker의 크기를 조정합니다.
 단위는 pt입니다.
 
 
+min_max
+~~~~~~~
+
+.. figure:: ../img/min_max.png
+    :align: center
+    :figwidth: 100%
+    :target: ../img/min_max.png
+
+    --min_max를 적용했을 떄 그래프
+
+그래프의 Position별 최댓값과 최솟값을 각각 이어 Line Plot으로 그린 뒤,
+사이를 투명하게 채워 그래프를 표시합니다.
+
+
+
 ylim
 ~~~~
 
