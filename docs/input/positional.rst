@@ -6,7 +6,7 @@ Visbam을 실행할 때 필수로 입력해야 하는 필드들입니다.
 그리고 반드시 아래와 같은 순서로 입력하셔야 합니다.
 
 python3 visualize.py ``bam_dir_path`` ``sample_list_path`` ``normal_dir_path``
-``refseq_path`` ``draw_span`` ``output_prefix``
+``variants_dir_path`` ``refseq_path`` ``output_prefix``
 
 
 bam_dir_path
@@ -57,6 +57,16 @@ Refseq데이터는 Tsv(Tab-Separated Values)파일 형식이어야 합니다.
 NR을 제외한 NM만 불러옵니다. 
 
 
+variants_dir_path
+-----------------
+
+Generic Variants의 데이터가 있는 경로를 설정해줍니다.
+각 파일의 파일명은 BAM파일의 파일명('.'앞까지)이어야 합니다.
+Generic Variants는 Tsv(Tab-Seperated Values) 형식으로
+열에 'Refseq', 'Pos', 'Effect'가 포함되어 있어야 합니다.
+
+
+
 nmid_to_draw
 ------------
 
@@ -76,16 +86,6 @@ NR을 제외한 NM만 가능합니다.
        -> NM_001005484
 
 
-draw_span
-----------
-
-.. note::
-    곧 Optional로 수정될 Argument입니다.
-
-옵션 중 exon_sliced_ 가 활성화 되지 않았을 때,
-그래프를 나눌 bp의 크기를 정합니다.
-
-.. _exon_sliced: optional.html#exon-sliced
 
 
 output_prefix

@@ -12,8 +12,8 @@ silhouette는 Coverage값에 따른 Exon의 앞쪽 Position의 오차범위에
 뒤쪽 Position의 평균이 들어가지 않을 때 이를 Clustering 하는 과정입니다.
 
 Clustering을 할 때, Exon을 두 개 선택하게 됩니다.
-아래 설명을 위해 ``Exon 1`` 과
-``Exon 7`` 을 선택했다고 가정합시다.
+아래 설명을 위해 :guilabel:`Exon 1` 과
+:guilabel:`Exon 7` 을 선택했다고 가정합시다.
 
 
 .. figure:: ../img/clustering_silhouette.png
@@ -23,25 +23,25 @@ Clustering을 할 때, Exon을 두 개 선택하게 됩니다.
 
 
 
-선택한 첫번째 Exon은 ``Exon 1`` 입니다.
-``Exon 1`` 과 ``Exon 2`` 를 붙여서 보면,
+선택한 첫번째 Exon은 :guilabel:`Exon 1` 입니다.
+:guilabel:`Exon 1` 과 :guilabel:`Exon 2` 를 붙여서 보면,
 Exon의 경계에서 Coverage 그래프 간의 차이가 생기게 됩니다.
 
-이 때 ``Exon 1`` 의 끝에서 ``silhouette_dintv`` 만큼의 구간의
+이 때 :guilabel:`Exon 1` 의 끝에서 ``--silhouette_dintv`` 만큼의 구간의
 ``CI`` 신뢰구간을 구해줍니다.
-``Exon 2`` 의 시작에서 ``silhouette_dintv`` 만큼의 구간의
+:guilabel:`Exon 2` 의 시작에서 ``--silhouette_dintv`` 만큼의 구간의
 전체 평균이 이 ``CI`` 신뢰구간에 들어가지 않으면, Clustering 합니다.
 
-또, ``Exon 8`` 의 끝에서 ``silhouette_dintv`` 만큼의 구간의
+또, :guilabel:`Exon 8` 의 끝에서 ``--silhouette_dintv`` 만큼의 구간의
 ``CI`` 신뢰구간을 구해줍니다.
-``Exon 7`` 의 시작에서 ``silhouette_dintv`` 만큼의 구간의
+:guilabel:`Exon 7` 의 시작에서 ``--silhouette_dintv`` 만큼의 구간의
 전체 평균이 이 ``CI`` 신뢰구간에 들어가지 않으면, Clustering 합니다.
 두 조건을 모두 만족해야 Clustering이 됩니다.
 
 
 
 
-``Exon 2`` 의 평균을 ``Tau`` 로 설정합니다.
+:guilabel:`Exon 2` 의 평균을 ``Tau`` 로 설정합니다.
 이보다 작은 값들만 최종 Clustering하게 됩니다.
 
 위에서 ``CI`` 와 ``Tau`` 값을 조정하면서 Silhouette Score를 측정합니다.

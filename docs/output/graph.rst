@@ -9,7 +9,7 @@ Final Graph
     :target: ../img/combined_graph.png
 
 
-``combined_slices`` 옵션이 켜져 있을 시 하나의 PDF로 출력됩니다.
+``--combined_slices`` 옵션이 켜져 있을 시 하나의 PDF로 출력됩니다.
 
 
 .. figure:: ../img/sliced_graph.png

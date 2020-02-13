@@ -25,14 +25,7 @@ combine_slices
 curated_genes
 ~~~~~~~~~~~~~~
 
-.. note::
-
-    이 옵션을 이용하려면 소스 코드와 같은 폴더 내에
-    tsv형식으로 되어 있는 ``allCuratedGenes.txt`` 파일이 있어야 합니다.
-    ``allCuratedGenes.txt`` 에 대해서는 Reading_Files_ 를 참조하시기 바랍니다.
-
-
-Refseq 데이터 중 allCuratedGenes.txt에 포함되어 있는 Refseq 데이터만 표시합니다.
+Refseq 데이터 중 ``curated_genes`` 파일 목록에 있는 NMID의 Refseq 데이터만 표시합니다.
 
 .. _Reading_Files: https://visbam.readthedocs.io/en/latest/process/read_files.html#refseq
 
@@ -50,9 +43,22 @@ draw_average_line
     draw_average_line 적용시 나타나는 average line(붉은색)
 
 
+draw_span
+----------
+
+.. note::
+
+    이 옵션을 이용하려면 ``exon_sliced`` 옵션이 비활성화되어야 합니다.
+
+옵션 중 exon_sliced_ 가 활성화 되지 않았을 때,
+그래프를 나눌 bp의 크기를 정합니다.
+설정되지 않을 시 기본값은 10000입니다.
+
+.. _exon_sliced: optional.html#exon-sliced
+
+
 exclude_exon
 ~~~~~~~~~~~~~
-
 
 .. note::
 

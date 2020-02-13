@@ -40,11 +40,7 @@ Coverage 계산까지 Normal Bam과 동일하게 진행됩니다.
 Generic Variants
 ----------------
 
-.. note::
-
-    해당 디렉토리를 설정할 수 있는 argument를 만들 예정입니다.
-
-정해진 디렉토리 ``200117_work`` 에 있는 모든 ``.txt`` 파일들을 불러옵니다.
+``variants_dir_path`` 폴더에 있는 모든 ``.txt`` 파일들을 불러옵니다.
 이때 txt는 Bam File의 파일명 중 온점 앞까지의 값과 같아야 합니다.
 
 예 :
@@ -67,8 +63,4 @@ Refseq
 
 그리고 refseq 중 ``nmid_to_draw`` 의 범위에 들어오는 모든 Refseq을 불러옵니다.
 
-.. note::
-
-    해당 디렉토리를 설정할 수 있는 argument를 만들 예정입니다.
-
-``curated_genes`` 속성이 켜져 있으면 Curated 파일에 있는 Refseq만 걸러냅니다.
+``--curated_genes`` 파일이 지정되어 있으면 ``--curated_genes`` 파일에 있는 Refseq만 걸러냅니다.
