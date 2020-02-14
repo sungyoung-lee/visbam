@@ -10,7 +10,14 @@ Generic Variants, Refseq 값을 이용하여 그래프에 표시합니다.
 
 Output 그림에 관한 자세한 설명은 Outputs_ 문서를 참조하십시오.
 
+
+.. figure:: ../img/draw_graph.png
+    :align: center
+    :figwidth: 100%
+    :target: ../img/draw_graph.png
+
 .. _Outputs: https://visbam.readthedocs.io/en/latest/output/graph.html
+
 
 
 Coverages

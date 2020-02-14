@@ -43,7 +43,7 @@ Coverage 계산까지 Normal Bam과 동일하게 진행됩니다.
 Generic Variants
 ----------------
 
-``variants_dir_path`` 폴더에 있는 모든 ``.txt`` 파일들을 불러옵니다.
+variants_dir_path_ 폴더에 있는 모든 ``.txt`` 파일들을 불러옵니다.
 이때 txt 파일명은 Bam File의 파일명 중 온점 앞까지의 값과 같아야 합니다.
 
 예 :
@@ -53,17 +53,28 @@ Generic Variants
  
     -> MS180000237_S10.txt
 
-그 뒤 ``nmid_to_draw`` 의 nmid와 일치하는 값이며,
+그 뒤 nmid_to_draw_ 의 nmid와 일치하는 값이며,
 Visualize 하는 Sample에 해당되는 값만 불러옵니다.
+
+.. _variants_dir_path : https://visbam.readthedocs.io/en/latest/input/positional.html#variants-dir-path
+
+.. _nmid_to_draw : https://visbam.readthedocs.io/en/latest/input/positional.html#nmid-to-draw
 
 
 Refseq
 ------
 
-``refseq_path`` 에 있는 Refseq 파일을 불러옵니다.
-이 후 ``nmid_to_draw`` 와 일치하는 Refseq 중 첫번째 값을 불러옵니다.
+refseq_path_ 에 있는 Refseq 파일을 불러옵니다.
+이 후 nmid_to_draw_ 와 일치하는 Refseq 중 첫번째 값을 불러옵니다.
 이 값이 그래프의 처음과 끝, Exon을 결정하는 Refseq이 됩니다.
 
-그리고 refseq 중 ``nmid_to_draw`` 의 범위에 들어오는 모든 Refseq을 불러옵니다.
+그리고 refseq 중 nmid_to_draw_ 의 범위에 들어오는 모든 Refseq을 불러옵니다.
 
-``--curated_genes`` 파일이 지정되어 있으면 ``--curated_genes`` 파일에 있는 Refseq만 걸러냅니다.
+`--curated_genes`_ 파일이 지정되어 있으면 `--curated_genes`_ 파일에 있는 Refseq만 걸러냅니다.
+
+
+.. _nmid_to_draw : https://visbam.readthedocs.io/en/latest/input/positional.html#nmid-to-draw
+
+.. _refseq_path : https://visbam.readthedocs.io/en/latest/input/positional.html#refseq_path
+
+.. _--curated_genes : https://visbam.readthedocs.io/en/latest/input/optional.html#curated-genes

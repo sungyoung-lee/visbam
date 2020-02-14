@@ -3,9 +3,9 @@ Optional Arguments
 
 Optional Arguments를 정리해 놓은 문서입니다.
 Visbam에 필요한 유용한 기능들이 많이 있습니다.
-대부분 필수적으로 적어야 하지 않지만, 특정 Option에 따라
+대부분 필수적으로 적어야 하지는 않지만, 특정 Option에 따라
 설정해줘야 하는 Input들도 있으니 참조하시기 바랍니다.
-각 Option이 담당하는 기능별로 모았습니다.
+각 Option의 기능별로 `Drawing Graph`_, Smoothing_, Clustering_ 으로 분류하였습니다.
 
 
 Drawing Graph
@@ -18,16 +18,15 @@ combine_slices
 ~~~~~~~~~~~~~~
 
 엑손별로, 혹은 각 bp별로 나눠진 graph들을 합쳐주는 옵션입니다.
-합쳤을 때와 그렇지 않을 떄의 차이는 Final_Graph_에서 확인할 수 있습니다.
+합쳤을 때와 그렇지 않을 떄의 차이는 Final_Graph_ 에서 확인할 수 있습니다.
 
 .. _Final_Graph: https://visbam.readthedocs.io/en/latest/output/graph.html
 
 curated_genes
 ~~~~~~~~~~~~~~
 
-Refseq 데이터 중 ``curated_genes`` 파일 목록에 있는 NMID의 Refseq 데이터만 표시합니다.
+Refseq 데이터 중 ``--curated_genes`` 파일 목록에 있는 NMID의 Refseq 데이터만 표시합니다.
 
-.. _Reading_Files: https://visbam.readthedocs.io/en/latest/process/read_files.html#refseq
 
 
 draw_average_line
@@ -40,7 +39,7 @@ draw_average_line
     :figwidth: 100%
     :target: ../img/draw_average_line.png
 
-    draw_average_line 적용시 나타나는 average line(붉은색)
+    --draw_average_line 적용시 나타나는 average line(붉은색)
 
 
 draw_span
@@ -48,13 +47,12 @@ draw_span
 
 .. note::
 
-    이 옵션을 이용하려면 ``exon_sliced`` 옵션이 비활성화되어야 합니다.
+    이 옵션을 이용하려면 exon_sliced_ 옵션이 비활성화되어야 합니다.
 
 옵션 중 exon_sliced_ 가 활성화 되지 않았을 때,
 그래프를 나눌 bp의 크기를 정합니다.
 설정되지 않을 시 기본값은 10000입니다.
 
-.. _exon_sliced: optional.html#exon-sliced
 
 
 exclude_exon
@@ -62,7 +60,7 @@ exclude_exon
 
 .. note::
 
-    이 옵션을 이용하려면 ``exon_sliced`` 옵션이 활성화되어야 합니다.
+    이 옵션을 이용하려면 exon_sliced_ 옵션이 활성화되어야 합니다.
 
 일부 엑손을 제외하고 표시합니다.
 엑손을 여러개를 선택하려면 쉼표로 구분하여 표시합니다.
@@ -89,7 +87,7 @@ exon_space
 
 .. note::
 
-    이 옵션을 이용하려면 ``exon_sliced`` 옵션이 활성화되어야 합니다.
+    이 옵션을 이용하려면 exon_sliced_ 옵션이 활성화되어야 합니다.
 
 ``exon_sliced`` 옵션에서 exon 앞뒤의 간격을 bp단위로 설정하여 줍니다.
 
@@ -158,7 +156,7 @@ average
 
 .. note::
 
-    이 옵션을 이용하려면 ``smoothing`` 옵션이 ``average`` 이어야 합니다.
+    이 옵션을 이용하려면 smoothing_ 옵션이 ``average`` 이어야 합니다.
 
 Smoothing이 average일 때, average를 적용할 앞 뒤 bp간격을 설정합니다.
 average가 1이면, 앞과 뒤에 각각 1bp가 적용되어 계산됩니다.
@@ -168,9 +166,9 @@ fill
 
 .. note::
 
-    이 옵션을 이용하려면 ``smoothing`` 옵션이 ``average`` 이어야 합니다.
+    이 옵션을 이용하려면 smoothing_ 옵션이 ``average`` 이어야 합니다.
 
-Smoothing이 average일 때, 앞 뒤로 ``average`` 만큼 간격을 더 주어
+Smoothing이 average일 때, 앞 뒤로 fill_ 만큼 간격을 더 주어
 그 간격에서 Moving Average를 계산합니다.
 
 
@@ -191,7 +189,7 @@ clustering
 
 .. note::
 
-    아래 옵션을 이용하려면 ``clustering`` 옵션이 활성화 되어있어야 합니다.
+    아래 옵션을 이용하려면 clustering_ 옵션이 활성화 되어있어야 합니다.
 
 
 clustering_mode 
@@ -236,7 +234,7 @@ score_plot_width
 
 .. note::
 
-    이 옵션을 이용하려면 ``clustering_mode`` 옵션이 ``silhouette`` 이어야 합니다.
+    이 옵션을 이용하려면 clustering_mode_ 옵션이 ``silhouette`` 이어야 합니다.
 
 Silhouette 최적화 과정에서 중간 결과로 그려지는
 CI/Tau/Score Plot의 Width를 결정합니다.
@@ -250,7 +248,7 @@ score_plot_height
 
 .. note::
 
-    이 옵션을 이용하려면 ``clustering_mode`` 옵션이 ``silhouette`` 이어야 합니다.
+    이 옵션을 이용하려면 clustering_mode_ 옵션이 ``silhouette`` 이어야 합니다.
 
 Silhouette 최적화 과정에서 중간 결과로 그려지는
 Score Plot의 height를 결정합니다.
@@ -262,7 +260,7 @@ limit_tau
 
 .. note::
 
-    이 옵션을 이용하려면 ``clustering_mode`` 옵션이 ``silhouette`` 이어야 합니다.
+    이 옵션을 이용하려면 clustering_mode_ 옵션이 ``silhouette`` 이어야 합니다.
 
 Silhouette 최적화 과정에서 tau의 위쪽 limit를 결정합니다.
 
@@ -272,7 +270,7 @@ limit_tau_low
 
 .. note::
 
-    이 옵션을 이용하려면 ``clustering_mode`` 옵션이 ``silhouette`` 이어야 합니다.
+    이 옵션을 이용하려면 clustering_mode_ 옵션이 ``silhouette`` 이어야 합니다.
 
 Silhouette 최적화 과정에서 tau의 아래쪽 limit를 결정합니다.
 
@@ -282,7 +280,7 @@ silhouette_dintv
 
 .. note::
 
-    이 옵션을 이용하려면 ``clustering_mode`` 옵션이 ``silhouette`` 이어야 합니다.
+    이 옵션을 이용하려면 clustering_mode_ 옵션이 ``silhouette`` 이어야 합니다.
 
 Silhouette Clustering 과정에서 계산할 Exon 앞뒤의 간격을 조정합니다.
 단위는 bp입니다.

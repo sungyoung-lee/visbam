@@ -27,14 +27,14 @@ Clustering을 할 때, Exon을 두 개 선택하게 됩니다.
 :guilabel:`Exon 1` 과 :guilabel:`Exon 2` 를 붙여서 보면,
 Exon의 경계에서 Coverage 그래프 간의 차이가 생기게 됩니다.
 
-이 때 :guilabel:`Exon 1` 의 끝에서 ``--silhouette_dintv`` 만큼의 구간의
+이 때 :guilabel:`Exon 1` 의 끝에서 `--silhouette_dintv`_ 만큼의 구간의
 ``CI`` 신뢰구간을 구해줍니다.
-:guilabel:`Exon 2` 의 시작에서 ``--silhouette_dintv`` 만큼의 구간의
+:guilabel:`Exon 2` 의 시작에서 `--silhouette_dintv`_ 만큼의 구간의
 전체 평균이 이 ``CI`` 신뢰구간에 들어가지 않으면, Clustering 합니다.
 
-또, :guilabel:`Exon 8` 의 끝에서 ``--silhouette_dintv`` 만큼의 구간의
+또, :guilabel:`Exon 8` 의 끝에서 `--silhouette_dintv`_ 만큼의 구간의
 ``CI`` 신뢰구간을 구해줍니다.
-:guilabel:`Exon 7` 의 시작에서 ``--silhouette_dintv`` 만큼의 구간의
+:guilabel:`Exon 7` 의 시작에서 `--silhouette_dintv`_ 만큼의 구간의
 전체 평균이 이 ``CI`` 신뢰구간에 들어가지 않으면, Clustering 합니다.
 두 조건을 모두 만족해야 Clustering이 됩니다.
 
@@ -48,6 +48,7 @@ Exon의 경계에서 Coverage 그래프 간의 차이가 생기게 됩니다.
 그 중 Silhouette Score가 가장 높을 때, 최종 Clustering 결과로 결정합니다.
 
 
+.. _--silhouette_dintv : https://visbam.readthedocs.io/en/latest/input/optional.html#silhouette-dintv
 
 NMF
 ---
@@ -69,4 +70,5 @@ Splice_Site
 
 Generic Variants 데이터 중 Effect의 이름이 ``splice_site`` 가
 있는 것들을 모아 줍니다.
-Splice_Site가 있는 Sample을 모두 선택하여 Clustering 하여 줍니다.
+``splice_site`` 가 있는 Sample을 모두 선택하여 Clustering 하여 줍니다.
+
