@@ -15,9 +15,10 @@ bam_dir_path
 Bam파일들이 있는 경로를 지정하여 줍니다.
 디렉토리 내의 폴더 안에 있는 Bam파일들은 검색하지 않습니다.
 이 디렉토리에 있는 Bam파일들중
-``sample_list_path`` 파일의 목록에 있는 Bam파일들만 Coverage가 계산되며
+sample_list_path_ 파일의 목록에 있는 Bam파일들만 Coverage가 계산되며
 그래프로 결과가 출력됩니다. 
 
+.. _sample_list_path: #sample-list-path
 
 sample_list_path 
 ----------------

@@ -32,10 +32,32 @@ Visbam을 실행시키려면 여러 Input이 필요합니다.
 필수로 넣어야 하는 Positional Input와 선택 옵션인 Optional Input이 있습니다.
 Optional Input 중에서도 특정 Option을 입력할 시
 필수로 입력해야 하는 필드가 있으니 주의하시기 바랍니다.
-자세한 설명은 아래 문서를 참고하십시오.
+전체 명령어의 목록은 다음과 같습니다.
+
+.. code:: 
+    visualize_0123.py [-h] [--exon_sliced] [--curated_genes CURATED_GENES]
+                             [--exclude_exon EXCLUDE_EXON] [--combine_slices]
+                             [--draw_average_line] [--draw_span DRAW_SPAN]
+                             [--smoothing SMOOTHING] [--average AVERAGE] [--fill]
+                             [--font_size FONT_SIZE] [--marker_size MARKER_SIZE]
+                             [--ylim YLIM] [--exon_space EXON_SPACE] [--min_max]
+                             [--clustering] [--clustering_mode CLUSTERING_MODE]
+                             [--select_exon SELECT_EXON] [--threshold THRESHOLD]
+                             [--score_plot_width SCORE_PLOT_WIDTH]
+                             [--score_plot_height SCORE_PLOT_HEIGHT]
+                             [--limit_tau LIMIT_TAU]
+                             [--limit_tau_low LIMIT_TAU_LOW]
+                             [--silhouette_dintv SILHOUETTE_DINTV] [--train TRAIN]
+                             [--test TEST]
+                             bam_dir_path sample_list_path normal_dir_path
+                             refseq_path variants_dir_path nmid_to_draw
+                             output_prefix
+
+더 자세한 설명은 아래 문서를 참고하십시오.
 
 * :doc:`Positional Arguments <input/positional>`
 * :doc:`Optional Arguments <input/optional>`
+
 
 
 .. toctree::

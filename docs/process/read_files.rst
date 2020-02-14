@@ -15,7 +15,7 @@ Normal Bam 파일부터 불러온 뒤, Visualize 할 Bam들을 불러와줍니�
 Normal Bam
 ~~~~~~~~~~
 
-normal_dir_path(링크) 내에 있는 BAM 파일들을 모두 불러와줍니다.
+normal_dir_path_ 내에 있는 BAM 파일들을 모두 불러와줍니다.
 Bam파일들을 하나씩 불러 온 뒤 해당 파일과 구간의 Cache 파일이
 있는지 없는지 확인합니다.
 Cache 파일이 존재하면 Cache 파일을 불러옵니다.
@@ -26,6 +26,9 @@ Cache File은 해당 코드가 있는 폴더에 ``cache/``
 디렉토리를 새로 만든 뒤 그 안에 파일들이 저장됩니다. 
 
 구해진 Normal Bam file들의 평균을 최종 결과값으로 저장합니다.
+
+
+.. _normal_dir_path: https://visbam.readthedocs.io/en/latest/input/positional.html#normal-dir-path
 
 
 Cancer Bam

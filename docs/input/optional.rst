@@ -44,7 +44,7 @@ draw_average_line
 
 
 draw_span
-----------
+~~~~~~~~~
 
 .. note::
 
