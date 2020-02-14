@@ -18,7 +18,6 @@ Bam파일들이 있는 경로를 지정하여 줍니다.
 sample_list_path_ 파일의 목록에 있는 Bam파일들만 Coverage가 계산되며
 그래프로 결과가 출력됩니다. 
 
-.. _sample_list_path: #sample-list-path
 
 sample_list_path 
 ----------------
