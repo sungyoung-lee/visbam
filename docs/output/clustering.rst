@@ -23,8 +23,11 @@ Plot의 크기가 Score의 크기 입니다.
 선택된 부분에 대한 Plot에는 빨간색 테두리로 강조 표시를 하였습니다.
 
 이 그래프의 Width/Height는
-``--score_plot_width``, ``--score_plot_height`` 로 지정할 수 있습니다.
+`--score_plot_width`_, `--score_plot_height`_ 로 지정할 수 있습니다.
 
+.. _--score_plot_width : https://visbam.readthedocs.io/en/latest/input/optional.html#score-plot-width
+
+.. _--score_plot_height : https://visbam.readthedocs.io/en/latest/input/optional.html#score-plot-height
 
 Ratio/Score Scatter Plot
 ------------------------

@@ -49,6 +49,7 @@ variants_dir_path_ 폴더에 있는 모든 ``.txt`` 파일들을 불러옵니다
 예 :
 
 .. code::
+
     MS180000237_S10.bwamem.sorted.dedup.realn.recal.dedup.bam
  
     -> MS180000237_S10.txt
@@ -75,6 +76,6 @@ refseq_path_ 에 있는 Refseq 파일을 불러옵니다.
 
 .. _nmid_to_draw : https://visbam.readthedocs.io/en/latest/input/positional.html#nmid-to-draw
 
-.. _refseq_path : https://visbam.readthedocs.io/en/latest/input/positional.html#refseq_path
+.. _refseq_path : https://visbam.readthedocs.io/en/latest/input/positional.html#refseq-path
 
 .. _--curated_genes : https://visbam.readthedocs.io/en/latest/input/optional.html#curated-genes

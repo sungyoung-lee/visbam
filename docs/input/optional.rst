@@ -54,6 +54,8 @@ draw_span
 설정되지 않을 시 기본값은 10000입니다.
 
 
+.. _exon_sliced : https://visbam.readthedocs.io/en/latest/input/optional.html#exon-sliced
+
 
 exclude_exon
 ~~~~~~~~~~~~~
@@ -70,6 +72,8 @@ exclude_exon
 .. code::
 
     --exclude_exon 1,2,3
+
+.. _exon_sliced : https://visbam.readthedocs.io/en/latest/input/optional.html#exon-sliced
 
 
 exon_sliced
@@ -89,8 +93,9 @@ exon_space
 
     이 옵션을 이용하려면 exon_sliced_ 옵션이 활성화되어야 합니다.
 
-``exon_sliced`` 옵션에서 exon 앞뒤의 간격을 bp단위로 설정하여 줍니다.
+exon_sliced_ 옵션에서 exon 앞뒤의 간격을 bp단위로 설정하여 줍니다.
 
+.. _exon_sliced : https://visbam.readthedocs.io/en/latest/input/optional.html#exon-sliced
 
 font_size
 ~~~~~~~~~~

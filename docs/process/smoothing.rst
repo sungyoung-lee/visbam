@@ -9,12 +9,13 @@ Smoothing은 두 가지 알고리즘을 선택하여 진행합니다.
 Average
 -------
 
-Average는 각 position 앞 뒤로 ``average`` 간격 만큼의 평균을
+Average는 각 position 앞 뒤로 `--average`_ 간격 만큼의 평균을
 계산하여 그 값을 구하는 방식으로 Smoothing을 합니다.
-이 때 해당 position 앞뒤로 ``average`` 만큼의 값이 없는
+이 때 해당 position 앞뒤로 `--average`_ 만큼의 값이 없는
 position의 경우에는 그 값이 0으로 처리됩니다.
 `--fill`_ 옵션을 켜 Exon 앞뒤의 값을 더 불러온 뒤 처리할 수 있습니다.
 
+.. _--average : https://visbam.readthedocs.io/en/latest/input/optional.html#average
 .. _--fill : https://visbam.readthedocs.io/en/latest/input/optional.html#fill
 
 Loess
