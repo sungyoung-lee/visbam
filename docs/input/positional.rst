@@ -5,8 +5,8 @@ Visbam을 실행할 때 필수로 입력해야 하는 필드들입니다.
 이 필드들을 입력하지 않으면 실행이 되지 않습니다.
 그리고 반드시 아래와 같은 순서로 입력하셔야 합니다.
 
-python3 visualize.py ``bam_dir_path`` ``sample_list_path`` ``normal_dir_path``
-``variants_dir_path`` ``refseq_path`` ``output_prefix``
+python3 visualize.py <``bam_dir_path``> <``sample_list_path``> <``normal_dir_path``>
+<``variants_dir_path``> <``refseq_path``> <``output_prefix``>
 
 
 bam_dir_path
@@ -24,6 +24,8 @@ sample_list_path
 
 bam_dir_path_ 중 Coverage를 계산할 Bam파일 목록을
 저장한 파일의 경로를 지정합니다.
+sample_list_path 파일에는 각 Bam 파일명의
+'.'앞까지의 이름이 엔터로 구분되어 있어야 합니다.
 
 .. warning::
     파일명은 맨 앞의 '.'이 위치한 바로 앞부분까지만 적어야 합니다.

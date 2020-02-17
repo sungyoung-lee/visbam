@@ -23,6 +23,19 @@ Sample Clustering
     알고리즘을 선택하고 설정을 바꾸어 최적의 결과를 표시할 수 있습니다.
     현재 3가지 알고리즘을 지원하고 있습니다.
 
+Prerequisites
+------------
+
+Visbam을 실행하기 전 설치되어야 할 파이썬 패키지들이 있습니다.
+아래 패키지들을 설치한 후 Visbam을 실행할 수 있습니다.
+
+* Numpy
+* Pandas
+* Matplotlib
+* Pysam
+* Sklearn
+* Skmisc
+
 
 
 Inputs

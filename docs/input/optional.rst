@@ -17,6 +17,10 @@ Drawing Graph
 combine_slices
 ~~~~~~~~~~~~~~
 
+.. code::
+
+   --combine_slices
+
 엑손별로, 혹은 각 bp별로 나눠진 graph들을 합쳐주는 옵션입니다.
 합쳤을 때와 그렇지 않을 떄의 차이는 Final_Graph_ 에서 확인할 수 있습니다.
 
@@ -25,12 +29,21 @@ combine_slices
 curated_genes
 ~~~~~~~~~~~~~~
 
-Refseq 데이터 중 ``--curated_genes`` 파일 목록에 있는 NMID의 Refseq 데이터만 표시합니다.
+.. code::
+
+   --curated_genes <curated_genes>
+
+Refseq 데이터 중 ``<curated_genes>`` 파일 목록에 있는 NMID의 Refseq 데이터만 표시합니다.
+``<curated_genes>`` 파일은 TSV 형식으로 Column에 ``RefSeq`` 항목이 포함되어 있어야 합니다.
 
 
 
 draw_average_line
 ~~~~~~~~~~~~~~~~~
+
+.. code::
+
+   --draw_average_line
 
 전체 샘플의 bp별 평균을 붉은색 Line Plot으로 표시합니다.
 
@@ -49,6 +62,11 @@ draw_span
 
     이 옵션을 이용하려면 exon_sliced_ 옵션이 비활성화되어야 합니다.
 
+.. code::
+
+   --draw_span <draw_span>
+
+
 옵션 중 exon_sliced_ 가 활성화 되지 않았을 때,
 그래프를 나눌 bp의 크기를 정합니다.
 설정되지 않을 시 기본값은 10000입니다.
@@ -63,6 +81,10 @@ exclude_exon
 .. note::
 
     이 옵션을 이용하려면 exon_sliced_ 옵션이 활성화되어야 합니다.
+
+.. code::
+
+   --exclude_exon <exclude_exon>
 
 일부 엑손을 제외하고 표시합니다.
 엑손을 여러개를 선택하려면 쉼표로 구분하여 표시합니다.
@@ -79,6 +101,10 @@ exclude_exon
 exon_sliced
 ~~~~~~~~~~~
 
+.. code::
+
+   --exon_sliced
+
 이 옵션을 켤 시, exon별로 그래프를 그릴 구간을 나누게 됩니다.
 그렇지 않으면, draw_span_ 에 따라 나누게 됩니다. 
 각 그래프의 차이는 (링크)에서 확인할 수 있습니다.
@@ -93,21 +119,33 @@ exon_space
 
     이 옵션을 이용하려면 exon_sliced_ 옵션이 활성화되어야 합니다.
 
+.. code::
+
+   --exon_space <exon_space>
+
 exon_sliced_ 옵션에서 exon 앞뒤의 간격을 bp단위로 설정하여 줍니다.
+int값을 받습니다.
 
 .. _exon_sliced : https://visbam.readthedocs.io/en/latest/input/optional.html#exon-sliced
 
 font_size
 ~~~~~~~~~~
 
-폰트 크기를 설정합니다. 단위는 pt입니다.
+.. code::
 
+   --font_size <font_size>
+
+폰트 크기를 설정합니다. 자연수 값을 받으며 단위는 pt입니다.
 
 marker_size
 ~~~~~~~~~~~
 
+.. code::
+
+   --marker_size <marker_size>
+
 Generic Variants를 Visualize할 때 Marker의 크기를 조정합니다.
-단위는 pt입니다.
+자연수 값을 받으며 단위는 pt입니다.
 
 
 min_max
@@ -120,6 +158,10 @@ min_max
 
     --min_max를 적용했을 떄 그래프
 
+.. code::
+
+   --min_max
+
 그래프의 Position별 최댓값과 최솟값을 각각 이어 Line Plot으로 그린 뒤,
 사이를 투명하게 채워 그래프를 표시합니다.
 
@@ -128,7 +170,12 @@ min_max
 ylim
 ~~~~
 
+.. code::
+
+   --ylim <ylim>
+
 그래프를 표시할 Coverage의 최댓값을 설정합니다.
+자연수 값을 받습니다.
 이 옵션이 없으면 모든 Sample의 Coverage 중
 제일 높은 값으로 설정됩니다.
 
@@ -143,6 +190,10 @@ Smoothing
 
 smoothing
 ~~~~~~~~~~
+
+.. code::
+
+   --smoothing <smoothing>
 
 어떤 속성으로 Smoothing을 할 지 설정합니다.
 설정할 수 있는 속성은 다음과 같습니다.
@@ -163,7 +214,12 @@ average
 
     이 옵션을 이용하려면 smoothing_ 옵션이 ``average`` 이어야 합니다.
 
+.. code::
+
+   --average <average>
+
 Smoothing이 average일 때, average를 적용할 앞 뒤 bp간격을 설정합니다.
+자연수 값을 받습니다.
 average가 1이면, 앞과 뒤에 각각 1bp가 적용되어 계산됩니다.
 
 fill
@@ -173,7 +229,11 @@ fill
 
     이 옵션을 이용하려면 smoothing_ 옵션이 ``average`` 이어야 합니다.
 
-Smoothing이 average일 때, 앞 뒤로 fill_ 만큼 간격을 더 주어
+.. code::
+
+   --fill
+
+Smoothing이 average일 때, 앞 뒤로 average_ 만큼 간격을 더 주어
 그 간격에서 Moving Average를 계산합니다.
 
 
@@ -190,6 +250,10 @@ Sample들을 Clustering하는 것과 관련된 Option들입니다.
 clustering
 ~~~~~~~~~~
 
+.. code::
+
+   --clustering
+
 주어진 샘플을 두 그룹으로 Clustering 합니다.
 
 .. note::
@@ -199,6 +263,10 @@ clustering
 
 clustering_mode 
 ~~~~~~~~~~~~~~~
+
+.. code::
+
+   --clustering_mode <clustering_mode>
 
 Clustering을 진행할 알고리즘을 결정합니다.
 알고리즘은 각각 ``silhouette`` , ``nmf`` , ``splice_site`` 가 있습니다.
@@ -214,7 +282,11 @@ Clustering을 진행할 알고리즘을 결정합니다.
 select_exon
 ~~~~~~~~~~~
 
-Clustering을 진행할 두 엑손의 번호를 입력합니다.
+.. code::
+
+   --select_exon <select_exon>
+
+Clustering의 기준이 될 두 엑손의 번호를 입력합니다.
 
 .. note::
 
@@ -231,7 +303,12 @@ Clustering을 진행할 두 엑손의 번호를 입력합니다.
 threshold
 ~~~~~~~~~~
 
+.. code::
+
+   --threshold <threshold>
+
 Clustering 된 그룹 중 평균이 threshold 이상인 값을 제외합니다.
+threshold의 값은 0이상인 float 값을 받습니다.
 
 
 score_plot_width
@@ -241,9 +318,13 @@ score_plot_width
 
     이 옵션을 이용하려면 clustering_mode_ 옵션이 ``silhouette`` 이어야 합니다.
 
+.. code::
+
+   --score_plot_width <score_plot_width>
+
 Silhouette 최적화 과정에서 중간 결과로 그려지는
 CI/Tau/Score Plot의 Width를 결정합니다.
-단위는 inch입니다.
+단위는 inch이고 자연수 값을 받습니다.
 CI/Tau/Score Plot에 대해서는 Result_of_Clustering_ 문서를 참조하십시오.
 
 .. _Result_of_Clustering: https://visbam.readthedocs.io/en/latest/output/clustering.html
@@ -255,9 +336,13 @@ score_plot_height
 
     이 옵션을 이용하려면 clustering_mode_ 옵션이 ``silhouette`` 이어야 합니다.
 
+.. code::
+
+   --score_plot_height <score_plot_height>
+
 Silhouette 최적화 과정에서 중간 결과로 그려지는
 Score Plot의 height를 결정합니다.
-단위는 inch입니다.
+단위는 inch이고 자연수 값을 받습니다.
 
 
 limit_tau
@@ -277,8 +362,12 @@ limit_tau_low
 
     이 옵션을 이용하려면 clustering_mode_ 옵션이 ``silhouette`` 이어야 합니다.
 
-Silhouette 최적화 과정에서 tau의 아래쪽 limit를 결정합니다.
+.. code::
 
+   --limit_tau_low <limit_tau_low>
+
+Silhouette 최적화 과정에서 tau의 아래쪽 limit를 결정합니다.
+자연수 값을 받습니다.
 
 silhouette_dintv
 ~~~~~~~~~~~~~~~~
@@ -287,6 +376,10 @@ silhouette_dintv
 
     이 옵션을 이용하려면 clustering_mode_ 옵션이 ``silhouette`` 이어야 합니다.
 
+.. code::
+
+   --silhouette_dintv <silhouette_dintv>
+
 Silhouette Clustering 과정에서 계산할 Exon 앞뒤의 간격을 조정합니다.
-단위는 bp입니다.
+단위는 bp이고 자연수 값을 받습니다.
 

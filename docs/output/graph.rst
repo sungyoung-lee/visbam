@@ -18,6 +18,8 @@ Final Graph
     :target: ../img/sliced_graph.png
 
 그렇지 않으면 각 Slice별로 출력됩니다.
+각 슬라이스의 파일 명 뒤에는 Slice 된 번호
+(혹은 Exon 번호)가 붙습니다.
 
 그래프는 크게 Coverage 부분, Refseq 부분으로 나누어집니다.
 Coverage부분에서는 Sample별로 계산한 Coverage들을 표시합니다.

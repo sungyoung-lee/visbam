@@ -5,7 +5,7 @@ Drawing the Final Graph
 이전 과정에서 계산했던 Smoothing 된(또는 그렇지 않은) Coverage,
 Generic Variants, Refseq 값을 이용하여 그래프에 표시합니다.
 
-그래프는 ``--combine_slices`` 값의 활성화 여부에 따라 한 파일로 출력될 지
+그래프는 `--combine_slices`_  값의 활성화 여부에 따라 한 파일로 출력될 지
 여러 파일로 출력될 지 결정됩니다.
 
 Output 그림에 관한 자세한 설명은 Outputs_ 문서를 참조하십시오.
@@ -18,6 +18,7 @@ Output 그림에 관한 자세한 설명은 Outputs_ 문서를 참조하십시�
 
 .. _Outputs: https://visbam.readthedocs.io/en/latest/output/graph.html
 
+.. _--combine_slices_ : https://visbam.readthedocs.io/en/latest/input/optional.html#combine-slices
 
 
 Coverages
@@ -28,7 +29,7 @@ Clustering이 진행되지 않은 경우 모든 Sample이 초록색으로 표시
 Clustering이 진행 된 경우, Clustering 된 Sample은 빨간색으로 표시됩니다.
 
 그리고 해당 Clustering이 얼마나 잘 되었는지 확인할 수 있는
-Clustering Evaluation 그래프를 각 Exon별로 제공합니다.
+Clustering Evaluation 그래프를 각 Exon별로 그려줍니다.
 
 
 
