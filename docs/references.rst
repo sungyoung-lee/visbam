@@ -29,13 +29,17 @@ Options
 +----------------------------------------------------------------------------------------------------+
 | *Drawing Graph*                                                                                    |
 +---------------------+--------------------------+---------------------------------------------------+
-| - -combine_slices   |                          | Combine all sliced graphs                         |
+| --combine_slices    |                          | Combine all sliced graphs                         |
 +---------------------+--------------------------+---------------------------------------------------+
-| - -cureated_genes   | {file}                   | Specify curated genes tsv file                    |
+| --cureated_genes    | {file}                   | Specify curated genes tsv file                    |
 +---------------------+--------------------------+---------------------------------------------------+
-| - -draw_average_line|                          | Draw average line of all coverages                |
+| --draw_average_line |                          | Draw average line of all coverages                |
 +---------------------+--------------------------+---------------------------------------------------+
-| - -draw_span        | {10000}                  | Specify span of each slice (bp)                   |
+| --draw_span         | {10000}                  | Specify span of each slice (bp)                   |
 +---------------------+--------------------------+---------------------------------------------------+
-| - -exclude_exon     | {num1,num2,...}          | Specify exons excluded                            |
+| --exclude_exon      | {num1,num2,...}          | Specify exons excluded                            |
++---------------------+--------------------------+---------------------------------------------------+
+| --exon_sliced       |                          | Slice the graph by exon of selected gene          |
++---------------------+--------------------------+---------------------------------------------------+
+| ----exon_space      | {0}                      | Specify margin of slice by exons                  |
 +---------------------+--------------------------+---------------------------------------------------+
