@@ -64,6 +64,54 @@ refseq_path
 
 Refseq_ 데이터를 불러옵니다.
 Refseq_ 데이터는 TSV(Tab-Separated Values)파일 형식이어야 합니다.
+아래와 같은 Column이 포함되어 있어야 합니다.
+
+.. code::
+
+   'bin', 'name', 'chrom', 'strand',
+   'txStart', 'txEnd', 'cdsStart', 'cdsEnd',
+   'exonCount', 'exonStarts', 'exonEnds', 'score',
+   'name2', 'cdsStartStat', 'cdsEndStat', 'exonFrames'
+
+.. _Refseq : https://en.wikipedia.org/wiki/RefSeq
+
+또, NR을 제외한 NM만 불러옵니다. 
+
+
+
+variants_dir_path
+-----------------
+
+`Genetic Variants`_ 의 데이터가 있는 경로를 설정해줍니다.
+각 파일의 파일명의 시작은 BAM파일의 파일명('.'앞까지)이어야 합니다.
+`Genetic Variants`_ 는 TSV(Tab-Seperated Values) 형식의 txt 파일로
+열에 ``Refseq``, ``Pos``, ``Effect`` 가 포함되어 있어야 합니다.
+
+.. _`Genetic Variants` : https://en.wikipedia.org/wiki/Genetic_variant
+
+
+nmid_to_draw
+------------
+
+그래프를 그릴 Refseq_ 의 NMID를 적어야 합니다.
+이 NMID의 시작과 끝이 Coverage를 추출할 범위입니다.
+NR을 제외한 NM만 가능합니다.
+
+.. warning::
+    뒤에 버전(. 뒷부분)은 떼고 적습니다.
+   
+    예시 :
+
+    .. code::
+      
+       NM_001005484.1  
+       
+       -> NM_001005484
+
+
+.. _Refseq : https://en.wikipedia.org/wiki/RefSeq
+
+
 
 
 
