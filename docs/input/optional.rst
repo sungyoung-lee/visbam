@@ -14,6 +14,62 @@ Drawing Graph
 그래프를 그리는 것과 관련된 Option들입니다.
 
 
+bam_dir_path
+~~~~~~~~~~~
+
+Bam_ 파일들이 있는 경로를 지정하여 줍니다.
+디렉토리 내의 폴더 안에 있는 Bam_ 파일들은 검색하지 않습니다.
+이 디렉토리에 있는 Bam_ 파일들중
+sample_list_path_ 파일의 목록에 있는 Bam_ 파일들만 Coverage가 계산되며
+그래프로 결과가 출력됩니다. 
+
+.. _Bam : https://en.wikipedia.org/wiki/Binary_Alignment_Map
+
+sample_list_path 
+~~~~~~~~~~~~~~~~
+
+bam_dir_path_ 중 Coverage를 계산할 Bam_ 파일 목록을
+저장한 파일의 경로를 지정합니다.
+sample_list_path 파일에는 각 Bam_ 파일명의
+'.'앞까지의 이름이 엔터로 구분되어 있어야 합니다.
+
+.. warning::
+    파일명은 맨 앞의 '.'이 위치한 바로 앞부분까지만 적어야 합니다.
+   
+    예시 :
+
+    .. code::
+        
+       MS190000066_S8.bwamem.sorted.dedup.realn.recal.dedup.bam
+       
+       -> MS190000066_S8
+
+.. _Bam : https://en.wikipedia.org/wiki/Binary_Alignment_Map
+
+
+
+
+normal_dir_path 
+~~~~~~~~~~~~~~~~
+
+그래프를 그릴 Bam_ 파일을 Normalize해줄 Normal Bam_ 파일들의 경로입니다.
+디렉토리 내의 폴더 안에 있는 Bam_ 파일들은 검색하지 않습니다.
+이 Bam_ 파일들은 sample_list_path_ Bam_ 파일의 Coverage를 Normalize 할 때 사용됩니다.
+따라서 이 디렉토리에 있는 Bam_ 파일들은 그래프로 출력되지 않습니다.
+Normalize에 관한 내용은 Reading_Files_ 문서를 참조하십시오.
+
+.. _Reading_Files: https://visbam.readthedocs.io/en/latest/process/read_files.html#normal-bam
+
+.. _Bam : https://en.wikipedia.org/wiki/Binary_Alignment_Map
+
+refseq_path
+~~~~~~~~~~~
+
+Refseq_ 데이터를 불러옵니다.
+Refseq_ 데이터는 TSV(Tab-Separated Values)파일 형식이어야 합니다.
+
+
+
 combine_slices
 ~~~~~~~~~~~~~~
 
