@@ -1,10 +1,7 @@
-Optional Arguments
-==================
+Arguments
+==========
 
-Optional Arguments를 정리해 놓은 문서입니다.
-Visbam에 필요한 유용한 기능들이 많이 있습니다.
-대부분 필수적으로 적어야 하지는 않지만, 특정 Option에 따라
-설정해줘야 하는 Input들도 있으니 참조하시기 바랍니다.
+Visbam의 전체 Arguments를 정리해 놓은 문서입니다.
 각 Option의 기능별로 `Drawing Graph`_, Smoothing_, Clustering_ 으로 분류하였습니다.
 
 
