@@ -150,3 +150,18 @@ Clustering 과정에서 제공하는 중간 결과 그래프와
 
    output/clustering
    output/graph
+
+
+References
+----------
+
+전체 references를 정리해 놓은 페이지입니다.
+
+* :doc:`References <references>`
+
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+   :caption: References
+
+   references
