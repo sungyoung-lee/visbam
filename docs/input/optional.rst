@@ -33,10 +33,12 @@ curated_genes
 
    --curated_genes <curated_genes>
 
-Refseq 데이터 중 ``<curated_genes>`` 파일 목록에 있는 NMID의 Refseq 데이터만 표시합니다.
-``<curated_genes>`` 파일은 TSV 형식으로 Column에 ``RefSeq`` 항목이 포함되어 있어야 합니다.
+Refseq_ 데이터 중 ``<curated_genes>`` 파일 목록에 있는 NMID의 Refseq_ 데이터만 표시합니다.
+``<curated_genes>`` 파일은 Tsv_ 형식으로 Column에 ``RefSeq`` 항목이 포함되어 있어야 합니다.
 
+.. _Refseq : https://en.wikipedia.org/wiki/RefSeq
 
+.. _Tsv : https://en.wikipedia.org/wiki/Tab-separated_values
 
 draw_average_line
 ~~~~~~~~~~~~~~~~~
@@ -123,10 +125,11 @@ exon_space
 
    --exon_space <exon_space>
 
-exon_sliced_ 옵션에서 exon 앞뒤의 간격을 bp단위로 설정하여 줍니다.
-int값을 받습니다.
+exon_sliced_ 옵션에서 exon 앞뒤의 간격을 bp_ 단위로 설정하여 줍니다.
+int값을 받습니다.`
 
 .. _exon_sliced : https://visbam.readthedocs.io/en/latest/input/optional.html#exon-sliced
+.. _bp : https://en.wikipedia.org/wiki/Base_pair
 
 font_size
 ~~~~~~~~~~
@@ -144,9 +147,10 @@ marker_size
 
    --marker_size <marker_size>
 
-Generic Variants를 Visualize할 때 Marker의 크기를 조정합니다.
+`Genetic Variants`_ 를 Visualize할 때 Marker의 크기를 조정합니다.
 자연수 값을 받으며 단위는 pt입니다.
 
+.. _`Genetic Variants` : https://en.wikipedia.org/wiki/Genetic_variant
 
 min_max
 ~~~~~~~
@@ -218,9 +222,12 @@ average
 
    --average <average>
 
-Smoothing이 average일 때, average를 적용할 앞 뒤 bp간격을 설정합니다.
+Smoothing이 average일 때, average를 적용할 앞 뒤 bp_ 간격을 설정합니다.
 자연수 값을 받습니다.
-average가 1이면, 앞과 뒤에 각각 1bp가 적용되어 계산됩니다.
+average가 1이면, 앞과 뒤에 각각 1 bp_ 가 적용되어 계산됩니다.
+
+.. _bp : https://en.wikipedia.org/wiki/Base_pair
+
 
 fill
 ~~~~~
@@ -298,17 +305,6 @@ Clustering의 기준이 될 두 엑손의 번호를 입력합니다.
 
         1번과 7번 exon을 지정하고 싶다면
         -> --select_exon 1,7
-
-
-threshold
-~~~~~~~~~~
-
-.. code::
-
-   --threshold <threshold>
-
-Clustering 된 그룹 중 평균이 threshold 이상인 값을 제외합니다.
-threshold의 값은 0이상인 float 값을 받습니다.
 
 
 score_plot_width

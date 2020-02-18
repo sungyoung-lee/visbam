@@ -3,23 +3,28 @@ Reading Files
 
 Visbam 프로그램에서 제일 처음에 진행되는 작업입니다.
 본격적인 Visualize System을 시작하기 전, 파일을 불러와 초기화 시켜줍니다.
-불러오는 파일은 Bam 파일, Generic Variants 데이터, Refseq 파일이 있습니다.
+불러오는 파일은 Bam_ 파일, `Genetic Variants`_ 데이터, Refseq_ 파일이 있습니다.
 
+.. _Bam : https://en.wikipedia.org/wiki/Binary_Alignment_Map
+.. _Refseq : https://en.wikipedia.org/wiki/RefSeq
+.. _`Genetic Variants` : https://en.wikipedia.org/wiki/Genetic_variant
 
 BAM Files
 ---------
 
-먼저 pysam 라이브러리를 이용하여 BAM 파일들을 불러와줍니다.
-Normal Bam 파일부터 불러온 뒤, Visualize 할 Bam들을 불러와줍니다.
+먼저 pysam 라이브러리를 이용하여 Bam_ 파일들을 불러와줍니다.
+Normal Bam_ 파일부터 불러온 뒤, Visualize 할 Bam_ 들을 불러와줍니다.
+
+.. _Bam : https://en.wikipedia.org/wiki/Binary_Alignment_Map
 
 Normal Bam
 ~~~~~~~~~~
 
-normal_dir_path_ 내에 있는 BAM 파일들을 모두 불러와줍니다.
-Bam파일들을 하나씩 불러 온 뒤 해당 파일과 구간의 Cache 파일이
+normal_dir_path_ 내에 있는 Bam_ 파일들을 모두 불러와줍니다.
+Bam_ 파일들을 하나씩 불러 온 뒤 해당 파일과 구간의 Cache 파일이
 있는지 없는지 확인합니다.
 Cache 파일이 존재하면 Cache 파일을 불러옵니다.
-없으면 각 파일의 Coverage를 pysam라이브러리를 이용하여 구해 줍니다.
+없으면 각 파일의 Coverage를 Pysam_ 라이브러리를 이용하여 구해 줍니다.
 그리고 Coverage를 Caching하여 저장합니다.
 
 Cache File은 해당 코드가 있는 폴더에 ``cache/``
@@ -30,21 +35,24 @@ Cache File은 해당 코드가 있는 폴더에 ``cache/``
 
 .. _normal_dir_path: https://visbam.readthedocs.io/en/latest/input/positional.html#normal-dir-path
 
+.. _Bam : https://en.wikipedia.org/wiki/Binary_Alignment_Map
+.. _Pysam : https://pysam.readthedocs.io/en/latest/index.html
 
 Cancer Bam
 ~~~~~~~~~~
 
-Coverage 계산까지 Normal Bam과 동일하게 진행됩니다.
-그리고 구해진 Cancer Bam에 position별로 각각
-해당 positon의 Normal Bam의 평균으로 나누어 줍니다.
+Coverage 계산까지 Normal Bam_ 과 동일하게 진행됩니다.
+그리고 구해진 Cancer Bam_ 에 position별로 각각
+해당 positon의 Normal Bam_ 의 평균으로 나누어 줍니다.
 이 결과를 최종적으로 전부 저장하여 Visualize합니다.
 
+.. _Bam : https://en.wikipedia.org/wiki/Binary_Alignment_Map
 
 Generic Variants
 ----------------
 
 variants_dir_path_ 폴더에 있는 모든 ``.txt`` 파일들을 불러옵니다.
-이때 txt 파일명은 Bam File의 파일명 중 온점 앞까지의 값과 같아야 합니다.
+이때 txt 파일명은 Bam_ File의 파일명 중 온점 앞까지의 값과 같아야 합니다.
 
 예 :
 
@@ -61,17 +69,18 @@ Visualize 하는 Sample에 해당되는 값만 불러옵니다.
 
 .. _nmid_to_draw : https://visbam.readthedocs.io/en/latest/input/positional.html#nmid-to-draw
 
+.. _Bam : https://en.wikipedia.org/wiki/Binary_Alignment_Map
 
 Refseq
 ------
 
-refseq_path_ 에 있는 Refseq 파일을 불러옵니다.
-이 후 nmid_to_draw_ 와 일치하는 Refseq 중 첫번째 값을 불러옵니다.
-이 값이 그래프의 처음과 끝, Exon을 결정하는 Refseq이 됩니다.
+refseq_path_ 에 있는 Refseq_ 파일을 불러옵니다.
+이 후 nmid_to_draw_ 와 일치하는 Refseq_ 중 첫번째 값을 불러옵니다.
+이 값이 그래프의 처음과 끝, Exon을 결정하는 Refseq_ 이 됩니다.
 
-그리고 refseq 중 nmid_to_draw_ 의 범위에 들어오는 모든 Refseq을 불러옵니다.
+그리고 Refseq_ 중 nmid_to_draw_ 의 범위에 들어오는 모든 Refseq_ 을 불러옵니다.
 
-`--curated_genes`_ 파일이 지정되어 있으면 `--curated_genes`_ 파일에 있는 Refseq만 걸러냅니다.
+`--curated_genes`_ 파일이 지정되어 있으면 `--curated_genes`_ 파일에 있는 Refseq_ 만 걸러냅니다.
 
 
 .. _nmid_to_draw : https://visbam.readthedocs.io/en/latest/input/positional.html#nmid-to-draw
@@ -79,3 +88,4 @@ refseq_path_ 에 있는 Refseq 파일을 불러옵니다.
 .. _refseq_path : https://visbam.readthedocs.io/en/latest/input/positional.html#refseq-path
 
 .. _--curated_genes : https://visbam.readthedocs.io/en/latest/input/optional.html#curated-genes
+.. _Refseq : https://en.wikipedia.org/wiki/RefSeq
