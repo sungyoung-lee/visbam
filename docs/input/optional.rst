@@ -352,7 +352,12 @@ limit_tau
 
     이 옵션을 이용하려면 clustering_mode_ 옵션이 ``silhouette`` 이어야 합니다.
 
+.. code::
+
+   --limit_tau <limit_tau>
+
 Silhouette 최적화 과정에서 tau의 위쪽 limit를 결정합니다.
+자연수 값을 받습니다.
 
 
 limit_tau_low

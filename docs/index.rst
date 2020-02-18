@@ -29,12 +29,27 @@ Prerequisites
 Visbam을 실행하기 전 설치되어야 할 파이썬 패키지들이 있습니다.
 아래 패키지들을 설치한 후 Visbam을 실행할 수 있습니다.
 
-* Numpy
-* Pandas
-* Matplotlib
-* Pysam
-* Sklearn
-* Skmisc
+* Numpy_
+* Pandas_
+* Matplotlib_
+* Pysam_
+* Sklearn_
+* Skmisc_
+
+
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+   :caption: Prerequisites
+
+.. _Numpy : https://numpy.org/
+.. _Pandas : https://pandas.pydata.org/
+.. _Matplotlib : https://matplotlib.org/
+.. _Pysam : https://pysam.readthedocs.io/en/latest/index.html
+.. _Sklearn : https://scikit-learn.org/stable/
+.. _Skmisc : https://has2k1.github.io/scikit-misc/installation.html
+
+
 
 
 
