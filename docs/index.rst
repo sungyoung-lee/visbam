@@ -89,7 +89,8 @@ Optional Input 중에서도 특정 Option을 입력할 시
 
 더 자세한 설명은 아래 문서를 참고하십시오.
 
-* :doc:`Arguments <input/optional>`
+* :doc:`Required Arguments <input/positional>`
+* :doc:`Optional Arguments <input/optional>`
 
 
 
@@ -98,6 +99,7 @@ Optional Input 중에서도 특정 Option을 입력할 시
    :hidden:
    :caption: Inputs
 
+   input/positional
    input/optional
 
 

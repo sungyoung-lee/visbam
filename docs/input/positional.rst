@@ -1,16 +1,16 @@
-Positional Arguments
-=====================
+Required Arguments
+==================
 
 Visbam을 실행할 때 필수로 입력해야 하는 필드들입니다.
 이 필드들을 입력하지 않으면 실행이 되지 않습니다.
-그리고 반드시 아래와 같은 순서로 입력하셔야 합니다.
-
-python3 visualize.py ``<bam_dir_path>`` ``<sample_list_path>`` ``<normal_dir_path>``
-``<variants_dir_path>`` ``<refseq_path>`` ``<output_prefix>``
 
 
-bam_dir_path
-------------
+bam_path
+--------
+
+.. code::
+
+   --bam_path <bam_dir_path>
 
 Bam_ 파일들이 있는 경로를 지정하여 줍니다.
 디렉토리 내의 폴더 안에 있는 Bam_ 파일들은 검색하지 않습니다.
@@ -20,8 +20,12 @@ sample_list_path_ 파일의 목록에 있는 Bam_ 파일들만 Coverage가 계�
 
 .. _Bam : https://en.wikipedia.org/wiki/Binary_Alignment_Map
 
-sample_list_path 
-----------------
+sample_path 
+-----------
+
+.. code::
+
+   --sample_path <sample_path>
 
 bam_dir_path_ 중 Coverage를 계산할 Bam_ 파일 목록을
 저장한 파일의 경로를 지정합니다.
@@ -41,8 +45,12 @@ sample_list_path 파일에는 각 Bam_ 파일명의
 
 .. _Bam : https://en.wikipedia.org/wiki/Binary_Alignment_Map
 
-normal_dir_path 
----------------
+normal_path 
+-----------
+
+.. code::
+
+   --normal_path <normal_path>
 
 그래프를 그릴 Bam_ 파일을 Normalize해줄 Normal Bam_ 파일들의 경로입니다.
 디렉토리 내의 폴더 안에 있는 Bam_ 파일들은 검색하지 않습니다.
@@ -56,6 +64,10 @@ Normalize에 관한 내용은 Reading_Files_ 문서를 참조하십시오.
 
 refseq_path
 -----------
+
+.. code::
+
+   --refseq_path <refseq_path>
 
 Refseq_ 데이터를 불러옵니다.
 Refseq_ 데이터는 TSV(Tab-Separated Values)파일 형식이어야 합니다.
@@ -74,8 +86,12 @@ Refseq_ 데이터는 TSV(Tab-Separated Values)파일 형식이어야 합니다.
 
 
 
-variants_dir_path
------------------
+variant_path
+------------
+
+.. code::
+
+   --variant_path <variant_path>
 
 `Genetic Variants`_ 의 데이터가 있는 경로를 설정해줍니다.
 각 파일의 파일명의 시작은 BAM파일의 파일명('.'앞까지)이어야 합니다.
@@ -85,8 +101,12 @@ variants_dir_path
 .. _`Genetic Variants` : https://en.wikipedia.org/wiki/Genetic_variant
 
 
-nmid_to_draw
-------------
+refseq
+------
+
+.. code::
+
+   --refseq <refseq>
 
 그래프를 그릴 Refseq_ 의 NMID를 적어야 합니다.
 이 NMID의 시작과 끝이 Coverage를 추출할 범위입니다.
@@ -107,8 +127,12 @@ NR을 제외한 NM만 가능합니다.
 .. _Refseq : https://en.wikipedia.org/wiki/RefSeq
 
 
-output_prefix
--------------
+prefix
+------
+
+.. code::
+
+   --prefix <prefix>
 
 output을 출력할 경로와 파일명을 지정합니다.
 
