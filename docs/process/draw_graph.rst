@@ -3,7 +3,7 @@ Drawing the Final Graph
 
 최종 Final graph를 출력하는 과정입니다.
 이전 과정에서 계산했던 smoothing 된(또는 그렇지 않은) coverage,
-`Generic Variants`_ , RefSeq_ 값을 이용하여 그래프에 표시합니다.
+`Genetic Variants`_ , RefSeq_ 값을 이용하여 그래프에 표시합니다.
 
 그래프는 `\\-\\-combine_slices`_  값의 활성화 여부에 따라 한 파일로 출력될 지
 여러 파일로 출력될 지 결정됩니다.
