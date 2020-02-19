@@ -80,12 +80,12 @@ refseq_path_ 에 있는 Refseq_ 파일을 불러옵니다.
 
 그리고 Refseq_ 중 nmid_to_draw_ 의 범위에 들어오는 모든 Refseq_ 을 불러옵니다.
 
-`--curated_genes`_ 파일이 지정되어 있으면 `--curated_genes`_ 파일에 있는 Refseq_ 만 걸러냅니다.
+`\\-\\-curated_genes`_ 파일이 지정되어 있으면 `\\-\\-curated_genes`_ 파일에 있는 Refseq_ 만 걸러냅니다.
 
 
 .. _nmid_to_draw : https://visbam.readthedocs.io/en/latest/input/positional.html#nmid-to-draw
 
 .. _refseq_path : https://visbam.readthedocs.io/en/latest/input/positional.html#refseq-path
 
-.. _--curated_genes : https://visbam.readthedocs.io/en/latest/input/optional.html#curated-genes
+.. _\\-\\-curated_genes : https://visbam.readthedocs.io/en/latest/input/optional.html#curated-genes
 .. _Refseq : https://en.wikipedia.org/wiki/RefSeq
