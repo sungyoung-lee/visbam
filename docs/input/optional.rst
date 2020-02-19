@@ -1,14 +1,14 @@
 Optional Arguments
 ==================
 
-Visbam의 Optional Arguments를 정리해 놓은 문서입니다.
-각 Option의 기능별로 Drawing Graph, Smoothing, Clustering 으로 분류하였습니다.
+Visbam의 Optional arguments를 정리해 놓은 문서입니다.
+각 option의 기능별로 Drawing Graph, Smoothing, Clustering 으로 분류하였습니다.
 
 
 Drawing Graph
 -------------
 
-그래프를 그리는 것과 관련된 Option들입니다.
+그래프를 그리는 것과 관련된 option들입니다.
 
 combine_slices
 ~~~~~~~~~~~~~~
@@ -17,7 +17,7 @@ combine_slices
 
    --combine_slices
 
-엑손별로, 혹은 각 bp별로 나눠진 graph들을 합쳐주는 옵션입니다.
+exon별로, 혹은 각 bp별로 나눠진 graph들을 합쳐주는 옵션입니다.
 합쳤을 때와 그렇지 않을 떄의 차이는 Final_Graph_ 에서 확인할 수 있습니다.
 
 .. _Final_Graph: https://visbam.readthedocs.io/en/latest/output/graph.html
@@ -29,12 +29,12 @@ curated_genes
 
    --curated_genes <curated_genes>
 
-Refseq_ 데이터 중 ``<curated_genes>`` 파일 목록에 있는 NMID의 Refseq_ 데이터만 표시합니다.
-``<curated_genes>`` 파일은 Tsv_ 형식으로 Column에 ``RefSeq`` 항목이 포함되어 있어야 합니다.
+RefSeq_ 데이터 중 ``<curated_genes>`` 파일 목록에 있는 NMID의 RefSeq_ 데이터만 표시합니다.
+``<curated_genes>`` 파일은 TSV_ 형식으로 column에 ``RefSeq`` 항목이 포함되어 있어야 합니다.
 
-.. _Refseq : https://en.wikipedia.org/wiki/RefSeq
+.. _RefSeq : https://en.wikipedia.org/wiki/RefSeq
 
-.. _Tsv : https://en.wikipedia.org/wiki/Tab-separated_values
+.. _TSV : https://en.wikipedia.org/wiki/Tab-separated_values
 
 draw_average_line
 ~~~~~~~~~~~~~~~~~
@@ -43,7 +43,7 @@ draw_average_line
 
    --draw_average_line
 
-전체 샘플의 bp별 평균을 붉은색 Line Plot으로 표시합니다.
+전체 샘플의 bp별 평균을 붉은색 line plot으로 표시합니다.
 
 .. figure:: ../img/draw_average_line.png
     :align: center
@@ -84,8 +84,8 @@ exclude_exon
 
    --exclude_exon <exclude_exon>
 
-일부 엑손을 제외하고 표시합니다.
-엑손을 여러개를 선택하려면 쉼표로 구분하여 표시합니다.
+일부 exon을 제외하고 표시합니다.
+Exon을 여러개를 선택하려면 쉼표로 구분하여 표시합니다.
 
 예 :
 
@@ -143,7 +143,7 @@ marker_size
 
    --marker_size <marker_size>
 
-`Genetic Variants`_ 를 Visualize할 때 Marker의 크기를 조정합니다.
+`Genetic Variants`_ 를 visualize할 때 marker의 크기를 조정합니다.
 자연수 값을 받으며 단위는 pt입니다.
 
 .. _`Genetic Variants` : https://en.wikipedia.org/wiki/Genetic_variant
@@ -162,7 +162,7 @@ min_max
 
    --min_max
 
-그래프의 Position별 최댓값과 최솟값을 각각 이어 Line Plot으로 그린 뒤,
+그래프의 position 별 최댓값과 최솟값을 각각 이어 line plot으로 그린 뒤,
 사이를 투명하게 채워 그래프를 표시합니다.
 
 
@@ -174,9 +174,9 @@ ylim
 
    --ylim <ylim>
 
-그래프를 표시할 Coverage의 최댓값을 설정합니다.
+그래프를 표시할 coverage의 최댓값을 설정합니다.
 자연수 값을 받습니다.
-이 옵션이 없으면 모든 Sample의 Coverage 중
+이 옵션이 없으면 모든 sample의 coverage 중
 제일 높은 값으로 설정됩니다.
 
 
@@ -185,7 +185,7 @@ ylim
 Smoothing
 ---------
 
-그래프를 Smoothing하는 것과 관련된 Option들입니다.
+그래프를 smoothing하는 것과 관련된 option들입니다.
 
 
 smoothing
@@ -195,7 +195,7 @@ smoothing
 
    --smoothing <smoothing>
 
-어떤 속성으로 Smoothing을 할 지 설정합니다.
+어떤 속성으로 smoothing을 할 지 설정합니다.
 설정할 수 있는 속성은 다음과 같습니다.
 
 
@@ -218,9 +218,9 @@ average
 
    --average <average>
 
-Smoothing이 average일 때, average를 적용할 앞 뒤 bp_ 간격을 설정합니다.
+Smoothing이 ``average`` 일 때, average를 적용할 앞 뒤 bp_ 간격을 설정합니다.
 자연수 값을 받습니다.
-average가 1이면, 앞과 뒤에 각각 1 bp_ 가 적용되어 계산됩니다.
+``<average>`` 가 1이면, 앞과 뒤에 각각 1 bp_ 가 적용되어 계산됩니다.
 
 .. _bp : https://en.wikipedia.org/wiki/Base_pair
 
@@ -236,8 +236,8 @@ fill
 
    --fill
 
-Smoothing이 average일 때, 앞 뒤로 average_ 만큼 간격을 더 주어
-그 간격에서 Moving Average를 계산합니다.
+Smoothing이 ``average`` 일 때, 앞 뒤로 average_ 만큼 간격을 더 주어
+그 간격에서 Moving average를 계산합니다.
 
 
 
@@ -247,7 +247,7 @@ Smoothing이 average일 때, 앞 뒤로 average_ 만큼 간격을 더 주어
 Clustering
 ---------
 
-Sample들을 Clustering하는 것과 관련된 Option들입니다.
+Sample들을 clustering하는 것과 관련된 option들입니다.
 
 
 clustering
@@ -257,7 +257,7 @@ clustering
 
    --clustering
 
-주어진 샘플을 두 그룹으로 Clustering 합니다.
+주어진 샘플을 두 그룹으로 clustering 합니다.
 
 .. note::
 
@@ -289,7 +289,7 @@ select_exon
 
    --select_exon <select_exon>
 
-Clustering의 기준이 될 두 엑손의 번호를 입력합니다.
+Clustering의 기준이 될 두 exon의 번호를 입력합니다.
 
 .. note::
 
@@ -315,9 +315,9 @@ score_plot_width
    --score_plot_width <score_plot_width>
 
 Silhouette 최적화 과정에서 중간 결과로 그려지는
-CI/Tau/Score Plot의 Width를 결정합니다.
+CI/Tau/Score plot의 width를 결정합니다.
 단위는 inch이고 자연수 값을 받습니다.
-CI/Tau/Score Plot에 대해서는 Result_of_Clustering_ 문서를 참조하십시오.
+CI/Tau/Score plot에 대해서는 Result_of_Clustering_ 문서를 참조하십시오.
 
 .. _Result_of_Clustering: https://visbam.readthedocs.io/en/latest/output/clustering.html
 
@@ -333,7 +333,7 @@ score_plot_height
    --score_plot_height <score_plot_height>
 
 Silhouette 최적화 과정에서 중간 결과로 그려지는
-Score Plot의 height를 결정합니다.
+CI/Tau/Score plot의 height를 결정합니다.
 단위는 inch이고 자연수 값을 받습니다.
 
 
@@ -377,6 +377,6 @@ silhouette_dintv
 
    --silhouette_dintv <silhouette_dintv>
 
-Silhouette Clustering 과정에서 계산할 Exon 앞뒤의 간격을 조정합니다.
+Silhouette Clustering 과정에서 계산할 exon 앞뒤의 간격을 조정합니다.
 단위는 bp이고 자연수 값을 받습니다.
 

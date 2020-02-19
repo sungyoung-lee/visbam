@@ -9,20 +9,20 @@ Smoothing은 두 가지 알고리즘을 선택하여 진행합니다.
 Average
 -------
 
-Averagei_ 는 각 position 앞 뒤로 `--average`_ 간격 만큼의 평균을
-계산하여 그 값을 구하는 방식으로 Smoothing을 합니다.
-이 때 해당 position 앞뒤로 `--average`_ 만큼의 값이 없는
+Average_ 는 각 position 앞 뒤로 `\\-\\-average`_ 간격 만큼의 평균을
+계산하여 그 값을 구하는 방식으로 smoothing을 합니다.
+이 때 해당 position 앞뒤로 `\\-\\-average`_ 만큼의 값이 없는
 position의 경우에는 그 값이 0으로 처리됩니다.
-`--fill`_ 옵션을 켜 Exon 앞뒤의 값을 더 불러온 뒤 처리할 수 있습니다.
+`\\-\\-fill`_ 옵션을 켜 exon 앞뒤의 값을 더 불러온 뒤 처리할 수 있습니다.
 
 .. _Average : https://en.wikipedia.org/wiki/Moving_average
-.. _--average : https://visbam.readthedocs.io/en/latest/input/optional.html#average
-.. _--fill : https://visbam.readthedocs.io/en/latest/input/optional.html#fill
+.. _\\-\\-average : https://visbam.readthedocs.io/en/latest/input/optional.html#average
+.. _\\-\\-fill : https://visbam.readthedocs.io/en/latest/input/optional.html#fill
 
 Loess
 ------
 
-Loess_ 는 skmisc의 loess라이브러리를 이용하여 Smoothing하는 방식입니다.
+Loess_ 는 skmisc의 loess라이브러리를 이용하여 smoothing하는 방식입니다.
 자세한 방식은 skmisc_ 를 참조하십시오.
 
 .. _Loess : https://en.wikipedia.org/wiki/Local_regression

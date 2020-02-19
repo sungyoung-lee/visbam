@@ -11,74 +11,74 @@ Options
 +==========================+==========================+===================================================+
 | **Required Arguments**                                                                                  |
 +--------------------------+--------------------------+---------------------------------------------------+
-| ``--bam_path``           | {.bam folder path}       | Specify .bam files folder                         |
+| \\-\\-bam_path           | {.bam folder path}       | Specify .bam files folder                         |
 +--------------------------+--------------------------+---------------------------------------------------+
-| ``--sample_path``        | {file}                   | Specify sample list file                          |
+| \\-\\-sample_path        | {file}                   | Specify sample list file                          |
 +--------------------------+--------------------------+---------------------------------------------------+
-| ``--normal_path``        | {.bam folder path}       | Specify .bam files folder of normal sample        |
+| \\-\\-normal_path        | {.bam folder path}       | Specify .bam files folder of normal sample        |
 +--------------------------+--------------------------+---------------------------------------------------+
-| ``--refseq_path``        | {file}                   | Specify refseq file of tsv                        |
+| \\-\\-refseq_path        | {file}                   | Specify refseq file of tsv                        |
 +--------------------------+--------------------------+---------------------------------------------------+
-| ``--variants_path``      | {file}                   | Specify generic variants file of tsv              |
+| \\-\\-variants_path      | {file}                   | Specify generic variants file of tsv              |
 +--------------------------+--------------------------+---------------------------------------------------+
-| ``--refseq``             | {NMID}                   | Specify nmid to draw                              |
+| \\-\\-refseq             | {NMID}                   | Specify nmid to draw                              |
 +--------------------------+--------------------------+---------------------------------------------------+
-| ``--prefix``             | {file without extension} | Specify output file path                          |
+| \\-\\-prefix             | {file without extension} | Specify output file path                          |
 +--------------------------+--------------------------+---------------------------------------------------+
 | **Optional Arguments**                                                                                  |
 +---------------------------------------------------------------------------------------------------------+
 | *Drawing Graph*                                                                                         |
 +--------------------------+--------------------------+---------------------------------------------------+
-| ``--output_prefix``      | {file without extension} | Specify output file path                          |
+| \\-\\-output_prefix      | {file without extension} | Specify output file path                          |
 +--------------------------+--------------------------+---------------------------------------------------+
-| ``--combine_slices``     |                          | Combine all sliced graphs                         |
+| \\-\\-combine_slices     |                          | Combine all sliced graphs                         |
 +--------------------------+--------------------------+---------------------------------------------------+
-| ``--cureated_genes``     | {file}                   | Specify curated genes tsv file                    |
+| \\-\\-cureated_genes     | {file}                   | Specify curated genes tsv file                    |
 +--------------------------+--------------------------+---------------------------------------------------+
-| ``--draw_average_line``  |                          | Draw average line of all coverages                |
+| \\-\\-draw_average_line  |                          | Draw average line of all coverages                |
 +--------------------------+--------------------------+---------------------------------------------------+
-| ``--draw_span``          | {10000}                  | Specify span of each slice (bp)                   |
+| \\-\\-draw_span          | {10000}                  | Specify span of each slice (bp)                   |
 +--------------------------+--------------------------+---------------------------------------------------+
-| ``--exclude_exon``       | {num1,num2,...}          | Specify exons excluded                            |
+| \\-\\-exclude_exon       | {num1,num2,...}          | Specify exons excluded                            |
 +--------------------------+--------------------------+---------------------------------------------------+
-| ``--exon_sliced``        |                          | Slice the graph by exon of selected gene          |
+| \\-\\-exon_sliced        |                          | Slice the graph by exon of selected gene          |
 +--------------------------+--------------------------+---------------------------------------------------+
-| ``--exon_space``         | {0}                      | Specify margin of slice by exons                  |
+| \\-\\-exon_space         | {0}                      | Specify margin of slice by exons                  |
 +--------------------------+--------------------------+---------------------------------------------------+
-| ``----font_size``        | {7}                      | Specify font size of whole graph                  |
+| \\-\\-font_size          | {7}                      | Specify font size of whole graph                  |
 +--------------------------+--------------------------+---------------------------------------------------+
-| ``----marker_size``      | {9}                      | Specify marker size of generic variants           |
+| \\-\\-marker_size        | {9}                      | Specify marker size of generic variants           |
 +--------------------------+--------------------------+---------------------------------------------------+
-| ``--min_max``            |                          | Draw min/max graph and fill between two graphs    |
+| \\-\\-min_max            |                          | Draw min/max graph and fill between two graphs    |
 +--------------------------+--------------------------+---------------------------------------------------+
-| ``--ylim``               | {10}                     | Set y limit of graph                              |
+| \\-\\-ylim               | {10}                     | Set y limit of graph                              |
 +--------------------------+--------------------------+---------------------------------------------------+
 | *Smoothing*                                                                                             |
 +--------------------------+--------------------------+---------------------------------------------------+
-| ``--smoothing``          | {average}, {loess}       | Specify smoothing option                          |
+| \\-\\-smoothing          | {average}, {loess}       | Specify smoothing option                          |
 +--------------------------+--------------------------+---------------------------------------------------+
-| ``--average``            | {0}                      | Set bp of average smoothing                       |
+| \\-\\-average            | {0}                      | Set bp of average smoothing                       |
 +--------------------------+--------------------------+---------------------------------------------------+
-| ``--fill``               |                          | Smooth graph with interval of ``--average``       |
+| \\-\\-fill               |                          | Smooth graph with interval of ``--average``       |
 +--------------------------+--------------------------+---------------------------------------------------+
 | *Clustering*                                                                                            |
 +--------------------------+--------------------------+---------------------------------------------------+
-| ``--clustering``         |                          | Clustering sample into two groups                 | 
+| \\-\\-clustering         |                          | Clustering sample into two groups                 | 
 +--------------------------+--------------------------+---------------------------------------------------+
-| ``--clustering_mode``    | {silhouette}, {nmf},     | Specify clustering mode                           |
+| \\-\\-clustering_mode    | {silhouette}, {nmf},     | Specify clustering mode                           |
 |                          | {splice_site}            |                                                   |
 +--------------------------+--------------------------+---------------------------------------------------+
-| ``--select_exon``        | {num1,num2}              | Select two exon to cluster samples                |
+| \\-\\-select_exon        | {num1,num2}              | Select two exon to cluster samples                |
 +--------------------------+--------------------------+---------------------------------------------------+
-| ``--score_plot_width``   | {12}                     | Set width of ci/tau/score plot                    |
+| \\-\\-score_plot_width   | {12}                     | Set width of ci/tau/score plot                    |
 +--------------------------+--------------------------+---------------------------------------------------+
-| ``--score_plot_height``  | {12}                     | Set height of ci/tau/score plot                   |
+| \\-\\-score_plot_height  | {12}                     | Set height of ci/tau/score plot                   |
 +--------------------------+--------------------------+---------------------------------------------------+
-| ``--limit_tau``          | {int}                    | Set high limit of silhouette clustering           |
+| \\-\\-limit_tau          | {int}                    | Set high limit of silhouette clustering           |
 +--------------------------+--------------------------+---------------------------------------------------+
-| ``--limit_tau_low``      | {int}                    | Set low limit of silhouette clustering            |
+| \\-\\-limit_tau_low      | {int}                    | Set low limit of silhouette clustering            |
 +--------------------------+--------------------------+---------------------------------------------------+
-| ``--silhouette_dintv``   | {30}                     | Set space of clustering from two exons border     |
+| \\-\\-silhouette_dintv   | {30}                     | Set space of clustering from two exons border     |
 +--------------------------+--------------------------+---------------------------------------------------+
 
 
@@ -96,7 +96,7 @@ Outputs
 +-------------------------------------------+---------------------------+---------------------------------------------------+
 | ``<output_prefix>`` _{num}.pdf            | output_prefix             | Draw graph of coverage of all samples (sliced)    |
 +-------------------------------------------+---------------------------+---------------------------------------------------+
-| ``<output_prefix>`` _silhouette_plot.pdf  | ``--clustering_mode``     | Draw ci/tau/score graph                           |
+| ``<output_prefix>`` _silhouette_plot.pdf  | \\-\\-clustering_mode     | Draw ci/tau/score graph                           |
 +-------------------------------------------+---------------------------+---------------------------------------------------+
-| ``<output_prefix>`` _ratio_score_plot.pdf | ``--clustering_mode``     | Draw ratio/score graph                            |
+| ``<output_prefix>`` _ratio_score_plot.pdf | \\-\\-clustering_mode     | Draw ratio/score graph                            |
 +-------------------------------------------+---------------------------+---------------------------------------------------+
