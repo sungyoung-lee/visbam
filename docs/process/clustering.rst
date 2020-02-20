@@ -52,7 +52,7 @@ Exon의 경계에서 coverage 그래프 간의 차이가 생기게 됩니다.
 
 .. _\\-\\-silhouette_dintv : https://visbam.readthedocs.io/en/latest/input/optional.html#silhouette-dintv
 .. _`CI/Tau/Score 그래프` : https://visbam.readthedocs.io/en/latest/output/clustering.html#ci-tau-score-scatter-plot
-.. _ `Ratio/Score 그래프` : https://visbam.readthedocs.io/en/latest/output/clustering.html#ratio-score-scatter-plot
+.. _`Ratio/Score 그래프` : https://visbam.readthedocs.io/en/latest/output/clustering.html#ratio-score-scatter-plot
 
 NMF
 ---

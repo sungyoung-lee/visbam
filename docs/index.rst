@@ -4,13 +4,13 @@ Visbam
 .. meta::
    :description lang=ko: Visualize coverages of multiple bam files
 
-Visbam은 여러 Bam_ file들의 coverage를 계산하여 visualize하여 줍니다.
+Visbam은 여러 Bam_ file들의 coverage를 계산하여 visualize하여 주는 프로그램입니다.
 주요 기능은 다음과 같습니다.
 
 Coverage Visualize
     여러 Bam_ 파일들의 coverage를 계산 후 하나의 Line plot으로 표현합니다.
     계산 후 결과를 caching하여 한번 계산한 후에는
-    더욱 빠르게 결과를 볼 수 있습니다.
+    더욱 빠르게 visualize 할 수 있습니다.
 
 RefSeq Visualize
     Bam_ 파일의 coverage가 선택한 DNA의 어느 위치에 있는지 알기 쉽도록
@@ -20,7 +20,8 @@ RefSeq Visualize
 Sample Clustering
     Bam_ 파일들을 coverage의 계산 결과에 따라 두 그룹으로 나누어 줍니다.
     각 그룹은 붉은색과 초록색으로 표시됩니다.
-    알고리즘을 선택하고 설정을 바꾸어 최적의 결과를 표시할 수 있습니다.
+    Coverage 하는 알고리즘을 선택하고 설정을 바꾸어,
+    최적의 결과를 표시할 수 있도록 하였습니다.
     현재 3가지 알고리즘을 지원하고 있습니다.
 
 .. _Bam : https://en.wikipedia.org/wiki/Binary_Alignment_Map
@@ -31,7 +32,7 @@ Prerequisites
 
 Visbam을 실행하기 전 설치되어야 할 파이썬 패키지들이 있습니다.
 아래 패키지들을 설치한 후 Visbam을 실행할 수 있습니다.
-Python 3 버전이어야 하며 3.5.2 이상 버전을 권장합니다.
+Python 3 버전만 지원하며, 3.5.2 이상 버전을 권장합니다.
 
 * Numpy_ : 여러 수학적 계산을 위해 필요합니다.
 * Pandas_ : Coverage 데이터 분석을 위해 필요합니다.
@@ -65,28 +66,6 @@ Visbam을 실행시키려면 여러 input이 필요합니다.
 Optional input 중에서도 특정 Option을 입력할 시
 필수로 입력해야 하는 필드가 있으니 주의하시기 바랍니다.
 전체 명령어의 목록은 다음과 같습니다.
-
-.. code:: 
-
-   visbam.py [-h] [--exon_sliced] [--curated_genes CURATED_GENES]
-                  [--exclude_exon EXCLUDE_EXON] [--combine_slices]
-                  [--draw_average_line] [--draw_span DRAW_SPAN]
-                  [--smoothing SMOOTHING] [--average AVERAGE] [--fill]
-                  [--font_size FONT_SIZE] [--marker_size MARKER_SIZE]
-                  [--ylim YLIM] [--exon_space EXON_SPACE] [--min_max]
-                  [--clustering] [--clustering_mode CLUSTERING_MODE]
-                  [--select_exon SELECT_EXON] [--threshold THRESHOLD]
-                  [--score_plot_width SCORE_PLOT_WIDTH]
-                  [--score_plot_height SCORE_PLOT_HEIGHT]
-                  [--limit_tau LIMIT_TAU]
-                  [--limit_tau_low LIMIT_TAU_LOW]
-                  [--silhouette_dintv SILHOUETTE_DINTV] [--train TRAIN]
-                  [--test TEST]
-                  bam_dir_path sample_list_path normal_dir_path
-                  refseq_path variants_dir_path nmid_to_draw
-                  output_prefix
-
-
 더 자세한 설명은 아래 문서를 참고하십시오.
 
 * :doc:`Required Arguments <input/positional>`
