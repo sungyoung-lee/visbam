@@ -1,15 +1,15 @@
-Reading Files
+Reading files
 ==============
 
 Visbam 프로그램에서 제일 처음에 진행되는 작업입니다.
 본격적인 visualize system을 시작하기 전, 파일을 불러와 초기화 시켜줍니다.
-불러오는 파일은 Bam_ 파일, `Genetic Variants`_ 데이터, RefSeq_ 파일이 있습니다.
+불러오는 파일은 Bam_ 파일, `Genetic variants`_ 데이터, RefSeq_ 파일이 있습니다.
 
 .. _Bam : https://en.wikipedia.org/wiki/Binary_Alignment_Map
 .. _RefSeq : https://en.wikipedia.org/wiki/RefSeq
-.. _`Genetic Variants` : https://en.wikipedia.org/wiki/Genetic_variant
+.. _`Genetic variants` : https://en.wikipedia.org/wiki/Genetic_variant
 
-BAM Files
+Bam files
 ---------
 
 먼저 pysam 라이브러리를 이용하여 Bam_ 파일들을 불러와줍니다.
@@ -48,7 +48,7 @@ Coverage 계산까지 Normal Bam_ 과 동일하게 진행됩니다.
 
 .. _Bam : https://en.wikipedia.org/wiki/Binary_Alignment_Map
 
-Generic Variants
+Genetic variants
 ----------------
 
 variants_dir_path_ 폴더에 있는 모든 ``.txt`` 파일들을 불러옵니다.

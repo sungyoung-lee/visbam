@@ -1,11 +1,11 @@
-Optional Arguments
+Optional arguments
 ==================
 
 Visbam의 Optional arguments를 정리해 놓은 문서입니다.
-각 option의 기능별로 Drawing Graph, Smoothing, Clustering 으로 분류하였습니다.
+각 option의 기능별로 Drawing graph, Smoothing, Clustering 으로 분류하였습니다.
 
 
-Drawing Graph
+Drawing graph
 -------------
 
 그래프를 그리는 것과 관련된 option들입니다.
@@ -17,7 +17,7 @@ combine_slices
 
    --combine_slices
 
-exon별로, 혹은 각 bp별로 나눠진 graph들을 합쳐주는 옵션입니다.
+Exon별로, 혹은 각 bp별로 나눠진 graph들을 합쳐주는 옵션입니다.
 합쳤을 때와 그렇지 않을 떄의 차이는 Final_Graph_ 에서 확인할 수 있습니다.
 
 .. _Final_Graph: https://visbam.readthedocs.io/en/latest/output/graph.html
@@ -143,10 +143,10 @@ marker_size
 
    --marker_size <marker_size>
 
-`Genetic Variants`_ 를 visualize할 때 marker의 크기를 조정합니다.
+`Genetic variants`_ 를 visualize할 때 marker의 크기를 조정합니다.
 자연수 값을 받으며 단위는 pt입니다.
 
-.. _`Genetic Variants` : https://en.wikipedia.org/wiki/Genetic_variant
+.. _`Genetic variants` : https://en.wikipedia.org/wiki/Genetic_variant
 
 min_max
 ~~~~~~~

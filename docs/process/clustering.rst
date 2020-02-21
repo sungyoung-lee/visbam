@@ -1,7 +1,7 @@
-Clustering Samples
+Clustering samples
 ==================
 
-Sample을 두 그룹으로 Clustering 하는 Process입니다.
+Sample을 두 그룹으로 Clustering 하는 process입니다.
 Clustering 알고리즘은 3가지가 있습니다.
 ``silhouette``, ``nmf``, ``splice_site`` 입니다.
 
@@ -69,11 +69,11 @@ W와 H행렬의 각각 행과 열은 2로 나누어 줍니다.
 clustering 결과를 저장하고 이를 NMF의 clustering 결과로 합니다.
 
 
-Splice_Site
------------
+Splice site
+------------
 
-`Genetic Variants`_ 데이터 중 effect의 이름이 ``splice_site`` 가
+`Genetic variants`_ 데이터 중 effect의 이름이 ``splice_site`` 가
 있는 것들을 모아 줍니다.
 ``splice_site`` 가 있는 sample을 모두 선택하여 clustering 하여 줍니다.
-.. _`Genetic Variants` : https://en.wikipedia.org/wiki/Genetic_variant
+.. _`Genetic variants` : https://en.wikipedia.org/wiki/Genetic_variant
 

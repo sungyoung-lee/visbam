@@ -1,7 +1,7 @@
-Smoothing the Graph
+Smoothing the graph
 ===================
 
-그래프를 더 간단히 볼 수 있도록 Smoothing 하는 과정입니다.
+그래프를 더 간단히 볼 수 있도록 smoothing 하는 과정입니다.
 Smoothing은 두 가지 알고리즘을 선택하여 진행합니다.
 ``average`` 와 ``loess`` 입니다.
 

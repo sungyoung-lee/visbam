@@ -1,4 +1,4 @@
-Final Graph
+Final graph
 ==========
 
 최종 결과물 그래프에 대해서 설명을 하는 페이지입니다.
@@ -36,7 +36,7 @@ Coverage
     :target: ../img/coverage.png
 
 최종적으로 계산한 coverage를 표시하는 부분입니다.
-여기에 `Genetic Variants`_ 도 함께 표시됩니다.
+여기에 `Genetic variants`_ 도 함께 표시됩니다.
 
 :guilabel:`Coverage` 는 line plot으로 그려집니다.
 ``Clustering`` 을 하지 않을 시 모든 그래프가 반투명한 초록색으로 그려집니다.
@@ -46,16 +46,16 @@ Coverage
 :guilabel:`Clustering Evaluation` 은 silhouette score 기반으로 그려지며 값은 각각 -1 이상입니다.
 또 두 그룹으로 나누어서 해당하는 group의 색으로 표시하여 줍니다.
 
-Coverage line plot 위에 :guilabel:`Genetic Variants` 를 표시합니다.
-각 :guilabel:`Genetic Variants` 의 ``Effect`` 별로 모양이 달라집니다.
+Coverage line plot 위에 :guilabel:`Genetic variants` 를 표시합니다.
+각 :guilabel:`Genetic variants` 의 ``Effect`` 별로 모양이 달라집니다.
 모양이 어떤 ``Effect`` 를 의미하는 지는 우측 상단에 :guilabel:`Legend` 를 통해서 확인 할 수 있습니다.
-또 색은 :guilabel:`Genetic Variants` 의 Bam이 어떤 group에 ``Clustering`` 되었는지에 따라 달라집니다.
+또 색은 :guilabel:`Genetic variants` 의 Bam이 어떤 group에 ``Clustering`` 되었는지에 따라 달라집니다.
 
-그리고 그래프 하단에 :guilabel:`Genetic Variants` 가 존재하는 position에 한해
+그리고 그래프 하단에 :guilabel:`Genetic variants` 가 존재하는 position에 한해
 position별로 :guilabel:`Pie Graph` 가 표시됩니다.
-어떤 group의 Bam의 :guilabel:`Genetic Variants` 가 그 position에 있는지 한 눈에 확인할 수 있습니다.
+어떤 group의 Bam의 :guilabel:`Genetic variants` 가 그 position에 있는지 한 눈에 확인할 수 있습니다.
 
-.. _`Genetic Variants` : https://en.wikipedia.org/wiki/Genetic_variant
+.. _`Genetic variants` : https://en.wikipedia.org/wiki/Genetic_variant
 
 
 RefSeq

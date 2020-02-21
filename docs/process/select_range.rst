@@ -1,4 +1,4 @@
-Selecting Range to Display
+Selecting range to display
 ==========================
 
 그래프가 계산되고 보여질 범위를 설정합니다.
@@ -6,7 +6,7 @@ Selecting Range to Display
 
 .. _\\-\\-exon_sliced : https://visbam.readthedocs.io/en/latest/input/optional.html#exon-sliced
 
-Exon_Sliced
+Exon-sliced
 -----------
 
 Exon으로 나눌 시, Exon 앞뒤 `\\-\\-exon_space`_ 값을 더한 범위가 선택됩니다.
@@ -15,7 +15,7 @@ Exon으로 나눌 시, Exon 앞뒤 `\\-\\-exon_space`_ 값을 더한 범위가 �
 .. _\\-\\-exon_space : https://visbam.readthedocs.io/en/latest/input/optional.html#exon-space
 
 
-not Exon_sliced
+Non exon_sliced
 -------------
 
 Span으로 따로 설정하여 나눌 시 `\\-\\-draw_span`_ 값에 따라 나눕니다.

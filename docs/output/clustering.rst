@@ -1,11 +1,11 @@
-Result of Clustering
+Result of clustering
 ====================
 
 Clustering 과정에서 출력된 결과물에 대해서 설명합니다.
 현재 clustering 과정 중 Silhouette 과정만 별도의 출력을 하고 있습니다.
 
 
-CI/Tau/Score Scatter Plot
+CI/Tau/Score scatter plot
 -------------------------
 
 .. figure:: ../img/ci_tau_score_plot.png
@@ -30,7 +30,7 @@ Plot의 크기가 score의 크기 입니다.
 
 .. _\\-\\-score_plot_height : https://visbam.readthedocs.io/en/latest/input/optional.html#score-plot-height
 
-Ratio/Score Scatter Plot
+Ratio/Score scatter plot
 ------------------------
 
 .. figure:: ../img/ratio_score_plot.png
