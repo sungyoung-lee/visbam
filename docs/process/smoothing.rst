@@ -38,7 +38,7 @@ Average_ 는 각 position 앞 뒤로 `\\-\\-average`_ 간격 만큼의 평균을
     :figwidth: 100%
     :target: ../img/smoothing_average_100_fill.png
 
-    Average가 100 일 때 fill option을 켠 그래프
+    Average가 100 일 때 \\-\\-fill option을 켠 그래프
 
 이 때 해당 position 앞뒤로 `\\-\\-average`_ 만큼의 값이 없는
 position의 경우에는 그 값이 0으로 처리됩니다.

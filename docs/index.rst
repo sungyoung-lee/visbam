@@ -62,7 +62,7 @@ Inputs
 ------
 
 Visbam을 실행시키려면 여러 input이 필요합니다.
-필수로 넣어야 하는 `Required arguments`_ 와 선택 옵션인 `Optional argument`_ 이 있습니다.
+필수로 넣어야 하는 `Required arguments`_ 와 선택 옵션인 `Optional arguments`_ 이 있습니다.
 `Optional arguments`_ 중에서도 특정 option을 입력할 시
 필수로 입력해야 하는 필드가 있으니 주의하시기 바랍니다.
 전체 명령어의 목록은 다음과 같습니다.

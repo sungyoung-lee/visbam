@@ -44,18 +44,19 @@ RefSeq_ 데이터 중 ``<curated_genes>`` 파일 목록에 있는 NMID의 RefSeq
 draw_average_line
 ~~~~~~~~~~~~~~~~~
 
-.. code::
-
-   --draw_average_line
-
-전체 샘플의 bp별 평균을 붉은색 line plot으로 표시합니다.
-
 .. figure:: ../img/draw_average_line.png
     :align: center
     :figwidth: 100%
     :target: ../img/draw_average_line.png
 
     --draw_average_line 적용시 나타나는 average line(붉은색)
+
+.. code::
+
+   --draw_average_line
+
+전체 샘플의 bp별 평균을 붉은색 line plot으로 표시합니다.
+
 
 
 draw_span
@@ -64,6 +65,11 @@ draw_span
 .. note::
 
     이 옵션을 이용하려면 exon_sliced_ 옵션이 비활성화되어야 합니다.
+
+.. figure::  ../img/option_non_exon.png
+    :align: center
+    :figwidth: 100%
+    :target: ../img/option_non_exon.png
 
 .. code::
 
@@ -85,6 +91,20 @@ exclude_exon
 
     이 옵션을 이용하려면 exon_sliced_ 옵션이 활성화되어야 합니다.
 
+.. figure::  ../img/option_exon.png
+    :align: center
+    :figwidth: 100%
+    :target: ../img/option_exon.png
+
+	원본
+
+.. figure::  ../img/option_excluded.png
+    :align: center
+    :figwidth: 100%
+    :target: ../img/option_excluded.png
+
+	\\-\\-exclude_exon 28 을 적용한 결과
+
 .. code::
 
    --exclude_exon <exclude_exon>
@@ -103,6 +123,11 @@ Exon을 여러개를 선택하려면 쉼표로 구분하여 표시합니다.
 
 exon_sliced
 ~~~~~~~~~~~
+
+.. figure::  ../img/option_exon.png
+    :align: center
+    :figwidth: 100%
+    :target: ../img/option_exon.png
 
 .. code::
 
