@@ -96,14 +96,14 @@ exclude_exon
     :figwidth: 100%
     :target: ../img/option_exon.png
 
-	원본
+    원본
 
 .. figure::  ../img/option_excluded.png
     :align: center
     :figwidth: 100%
     :target: ../img/option_excluded.png
 
-	\\-\\-exclude_exon 28 을 적용한 결과
+    \\-\\-exclude_exon 28 을 적용한 결과
 
 .. code::
 
