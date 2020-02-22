@@ -91,10 +91,10 @@ exclude_exon
 
     이 옵션을 이용하려면 exon_sliced_ 옵션이 활성화되어야 합니다.
 
-.. figure::  ../img/option_exon.png
+.. figure::  ../img/option_exon_e.png
     :align: center
     :figwidth: 100%
-    :target: ../img/option_exon.png
+    :target: ../img/option_exon_e.png
 
     원본
 
