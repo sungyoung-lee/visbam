@@ -147,6 +147,13 @@ exon_space
 
     이 옵션을 이용하려면 exon_sliced_ 옵션이 활성화되어야 합니다.
 
+.. figure::  ../img/option_exon_space.png
+    :align: center
+    :figwidth: 100%
+    :target: ../img/option_exon_space.png
+
+    엑손 사이의 간격을 30bp로 두어 출력한 모습
+
 .. code::
 
    --exon_space <exon_space>
@@ -240,6 +247,20 @@ Smoothing 속성에 대한 자세한 정보는 Smoothing_ 을 참조하십시오
 average
 ~~~~~~~~
 
+.. figure::  ../img/smoothing_average_10.png
+    :align: center
+    :figwidth: 100%
+    :target: ../img/smoothing_average_10.png
+
+    average 10
+
+.. figure::  ../img/smoothing_average_100.png
+    :align: center
+    :figwidth: 100%
+    :target: ../img/smoothing_average_100.png
+
+    average 100
+
 .. note::
 
     이 옵션을 이용하려면 smoothing_ 옵션이 ``average`` 이어야 합니다.
@@ -261,6 +282,13 @@ fill
 .. note::
 
     이 옵션을 이용하려면 smoothing_ 옵션이 ``average`` 이어야 합니다.
+
+.. figure::  ../img/smoothing_average_100_fill.png
+    :align: center
+    :figwidth: 100%
+    :target: ../img/smoothing_average_100_fill.png
+
+    average 100 fill
 
 .. code::
 
