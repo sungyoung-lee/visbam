@@ -14,7 +14,6 @@ Output 그림에 관한 자세한 설명은 Outputs_ 문서를 참조하십시�
 .. figure:: ../img/draw_graph.png
     :align: center
     :figwidth: 100%
-    :target: ../img/draw_graph.png
 
 .. _Outputs: https://visbam.readthedocs.io/en/latest/output/graph.html
 
@@ -38,12 +37,16 @@ Clustering Evaluation 그래프를 각 exon별로 그려줍니다.
 Genetic variants
 ----------------
 
-`Genetic variants`_ 를 일치하는 sample과 position에 표시하여 줍니다.
+`\\-\\-variant_path` 로 불러왔던 `Genetic variants`_ 를
+일치하는 sample과 position에 표시하여 줍니다.
 그리고 effect 별로 다른 모양을 표시하여 줍니다.
+
 
 또 그래프 하단에 variant가 존재하는 position에 한해
 Clustering 된 두 그룹의 비율을 pie marker로 표시하여 줍니다.
 
+
+.. _`\\-\\-variant_path` : https://visbam.readthedocs.io/en/latest/input/positional.html#variant-path 
 .. _`Genetic variants` : https://en.wikipedia.org/wiki/Genetic_variant
 
 RefSeq

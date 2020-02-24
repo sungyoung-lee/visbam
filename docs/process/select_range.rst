@@ -10,7 +10,7 @@ Exon-sliced
 -----------
 
 Exon으로 나눌 시, Exon 앞뒤 `\\-\\-exon_space`_ 값을 더한 범위가 선택됩니다.
-첫 exon과 끝 exon은 각각 앞, 뒤로 100bp씩 더 추가되어 선택됩니다.
+선택한 전체 RefSeq의 양끝에 100bp씩 더 추가되어 선택됩니다.
 
 .. _\\-\\-exon_space : https://visbam.readthedocs.io/en/latest/input/optional.html#exon-space
 

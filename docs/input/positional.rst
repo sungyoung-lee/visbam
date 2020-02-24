@@ -96,13 +96,14 @@ variant_path
 
 `Genetic variants`_ 의 데이터가 있는 경로를 설정해줍니다.
 각 파일의 파일명의 시작은 Bam_ 파일의 파일명('.'앞까지)이어야 합니다.
-`Genetic variants`_ 는 `TSV(Tab-Seperated Values)`_ 형식의 txt 파일로
+`Genetic variants`_ 는 `TSV(Tab-Separated Values)`_ 형식의 txt 파일로
 열에 ``RefSeq``, ``Pos``, ``Effect`` 가 포함되어 있어야 합니다.
+출력 결과는 `Drawing the final graph`_ 문서에서 참고하실 수 있습니다.
 
 .. _`Genetic variants` : https://en.wikipedia.org/wiki/Genetic_variant
 .. _Bam : https://en.wikipedia.org/wiki/Binary_Alignment_Map
 .. _`TSV(Tab-Separated Values)` : https://en.wikipedia.org/wiki/Tab-separated_values
-
+.. _`Drawing the final graph` : https://visbam.readthedocs.io/en/latest/process/draw_graph.html#id1
 
 refseq
 ------

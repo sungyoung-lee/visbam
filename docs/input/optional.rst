@@ -46,7 +46,6 @@ draw_average_line
 .. figure:: ../img/draw_average_line.png
     :align: center
     :figwidth: 100%
-    :target: ../img/draw_average_line.png
 
     --draw_average_line 적용시 나타나는 average line(붉은색)
 
@@ -68,7 +67,6 @@ draw_span
 .. figure::  ../img/option_non_exon.png
     :align: center
     :figwidth: 100%
-    :target: ../img/option_non_exon.png
 
 .. code::
 
@@ -93,14 +91,12 @@ exclude_exon
 .. figure::  ../img/option_exon_e.png
     :align: center
     :figwidth: 100%
-    :target: ../img/option_exon_e.png
 
     원본
 
 .. figure::  ../img/option_excluded.png
     :align: center
     :figwidth: 100%
-    :target: ../img/option_excluded.png
 
     \\-\\-exclude_exon 28 을 적용한 결과
 
@@ -126,7 +122,6 @@ exon_sliced
 .. figure::  ../img/option_exon.png
     :align: center
     :figwidth: 100%
-    :target: ../img/option_exon.png
 
 .. code::
 
@@ -149,7 +144,6 @@ exon_space
 .. figure::  ../img/option_exon_space.png
     :align: center
     :figwidth: 100%
-    :target: ../img/option_exon_space.png
 
     엑손 사이의 간격을 30bp로 두어 출력한 모습
 
@@ -158,7 +152,7 @@ exon_space
    --exon_space <exon_space>
 
 exon_sliced_ 옵션에서 exon 앞뒤의 간격을 bp_ 단위로 설정하여 줍니다.
-int값을 받습니다.`
+int값을 받습니다.
 
 .. _exon_sliced : https://visbam.readthedocs.io/en/latest/input/optional.html#exon-sliced
 .. _bp : https://en.wikipedia.org/wiki/Base_pair
@@ -190,7 +184,6 @@ min_max
 .. figure:: ../img/min_max.png
     :align: center
     :figwidth: 100%
-    :target: ../img/min_max.png
 
     --min_max를 적용했을 떄 그래프
 
@@ -249,14 +242,12 @@ average
 .. figure::  ../img/smoothing_average_10.png
     :align: center
     :figwidth: 100%
-    :target: ../img/smoothing_average_10.png
 
     average 10
 
 .. figure::  ../img/smoothing_average_100.png
     :align: center
     :figwidth: 100%
-    :target: ../img/smoothing_average_100.png
 
     average 100
 
@@ -285,7 +276,6 @@ fill
 .. figure::  ../img/smoothing_average_100_fill.png
     :align: center
     :figwidth: 100%
-    :target: ../img/smoothing_average_100_fill.png
 
     average 100 fill
 
@@ -314,12 +304,13 @@ clustering
 
    --clustering
 
-주어진 샘플을 두 그룹으로 clustering 합니다.
+주어진 샘플을 두 그룹으로 clustering_ 합니다.
 
 .. note::
 
-    아래 옵션을 이용하려면 clustering_ 옵션이 활성화 되어있어야 합니다.
+    아래 옵션을 이용하려면 clustering 옵션이 활성화 되어있어야 합니다.
 
+.. _clustering: https://visbam.readthedocs.io/en/latest/process/clustering.html 
 
 clustering_mode 
 ~~~~~~~~~~~~~~~

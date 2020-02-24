@@ -3,7 +3,10 @@ Clustering samples
 
 Sample을 두 그룹으로 Clustering 하는 process입니다.
 Clustering 알고리즘은 3가지가 있습니다.
-``silhouette``, ``nmf``, ``splice_site`` 입니다.
+`\\-\\-clustering`_ 옵션에서 ``silhouette``, ``nmf``, ``splice_site``
+중 하나를 선택하여 실행할 수 있습니다..
+
+.. _\\-\\-clustering : https://visbam.readthedocs.io/en/latest/input/optional.html#clustering
 
 Silhouette
 ----------
@@ -19,7 +22,6 @@ Clustering을 할 때, exon을 두 개 선택하게 됩니다.
 .. figure:: ../img/clustering_silhouette.png
     :align: center
     :figwidth: 100%
-    :target: ../img/clustering_silhouette.png
 
 
 
@@ -75,5 +77,7 @@ Splice site
 `Genetic variants`_ 데이터 중 effect의 이름이 ``splice_site`` 가
 있는 것들을 모아 줍니다.
 ``splice_site`` 가 있는 sample을 모두 선택하여 clustering 하여 줍니다.
+
+
 .. _`Genetic variants` : https://en.wikipedia.org/wiki/Genetic_variant
 

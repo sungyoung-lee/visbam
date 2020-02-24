@@ -6,7 +6,6 @@ Final graph
 .. figure:: ../img/combined_graph.png
     :align: center
     :figwidth: 100%
-    :target: ../img/combined_graph.png
 
 
 `\\-\\-combine_slices`_ 옵션이 켜져 있을 시 하나의 PDF로 출력됩니다.
@@ -15,7 +14,6 @@ Final graph
 .. figure:: ../img/sliced_graph.png
     :align: center
     :figwidth: 100%
-    :target: ../img/sliced_graph.png
 
 그렇지 않으면 각 slice별로 출력됩니다.
 각 슬라이스의 파일 명 뒤에는 slice 된 번호
@@ -33,7 +31,6 @@ Coverage
 .. figure:: ../img/coverage.png
     :align: center
     :figwidth: 100%
-    :target: ../img/coverage.png
 
 최종적으로 계산한 coverage를 표시하는 부분입니다.
 여기에 `Genetic variants`_ 도 함께 표시됩니다.
@@ -64,7 +61,6 @@ RefSeq
 .. figure:: ../img/refseq.png
     :align: center
     :figwidth: 100%
-    :target: ../img/refseq.png
 
 선택된 RefSeq들을 coverage 부분의 position에 따라 표시해 줍니다.
 tx, cds와 direction, exon을 그려줍니다.

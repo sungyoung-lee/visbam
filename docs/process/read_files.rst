@@ -27,7 +27,7 @@ cache 파일이 존재하면 cache 파일을 불러옵니다.
 없으면 각 파일의 coverage를 Pysam_ 라이브러리를 이용하여 구해 줍니다.
 그리고 coverage를 caching하여 저장합니다.
 
-Cache file은 해당 코드가 있는 폴더에 ``cache/``
+Cache file은 현재 작업환경에서 ``cache/``
 디렉토리를 새로 만든 뒤 그 안에 파일들이 저장됩니다. 
 
 구해진 Normal bam file들의 평균을 최종 결과값으로 저장합니다.

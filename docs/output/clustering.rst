@@ -11,7 +11,6 @@ CI/Tau/Score scatter plot
 .. figure:: ../img/ci_tau_score_plot.png
     :align: center
     :figwidth: 100%
-    :target: ../img/ci_tau_score_plot.png
 
 CI(Confidence Interval), Tau에 따른 score의 관계를 표시한 그래프 입니다.
 Scatter plot으로 출력되었고, x축은 Ci, y축은 Tau입니다.
@@ -36,7 +35,6 @@ Ratio/Score scatter plot
 .. figure:: ../img/ratio_score_plot.png
     :align: center
     :figwidth: 100%
-    :target: ../img/ratio_score_plot.png
 
 Clustering 된 것과 그렇지 않은 것 사이의 비율(ratio)를 x축으로 하고,
 score를 y축으로 하여 표시한 scatter plot 그래프 입니다.
