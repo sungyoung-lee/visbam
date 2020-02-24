@@ -37,7 +37,7 @@ Clustering Evaluation 그래프를 각 exon별로 그려줍니다.
 Genetic variants
 ----------------
 
-`\\-\\-variant_path` 로 불러왔던 `Genetic variants`_ 를
+`\\-\\-variant_path`_ 로 불러왔던 `Genetic variants`_ 를
 일치하는 sample과 position에 표시하여 줍니다.
 그리고 effect 별로 다른 모양을 표시하여 줍니다.
 
