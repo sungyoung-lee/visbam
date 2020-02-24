@@ -16,7 +16,6 @@ combine_slices
 .. figure::  ../img/combined_graph.png
     :align: center
     :figwidth: 100%
-    :target: ../img/combined_graph.png
 
 .. code::
 
