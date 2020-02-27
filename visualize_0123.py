@@ -27,25 +27,28 @@ Argument Setting
 
 # 파일 이름과 span을 argument로 불러들인다.
 parser = argparse.ArgumentParser()
-parser.add_argument('bam_dir_path', help='bam파일을 읽어들일 디렉토리를 정합니다.')
-parser.add_argument('sample_list_path', help='해당하는 sample 이름이 들어있는 경로를 지정합니다.')
-parser.add_argument('normal_dir_path', help='normal sample이 들어있는 경로를 지정합니다.')
-parser.add_argument('refseq_path', help='refseq 파일의 경로를 지정합니다.')
-parser.add_argument('nmid_to_draw', help='사용할 NMID를 지정합니다.')
-parser.add_argument('draw_span', type=int, help='사진을 몇 bp단위로 분할할 것인지 정합니다.')
-parser.add_argument('output_prefix', help='output 파일명을 정합니다.')
+parser.add_argument('--bam_path', help='bam파일을 읽어들일 디렉토리를 정합니다.')
+parser.add_argument('--sample_path', help='해당하는 sample 이름이 들어있는 경로를 지정합니다.')
+parser.add_argument('--normal_path', help='normal sample이 들어있는 경로를 지정합니다.')
+parser.add_argument('--refseq_path', help='refseq 파일의 경로를 지정합니다.')
+parser.add_argument('--variants_path', help='Generic Variants 파일 경로를 지정합니다.')
+parser.add_argument('--refseq', help='사용할 NMID를 지정합니다.')
+parser.add_argument('--prefix', help='output 파일명을 정합니다.')
+
 parser.add_argument('--exon_sliced', help='exon 주변의 100bp 부분만 그립니다.', action='store_true')
-parser.add_argument('--curated_genes', help='curated genes', action='store_true')
+parser.add_argument('--curated_genes', help='curated genes')
 parser.add_argument('--exclude_exon', default='', help='주어진 exon을 제외하고 계산&출력합니다.(1,2,3,4,...)')
 parser.add_argument('--combine_slices', help='모든 분리된 그림을 붙여 출력합니다.', action='store_true')
 parser.add_argument('--draw_average_line', action='store_true', help='그래프에 평균값을 빨간 선으로 표시합니다.')
-parser.add_argument('--smoothing', default=0, help='그래프를 smoothing할 모드를 지정합니다. (average, loess)')
+parser.add_argument('--draw_span', type=int, default=10000, help='사진을 몇 bp단위로 분할할 것인지 정합니다.')
+parser.add_argument('--smoothing', default='average', help='그래프를 smoothing할 모드를 지정합니다. (average, loess)')
 parser.add_argument('--average', type=int, default=0, help='주어진 정수값 span만큼 Moving Average를 적용합니다.')
 parser.add_argument('--fill', help='moving average과정에서 바깥의 값을 가져올지 경계의 값으로 채울지 결정합니다.', action='store_true')
-parser.add_argument('--font_size', type=int, default=22, help='본 그래프의 fontsize를 조정합니다. (단위:pt)')
+parser.add_argument('--font_size', type=int, default=7, help='본 그래프의 fontsize를 조정합니다. (단위:pt)')
 parser.add_argument('--marker_size', type=int, default=9, help='variant marker의 size를 조정합니다. (단위:pt)')
 parser.add_argument('--ylim', type=int, default=10, help='표시할 y축의 최댓값을 정합니다.')
-parser.add_argument('--exon_space', type=int, default=30, help='exon_sliced일 때 표시할 exon 주위 간격을 설정합니다.')
+parser.add_argument('--exon_space', type=int, default=0, help='exon_sliced일 때 표시할 exon 주위 간격을 설정합니다.')
+parser.add_argument('--min_max', action='store_true', help='그래프의 최댓값과 최솟값만 표시합니다.')
 
 parser.add_argument('--clustering', action='store_true', help='주어진 그래프를 두 그룹으로 clustering합니다.')
 parser.add_argument('--clustering_mode', default='silhouette', help='view_mode 2에서 filtering할 method 설정(silhouette, nmf, splice_site)')
@@ -62,18 +65,20 @@ parser.add_argument('--train', type=int, default=2, help='clustering에서 train
 parser.add_argument('--test', type=int, default=3, help='clustering에서 test할 exon')
 
 args = parser.parse_args()
-bam_dir = args.bam_dir_path
-sample_list_path = args.sample_list_path
-normal_dir_path = args.normal_dir_path
+bam_dir = args.bam_path
+sample_list_path = args.sample_path
+normal_dir_path = args.normal_path
 refseq_path = args.refseq_path
-nmid_to_draw = args.nmid_to_draw
+nmid_to_draw = args.refseq
+variants_dir = args.variants_path
 draw_span = args.draw_span
-output_prefix = args.output_prefix
+output_prefix = args.prefix
 flag = args.exon_sliced
 flag3 = args.curated_genes
 exclude = args.exclude_exon.strip()
 combine = args.combine_slices
 max_whole = args.ylim
+min_max = args.min_max
 exon_space = args.exon_space
 view_mode = args.clustering
 filt_mode = args.clustering_mode
@@ -127,7 +132,7 @@ select_list = [1, 7] if select == '' else list(map(int, select.split(',')))
 
 def include(refseq) :
 	# curated된 refseq 목록을 불러온다.
-	curated_f = open('allCuratedGenes.txt', 'r')
+	curated_f = open(flag3, 'r')
 	curated_r = curated_f.readlines()
 	# 모든 값에 대해 false인 Series를 만든다.
 	curated = refseq.contains("NNNNNNNNNNNNNNNNNNNNNN")
@@ -190,7 +195,7 @@ if not exclude == '' :
 refseq = refseq[refseq.name.str.contains("NM")]
 refseq = refseq[refseq.txStart <= stop]
 refseq = refseq[refseq.txEnd >= start]
-if flag3 :
+if not flag3 == None :
 	refseq = refseq[include(refseq.name.str)]
 
 # refseq 정보
@@ -209,6 +214,9 @@ names = refseq.name2.tolist()
 print('there are '+str(len(names))+' refseq datas')
 
 
+
+if not os.path.isdir('cache'):
+	os.mkdir('cache')
 
 
 
@@ -242,10 +250,12 @@ for bamn, bam in enumerate(bam_list) :
 	if not os.path.isfile(sam_path) :
 		continue
 
+	nm_fn = normal_dir_path[normal_dir_path.rfind('/')+1:]
 
 	# cache path
-	cache_path = 'cache/'+bam+'_'+name_n+'_'+contig+'_'+str(start)+'_'+str(stop)
-	
+	cache_path = 'cache/'+nm_fn+'_'+bam+'_'+name_n+'_'+contig+'_'+str(start)+'_'+str(stop)
+	print(cache_path)	
+
 	cv = []
 
 	# 해당 캐시가 없을 경우 coverage 계산
@@ -458,8 +468,6 @@ Load Generic Variants Data
 bam_all_list = os.listdir(bam_dir)
 bam_all_list = [file for file in bam_list if file.endswith(".bam")]
 
-# variants파일 경로
-variants_dir = '200117_work/'
 
 # variants를 모두 불러온다.
 var_list = os.listdir(variants_dir)
@@ -482,7 +490,7 @@ for varf in var_list :
 
 
 	# 파일 csv로 불러오기
-	df_var_list = pd.DataFrame.from_csv(variants_dir+varf, sep='\t')
+	df_var_list = pd.DataFrame.from_csv(variants_dir+'/'+varf, sep='\t')
 	varf_c = varf[:varf.find('.')]
 
 	# 그러나 해당 varinats의 sample이 앞서 불러온 sample에 없으면 넘김
@@ -577,7 +585,7 @@ if flag :
 		else :
 			draw_range_e.append(ees_nm[k]+s_bp)
 
-	draw_range[0] = start if draw_range[0]-100 < start else draw_range[0]-100
+	draw_range[0] = start if draw_range[0]+100 < start else draw_range[0]+100
 	draw_range_e[-1] = stop if draw_range_e[-1]+100 > stop else draw_range_e[-1]+100
 #elif flag :	
 #	for k, es in enumerate(ess_nm) :
@@ -588,7 +596,14 @@ if flag :
 #			draw_range.append(start)
 #		draw_range_e.append(ees_nm[k]+100)
 else :
-	draw_range = range(start, stop+1, draw_span)
+	draw_range = list(range(start, stop+1, draw_span))
+	draw_range_e = list(range(start+draw_span, stop+1, draw_span))
+
+	if stop+1 in draw_range :
+		draw_range.remove(stop+1)
+
+	if not stop+1 in draw_range_e :
+		draw_range_e.append(stop+1)
 
 
 # 위 배열에 해당하는 범위를 그래프로 그린다.
@@ -772,7 +787,7 @@ if view_mode :
 
 	# 1번째 방법 silhouette
 	if filt_mode == 'silhouette' : 
-		for ci in list(range(2, 26, 1)) :
+		for ci in [0.5, 1, 1.5] + list(range(2, 26, 1)) :
 
 			# 임시로 저장할 배열
 			drops_t = []
@@ -1250,18 +1265,8 @@ matplotlib.rcParams.update({'font.size': font_size})
 
 if combine :
 	
-	nmids_whole = refseq_r.name.tolist()
+	refseq_r = pd.DataFrame()
 
-	nl_whole = len(nmids_whole)
-
-
-
-	# figure 설정
-	# 여러 칸으로 나눈다.
-	fig = plt.figure(figsize=(120, 2+12+1*nl_whole))
-	gs = gridspec.GridSpec(nrows=2, ncols=len(ess_nm), height_ratios=[4+(nl_whole-1)*0.2, nl_whole])
-	gs.update(wspace=0, hspace=0.05)
-	fig.suptitle(title)
 
 	# 첫번째 칸부터 차례로 채워나간다.
 	for n, st in enumerate(draw_range) :
@@ -1274,29 +1279,56 @@ if combine :
 		xticks = np.arange(st, stop_n)
 
 		# refseq를 해당되는 부분에 포함되는 것만 선별한다.
-		refseq_r = refseq[refseq.txStart <= stop_n]
-		refseq_r = refseq_r[refseq_r.txEnd >= st]
+		refseq_r_t = refseq[refseq.txStart <= stop_n]
+		refseq_r_t = refseq_r_t[refseq_r_t.txEnd >= st]
+		refseq_r = refseq_r.append(refseq_r_t, ignore_index=True)
+
+	
+	refseq_r = refseq_r.drop_duplicates()
+
 			
-		chrom = refseq_r.chrom.tolist()
-		strands = refseq_r.strand.tolist()
-		tx_s = refseq_r.txStart.tolist()
-		tx_e = refseq_r.txEnd.tolist()
-		cds_s = refseq_r.cdsStart.tolist()
-		cds_e = refseq_r.cdsEnd.tolist()
-		exon_s = refseq_r.exonStarts.tolist()
-		exon_e = refseq_r.exonEnds.tolist()
-		nmids = refseq_r.name.tolist()
-		names = refseq_r.name2.tolist()
-		
-		# refseq의 이름들
-		nl = len(nmids)
+	chrom = refseq_r.chrom.tolist()
+	strands = refseq_r.strand.tolist()
+	tx_s = refseq_r.txStart.tolist()
+	tx_e = refseq_r.txEnd.tolist()
+	cds_s = refseq_r.cdsStart.tolist()
+	cds_e = refseq_r.cdsEnd.tolist()
+	exon_s = refseq_r.exonStarts.tolist()
+	exon_e = refseq_r.exonEnds.tolist()
+	nmids = refseq_r.name.tolist()
+	names = refseq_r.name2.tolist()
+	
+	# refseq의 이름들
+	nl = len(nmids)
+
+	nmids_whole = refseq_r.name.tolist()
+
+	nl_whole = len(nmids_whole)
 
 
+
+	# figure 설정
+	# 여러 칸으로 나눈다.
+
+	fig = plt.figure(figsize=(120, 2+12+1*nl_whole))
+	gs = gridspec.GridSpec(nrows=2, ncols=len(draw_range), height_ratios=[4+(nl_whole-1)*0.2, nl_whole])
+	gs.update(wspace=0, hspace=0.05)
+	fig.suptitle(title)
+
+	for n, st in enumerate(draw_range) :
+		sys.stderr.write('\r'+'exon '+str(n+1)+' drawing...')
+		sys.stderr.write("\033[K")
+
+		stop_n = draw_range_e[n]
+	
+		# x축의 값을 정해진 시작점과 끝점으로 한다.
+		xticks = np.arange(st, stop_n)
 
 		# coverage의 dataframe을 만들고 plot의 윗 부분을 불러온다.i
 		df2 = pd.DataFrame(coverage[st-start:stop_n-start], index=xticks)
 
 		ax_main = plt.subplot(gs[n])
+		ax_main.yaxis.set_tick_params(labelsize=font_size*2)
 
 		if not n == 0 :
 			ax_main.get_yaxis().set_ticks([])
@@ -1317,7 +1349,12 @@ if combine :
 
 		# clustering 안했을 시 전체 그래프를 그린다.
 		if not view_mode :
-			ax_main.plot(df2_mean_p, color='g', alpha=0.5)
+			if min_max :
+				ax_main.fill_between(xticks, df2_mean.max(axis=1), df_nb.min(axis=1), facecolor='g', alpha=0.5)
+				ax_main.plot(df2_mean.max(axis=1), color='g', linewidth=3.0)
+				ax_main.plot(df2_mean.min(axis=1), color='g', linewidth=3.0)
+			else :
+				ax_main.plot(df2_mean_p, color='g', alpha=0.5)
 			if draw_average_line :
 				ax_main.plot(df2_mean_p, color='red', linewidth=3.0)
 		else :
@@ -1364,10 +1401,12 @@ if combine :
 
 			# boths가 아닌 부분 draw
 			df_nb = df2_mean_p.iloc[:, [b for b in range(len(coverage[0])) if not b in boths]]
-			ax_main.fill_between(xticks, df_nb.max(axis=1), df_nb.min(axis=1), facecolor='g', alpha=0.5)
-			ax_main.plot(df_nb.max(axis=1), color='g', linewidth=3.0)
-			ax_main.plot(df_nb.min(axis=1), color='g', linewidth=3.0)
-			
+			if min_max : 
+				ax_main.fill_between(xticks, df_nb.max(axis=1), df_nb.min(axis=1), facecolor='g', alpha=0.5)
+				ax_main.plot(df_nb.max(axis=1), color='g', linewidth=3.0)
+				ax_main.plot(df_nb.min(axis=1), color='g', linewidth=3.0)
+			else :
+				ax_main.plot(df_nb, color='g', alpha=0.5)	
 
 
 			# y축과 x축 표시할 부분 지정
@@ -1389,10 +1428,12 @@ if combine :
 			if len(boths) > 0:
 			# boths인 부분 draw
 				df_b = df2_mean_p.iloc[:, boths]
-			#	ax_main.plot(df_b, color='r', alpha=0.5)
-				ax_main.fill_between(xticks, df_b.max(axis=1), df_b.min(axis=1), facecolor='red', alpha=0.5)
-				ax_main.plot(df_b.max(axis=1), color='red', linewidth=3.0)
-				ax_main.plot(df_b.min(axis=1), color='red', linewidth=3.0)
+				if min_max :
+					ax_main.fill_between(xticks, df_b.max(axis=1), df_b.min(axis=1), facecolor='red', alpha=0.5)
+					ax_main.plot(df_b.max(axis=1), color='red', linewidth=3.0)
+					ax_main.plot(df_b.min(axis=1), color='red', linewidth=3.0)
+				else :
+					ax_main.plot(df_b, color='r', alpha=0.5)
 
 
 			'''
@@ -1568,9 +1609,12 @@ if combine :
 
 		# refseq가 표시될 이름을 정한다.
 		ytlbs = [aa+"\n"+names[aai] for aai, aa in enumerate(nmids)]
-		ax_bottom = plt.subplot(gs[n+len(ess_nm)], yticks=byts, xticklabels=[], yticklabels=list(reversed(ytlbs)))
+		ax_bottom = plt.subplot(gs[n+len(draw_range)], yticks=byts, xticklabels=[], yticklabels=list(reversed(ytlbs)))
+		ax_bottom.yaxis.set_tick_params(labelsize=font_size*2)
 		ax_bottom.tick_params(axis='both', which='both', bottom=False, top=False, labelbottom=False)
-		
+		ax_bottom.set_ylim(2-nl-0.4, 1+0.4)
+
+	
 		if not n == 0 :
 			ax_bottom.get_yaxis().set_ticks([])
 			ax_bottom.spines['left'].set_visible(False)
@@ -1581,10 +1625,10 @@ if combine :
 
 		# refseq의 범위를 검은 선으로 그린다.
 		for j, ts in enumerate(tx_s) :	
-			a_s = ts if ts > st else st
-			a_e = tx_e[j] if tx_e[j] < stop_n else stop_n
-			if a_e-a_s < 0 :
-				continue
+			a_s = ts# if ts > st else st
+			a_e = tx_e[j]# if tx_e[j] < stop_n else stop_n
+			#if a_e-a_s < 0 :
+			#	continue
 			bxts = np.arange(a_s, a_e)
 			blns = np.full(a_e-a_s,  1-j, dtype=int)
 			ax_bottom.plot(bxts, blns, 'black')
@@ -1629,7 +1673,7 @@ if combine :
 				ax_bottom.add_patch(rect)
 				leftt = es if es > st else st
 				rightt = ees[k] if ees[k] < stop_n else stop_n
-				ax_bottom.text((leftt+rightt)/2, 1-j, str(k+1), horizontalalignment='center', verticalalignment='center', color='white', fontsize=30)
+				ax_bottom.text((leftt+rightt)/2, 1-j, str(k+1), horizontalalignment='center', verticalalignment='center', color='white', fontsize=font_size*3)
 
 
 
@@ -1725,13 +1769,16 @@ else :
 
 		# clustering 안했을 시 전체 그래프를 그린다.
 		if not view_mode :
-			ax_main.plot(df2_mean_p, color='g', alpha=0.5)
+			if min_max :
+				ax_main.fill_between(xticks, df2_mean.max(axis=1), df_nb.min(axis=1), facecolor='g', alpha=0.5)
+				ax_main.plot(df2_mean.max(axis=1), color='g', linewidth=3.0)
+				ax_main.plot(df2_mean.min(axis=1), color='g', linewidth=3.0)
+			else :
+				ax_main.plot(df2_mean_p, color='g', alpha=0.5)
 			if draw_average_line :
 				ax_main.plot(df2_mean_p, color='red', linewidth=3.0)
 		else :
 
-	#		df2_T = df2_mean_p.T
-	#		data_lines = df2_T.values
 
 	#		df2_T['cluster_id'] = kmeans.labels_
 	#		df2_T['both'] = boths_01
@@ -1774,14 +1821,16 @@ else :
 
 			# boths가 아닌 부분 draw
 			df_nb = df2_mean_p.iloc[:, [b for b in range(len(coverage[0])) if not b in boths]]
-			ax_main.fill_between(xticks, df_nb.max(axis=1), df_nb.min(axis=1), facecolor='g', alpha=0.5)
-			ax_main.plot(df_nb.max(axis=1), color='g', linewidth=3.0)
-			ax_main.plot(df_nb.min(axis=1), color='g', linewidth=3.0)
-			
+			if min_max : 
+				ax_main.fill_between(xticks, df_nb.max(axis=1), df_nb.min(axis=1), facecolor='g', alpha=0.5)
+				ax_main.plot(df_nb.max(axis=1), color='g', linewidth=3.0)
+				ax_main.plot(df_nb.min(axis=1), color='g', linewidth=3.0)
+			else :
+				ax_main.plot(df_nb, color='g', alpha=0.5)	
 
 
 			# y축과 x축 표시할 부분 지정
-			ax_main.set_ylim([0, max_whole])
+		#	ax_main.set_ylim([0, max_whole])
 			ax_main.set_xlim([st, stop_n])
 
 
@@ -1799,11 +1848,12 @@ else :
 			if len(boths) > 0:
 			# boths인 부분 draw
 				df_b = df2_mean_p.iloc[:, boths]
-			#	ax_main.plot(df_b, color='r', alpha=0.5)
-				ax_main.fill_between(xticks, df_b.max(axis=1), df_b.min(axis=1), facecolor='red', alpha=0.5)
-				ax_main.plot(df_b.max(axis=1), color='red', linewidth=3.0)
-				ax_main.plot(df_b.min(axis=1), color='red', linewidth=3.0)
-
+				if min_max :
+					ax_main.fill_between(xticks, df_b.max(axis=1), df_b.min(axis=1), facecolor='red', alpha=0.5)
+					ax_main.plot(df_b.max(axis=1), color='red', linewidth=3.0)
+					ax_main.plot(df_b.min(axis=1), color='red', linewidth=3.0)
+				else :
+					ax_main.plot(df_b, color='r', alpha=0.5)
 
 			'''
 			Special Plot print
@@ -1916,50 +1966,52 @@ else :
 		Clustering evaluation
 		'''
 
-		clustered_list = boths_01
-		# clustered_list = kmeans.labels_
+		if view_mode :
 
-		# silhouette를 각 sample에 대해 계산
-		silhouette_avg = silhouette_score(data_lines, clustered_list)
-		sample_silhouette_values = silhouette_samples(data_lines, clustered_list)
+			clustered_list = boths_01
+			# clustered_list = kmeans.labels_
 
-		# inset 그래프 설정
-		ax_inset = inset_axes(ax_main, width="30%", height="50%", loc=2)
-		#ax_inset.set_xlim([-1, 1])
-		ax_inset.set_ylim([0, len(data_lines) + (2 + 1) * 10])
+			# silhouette를 각 sample에 대해 계산
+			silhouette_avg = silhouette_score(data_lines, clustered_list)
+			sample_silhouette_values = silhouette_samples(data_lines, clustered_list)
 
-		# 각 분류끼리의 간격 설정
-		y_lower = 10
+			# inset 그래프 설정
+			ax_inset = inset_axes(ax_main, width="30%", height="50%", loc=2)
+			#ax_inset.set_xlim([-1, 1])
+			ax_inset.set_ylim([0, len(data_lines) + (2 + 1) * 10])
 
-		# clustering evaluation drawing
-		for i in range(2):
-			# i번째 분류에 대한 silhouette 계산 및 정렬
-			ith_cluster_silhouette_values = sample_silhouette_values[clustered_list == i]
-			ith_cluster_silhouette_values.sort()
+			# 각 분류끼리의 간격 설정
+			y_lower = 10
 
-			# sample 갯수 계산 뒤 그릴 범위지정
-			size_cluster_i = ith_cluster_silhouette_values.shape[0]
-			y_upper = y_lower + size_cluster_i
+			# clustering evaluation drawing
+			for i in range(2):
+				# i번째 분류에 대한 silhouette 계산 및 정렬
+				ith_cluster_silhouette_values = sample_silhouette_values[clustered_list == i]
+				ith_cluster_silhouette_values.sort()
 
-			# i가 1이면 boths이다.
-			# color = c2c if i == 1 else c1c
-			color = 'red' if i == 1 else 'g'
-			# 해당 분류의 그래프를 채운다.
-			ax_inset.fill_betweenx(np.arange(y_lower, y_upper),
-				0, ith_cluster_silhouette_values,
-				facecolor=color, edgecolor=color, alpha=0.5)
+				# sample 갯수 계산 뒤 그릴 범위지정
+				size_cluster_i = ith_cluster_silhouette_values.shape[0]
+				y_upper = y_lower + size_cluster_i
 
-			# 해당 분류에 텍스트를 단다.
-			ax_inset.text(-0.05, y_lower + 0.5 * size_cluster_i, 'clustered' if i == 1 else 'non-clustered')
+				# i가 1이면 boths이다.
+				# color = c2c if i == 1 else c1c
+				color = 'red' if i == 1 else 'g'
+				# 해당 분류의 그래프를 채운다.
+				ax_inset.fill_betweenx(np.arange(y_lower, y_upper),
+					0, ith_cluster_silhouette_values,
+					facecolor=color, edgecolor=color, alpha=0.5)
 
-			y_lower = y_upper + 10
+				# 해당 분류에 텍스트를 단다.
+				ax_inset.text(-0.05, y_lower + 0.5 * size_cluster_i, 'clustered' if i == 1 else 'non-clustered')
 
-		# silhouette 값의 평균을 표시하고 0 값을 표시한다.
-		ax_inset.axvline(x=silhouette_avg, color="red", linestyle="--")
-		ax_inset.axvline(x=0, color="black", linestyle="-")
+				y_lower = y_upper + 10
 
-		ax_inset.set_yticks([])  # Clear the yaxis labels / ticks
-		#ax_inset.set_xticks([-1, 0, 0.2, 0.4, 0.6, 0.8, 1])
+			# silhouette 값의 평균을 표시하고 0 값을 표시한다.
+			ax_inset.axvline(x=silhouette_avg, color="red", linestyle="--")
+			ax_inset.axvline(x=0, color="black", linestyle="-")
+
+			ax_inset.set_yticks([])  # Clear the yaxis labels / ticks
+			#ax_inset.set_xticks([-1, 0, 0.2, 0.4, 0.6, 0.8, 1])
 
 
 
@@ -2015,7 +2067,7 @@ else :
 			interval = int((stop_n-st)/60)
 			a_s = ts if ts > st else st
 			a_e = tx_e[j] if tx_e[j] < stop_n else stop_n
-			if (a_e > a_s) and (stop_n > st)  :
+			if (a_e > a_s) and (stop_n > st) and interval > 0:
 				for k in range(a_s, a_e, interval) :
 					if strand == '+' :
 						ax_bottom.arrow(k, 1-j, interval, 0, head_width=0.2, head_length=interval/2, overhang=1)
