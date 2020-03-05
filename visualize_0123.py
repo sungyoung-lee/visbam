@@ -49,6 +49,7 @@ parser.add_argument('--marker_size', type=int, default=9, help='variant marker�
 parser.add_argument('--ylim', type=int, default=10, help='표시할 y축의 최댓값을 정합니다.')
 parser.add_argument('--exon_space', type=int, default=0, help='exon_sliced일 때 표시할 exon 주위 간격을 설정합니다.')
 parser.add_argument('--min_max', action='store_true', help='그래프의 최댓값과 최솟값만 표시합니다.')
+parser.add_argument('--selected_refseq_only', action='store_true', help='선택한 refseq만 출력합니다.')
 
 parser.add_argument('--clustering', action='store_true', help='주어진 그래프를 두 그룹으로 clustering합니다.')
 parser.add_argument('--clustering_mode', default='silhouette', help='view_mode 2에서 filtering할 method 설정(silhouette, nmf, splice_site)')
@@ -97,6 +98,7 @@ limit_tau_low = args.limit_tau_low
 font_size = args.font_size
 marker_size = args.marker_size
 silhouette_dintv = args.silhouette_dintv
+selected_refseq_only = args.selected_refseq_only
 
 
 # set title
@@ -1257,34 +1259,36 @@ if view_mode :
 
 
 # refseq를 해당되는 부분에 포함되는 것만 선별한다.
+
 refseq_r = refseq[refseq.txStart <= draw_range_e[-1]]
 refseq_r = refseq_r[refseq_r.txEnd >= draw_range[0]]
+
 
 # 전체적인 font size 설정
 matplotlib.rcParams.update({'font.size': font_size})
 
 if combine :
-	
-	refseq_r = pd.DataFrame()
 
+	if selected_refseq_only :
+		refseq_r = refseq_r[refseq_r.name.str.contains(nmid_to_draw)]
+	else :
+		for n, st in enumerate(draw_range) :
+			sys.stderr.write('\r'+'exon '+str(n+1)+' drawing...')
+			sys.stderr.write("\033[K")
 
-	# 첫번째 칸부터 차례로 채워나간다.
-	for n, st in enumerate(draw_range) :
-		sys.stderr.write('\r'+'exon '+str(n+1)+' drawing...')
-		sys.stderr.write("\033[K")
+			stop_n = draw_range_e[n]
+		
+			# x축의 값을 정해진 시작점과 끝점으로 한다.
+			xticks = np.arange(st, stop_n)
 
-		stop_n = draw_range_e[n]
-	
-		# x축의 값을 정해진 시작점과 끝점으로 한다.
-		xticks = np.arange(st, stop_n)
+			# refseq를 해당되는 부분에 포함되는 것만 선별한다.
+			refseq_r_t = refseq[refseq.txStart <= stop_n]
+			refseq_r_t = refseq_r_t[refseq_r_t.txEnd >= st]
+			refseq_r = refseq_r.append(refseq_r_t, ignore_index=True)
 
-		# refseq를 해당되는 부분에 포함되는 것만 선별한다.
-		refseq_r_t = refseq[refseq.txStart <= stop_n]
-		refseq_r_t = refseq_r_t[refseq_r_t.txEnd >= st]
-		refseq_r = refseq_r.append(refseq_r_t, ignore_index=True)
+		
+		refseq_r = refseq_r.drop_duplicates()
 
-	
-	refseq_r = refseq_r.drop_duplicates()
 
 			
 	chrom = refseq_r.chrom.tolist()
@@ -1414,10 +1418,7 @@ if combine :
 			ax_main.set_xlim([st, stop_n])
 
 
-			# 3가지 분류 다 boths인 4sample들
-			triple_s = ['MS190000107_S3', 'MS190000429_S1', 'MS190000487_S3', 'MS190000311_S11']
 			real_bam_list_s = [r[:r.find('.')] for r in real_bam_list]
-			triple = [real_bam_list_s.index(t) for t in triple_s]
 			
 			
 
@@ -1689,7 +1690,7 @@ if combine :
 		var_legends.append(ax_main.scatter([], [], marker=var_mark, color=var_col, edgecolor='black', s=marker_size**2, linewidth='2', alpha=0.5))
 
 	# 저장 된 것을 바탕으로 legend 표시
-	ax_main.legend(tuple(var_legends), tuple(var_names), loc='upper right', title='Generic Variants')
+	ax_main.legend(tuple(var_legends), tuple(var_names), loc='upper right', title='Genetic Variants')
 
 
 
@@ -1713,6 +1714,11 @@ if combine :
 
 
 else : 
+
+	if selected_refseq_only :
+		refseq_r = refseq_r[refseq_r.name.str.contains(nmid_to_draw)]
+
+
 	for n, st in enumerate(draw_range) :
 
 		print('\n'+output_prefix+'_'+str(n+1)+' saving...')
@@ -1834,10 +1840,6 @@ else :
 			ax_main.set_xlim([st, stop_n])
 
 
-			# 3가지 분류 다 boths인 4sample들
-			triple_s = ['MS190000107_S3', 'MS190000429_S1', 'MS190000487_S3', 'MS190000311_S11']
-			real_bam_list_s = [r[:r.find('.')] for r in real_bam_list]
-			triple = [real_bam_list_s.index(t) for t in triple_s]
 			
 			
 
