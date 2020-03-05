@@ -195,6 +195,14 @@ min_max
 사이를 투명하게 채워 그래프를 표시합니다.
 
 
+selected_refseq_only
+~~~~~~~~~~~~~~~~~~~~
+
+.. code::
+
+   --selected_refseq_only
+
+선택한 refseq만 표시하도록 합니다.
 
 ylim
 ~~~~
