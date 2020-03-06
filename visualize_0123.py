@@ -780,11 +780,12 @@ if view_mode :
 	xticks = np.arange(start, stop+1)
 	df_drop = pd.DataFrame(coverage, index=xticks)
 
-	e1_e_d = draw_range_e[drop_n] - start # 선택된 1번째 exon의 끝 위치
-	e2_s_d = draw_range[drop_n+1] - start # 선택된 1번째 exon+1의 시작 위치
+	if filt_mode == 'silhouette' or filt_mode == 'nmf' :
+		e1_e_d = draw_range_e[drop_n] - start # 선택된 1번째 exon의 끝 위치
+		e2_s_d = draw_range[drop_n+1] - start # 선택된 1번째 exon+1의 시작 위치
 
-	e1_e_r = draw_range_e[rise_n] - start # 선택된 2번째 exon의 끝 위치
-	e2_s_r = draw_range[rise_n+1] - start # 선택된 2번째 exon+1의 시작 위치
+		e1_e_r = draw_range_e[rise_n] - start # 선택된 2번째 exon의 끝 위치
+		e2_s_r = draw_range[rise_n+1] - start # 선택된 2번째 exon+1의 시작 위치
 
 
 	# 1번째 방법 silhouette
@@ -1093,12 +1094,15 @@ if view_mode :
 					boths_t.append(wi)
 
 
+			if len(boths_t) < 0 :
+				continue
+
 			# boths 01 생성
 			boths_01_t = np.zeros(len(coverage[0]))
 			for dn in boths_t :
 				boths_01_t[dn] = 1
 
-		
+	
 		
 			df_silhouette = df_silhouette.T.values
 
@@ -1354,7 +1358,7 @@ if combine :
 		# clustering 안했을 시 전체 그래프를 그린다.
 		if not view_mode :
 			if min_max :
-				ax_main.fill_between(xticks, df2_mean.max(axis=1), df_nb.min(axis=1), facecolor='g', alpha=0.5)
+				ax_main.fill_between(xticks, df2_mean.max(axis=1), df2_mean.min(axis=1), facecolor='g', alpha=0.5)
 				ax_main.plot(df2_mean.max(axis=1), color='g', linewidth=3.0)
 				ax_main.plot(df2_mean.min(axis=1), color='g', linewidth=3.0)
 			else :
@@ -1437,91 +1441,91 @@ if combine :
 					ax_main.plot(df_b, color='r', alpha=0.5)
 
 
-			'''
-			Special Plot print
-			'''
-			ax_main.plot(df_special.iloc[st-start:stop_n-start], color='cyan', linewidth = 3.0)
+		'''
+		Special Plot print
+		'''
+		ax_main.plot(df_special.iloc[st-start:stop_n-start], color='cyan', linewidth = 3.0)
 
 
+		
+		'''
+		Draw Generic Variants Data
+		'''
+		df_var_p = df_var[df_var['pos'] >= st]
+		df_var_p = df_var_p[df_var_p['pos'] < stop_n]
+
+		
+
+		c_m = '#A0ffA0'
+		marker_colors = ['red', 'g']
+		m_pos_list = []
+		m_col_list = []
+		
+
+		# generic variants 그리고 각 데이터 위치와 색상 저장
+		for vp_i, vp in df_var_p.iterrows() :
+		#	if vp['bam'] in triple :
+
+			# 마커 모양 지정 
+			var_mark = var_markers[effect_list.index(vp['effect'])%len(var_markers)]
+			# 마커 색상 지정
+			var_col = ''
+			if boths_01[int(vp['bam'])] == 1 :
+				var_col = 'red'
+			else :
+				var_col = 'g'
+			# 마커 위치와 색상 저장
+			m_pos_list.append(vp['pos'])
+			m_col_list.append(var_col)
+			# 마커 그리기
+			ax_main.plot(vp['pos'], coverage[int(vp['pos']-start)][int(vp['bam'])], marker=var_mark,
+						markeredgecolor='black', markeredgewidth=2, color=var_col, markersize=marker_size, alpha=0.5)
+
+		# 마커 위치 중복 제거 후 색상 비율을 결정하는 배열 생성
+		marker_positions = list(set(m_pos_list))
+		marker_ratio = [np.zeros(len(marker_colors)) for i in marker_positions]
+
+		# 비율 표시 위치 지정
+		marker_y = ax_main.get_ylim()[1]/100	
+
+		# 각 마커의 정보를 marker_ratio배열에 저장
+		for m_i, m_pos in enumerate(m_pos_list) :
 			
-			'''
-			Draw Generic Variants Data
-			'''
-			df_var_p = df_var[df_var['pos'] >= st]
-			df_var_p = df_var_p[df_var_p['pos'] < stop_n]
+			# 해당 variant의 색상 불러오기
+			m_col = m_col_list[m_i]
 
+			# 위치와 색상 지정
+			if m_pos in marker_positions :
+				index_p = marker_positions.index(m_pos)
+
+			if m_col in marker_colors :
+				index_c = marker_colors.index(m_col)
 			
+			# ++1
+			marker_ratio[index_p][index_c] += 1
 
-			c_m = '#A0ffA0'
-			marker_colors = ['red', 'g']
-			m_pos_list = []
-			m_col_list = []
-			
+		# 배열 정보에 따라 비율 표시
+		for r_i, ratio_list in enumerate(marker_ratio) :
+			r1 = ratio_list[0] / sum(ratio_list)
 
-			# generic variants 그리고 각 데이터 위치와 색상 저장
-			for vp_i, vp in df_var_p.iterrows() :
-			#	if vp['bam'] in triple :
+			# non-boths 마커 모양 설정
+			x = [0] + np.cos(np.linspace(0, 2 * np.pi * r1, 10)).tolist()
+			y = [0] + np.sin(np.linspace(0, 2 * np.pi * r1, 10)).tolist()
+			xy1 = np.column_stack([x, y])
 
-				# 마커 모양 지정 
-				var_mark = var_markers[effect_list.index(vp['effect'])%len(var_markers)]
-				# 마커 색상 지정
-				var_col = ''
-				if boths_01[int(vp['bam'])] == 1 :
-					var_col = 'red'
-				else :
-					var_col = 'g'
-				# 마커 위치와 색상 저장
-				m_pos_list.append(vp['pos'])
-				m_col_list.append(var_col)
-				# 마커 그리기
-				ax_main.plot(vp['pos'], coverage[int(vp['pos']-start)][int(vp['bam'])], marker=var_mark,
-							markeredgecolor='black', markeredgewidth=2, color=var_col, markersize=marker_size, alpha=0.5)
+			# boths 마커 모양 설정
+			x = [0] + np.cos(np.linspace(2 * np.pi * r1, 2 * np.pi, 10)).tolist()
+			y = [0] + np.sin(np.linspace(2 * np.pi * r1, 2 * np.pi, 10)).tolist()
+			xy2 = np.column_stack([x, y])
 
-			# 마커 위치 중복 제거 후 색상 비율을 결정하는 배열 생성
-			marker_positions = list(set(m_pos_list))
-			marker_ratio = [np.zeros(len(marker_colors)) for i in marker_positions]
+			# 마커 표시
+			if not ratio_list[0] == 0 : 
+				ax_main.plot(marker_positions[r_i], marker_y, marker=xy1, markersize=marker_size, color='#ffA0A0')
+			if not ratio_list[1] == 0 : 
+				ax_main.plot(marker_positions[r_i], marker_y, marker=xy2, markersize=marker_size, color=c_m)
 
-			# 비율 표시 위치 지정
-			marker_y = ax_main.get_ylim()[1]/100	
-
-			# 각 마커의 정보를 marker_ratio배열에 저장
-			for m_i, m_pos in enumerate(m_pos_list) :
-				
-				# 해당 variant의 색상 불러오기
-				m_col = m_col_list[m_i]
-
-				# 위치와 색상 지정
-				if m_pos in marker_positions :
-					index_p = marker_positions.index(m_pos)
-
-				if m_col in marker_colors :
-					index_c = marker_colors.index(m_col)
-				
-				# ++1
-				marker_ratio[index_p][index_c] += 1
-
-			# 배열 정보에 따라 비율 표시
-			for r_i, ratio_list in enumerate(marker_ratio) :
-				r1 = ratio_list[0] / sum(ratio_list)
-
-				# non-boths 마커 모양 설정
-				x = [0] + np.cos(np.linspace(0, 2 * np.pi * r1, 10)).tolist()
-				y = [0] + np.sin(np.linspace(0, 2 * np.pi * r1, 10)).tolist()
-				xy1 = np.column_stack([x, y])
-
-				# boths 마커 모양 설정
-				x = [0] + np.cos(np.linspace(2 * np.pi * r1, 2 * np.pi, 10)).tolist()
-				y = [0] + np.sin(np.linspace(2 * np.pi * r1, 2 * np.pi, 10)).tolist()
-				xy2 = np.column_stack([x, y])
-
-				# 마커 표시
-				if not ratio_list[0] == 0 : 
-					ax_main.plot(marker_positions[r_i], marker_y, marker=xy1, markersize=marker_size, color='#ffA0A0')
-				if not ratio_list[1] == 0 : 
-					ax_main.plot(marker_positions[r_i], marker_y, marker=xy2, markersize=marker_size, color=c_m)
-
-				# 마커 테두리 표시
-				ax_main.plot(marker_positions[r_i], marker_y, color='None', marker='o', markersize=marker_size, markeredgecolor='#888888', markeredgewidth=2)
+			# 마커 테두리 표시
+			ax_main.plot(marker_positions[r_i], marker_y, color='None', marker='o', markersize=marker_size, markeredgecolor='#888888', markeredgewidth=2)
 
 		
 
@@ -1548,50 +1552,52 @@ if combine :
 		Clustering evaluation
 		'''
 
-		clustered_list = boths_01
-		# clustered_list = kmeans.labels_
+		if view_mode :
 
-		# silhouette를 각 sample에 대해 계산
-		silhouette_avg = silhouette_score(data_lines, clustered_list)
-		sample_silhouette_values = silhouette_samples(data_lines, clustered_list)
+			clustered_list = boths_01
+			# clustered_list = kmeans.labels_
 
-		# inset 그래프 설정
-		ax_inset = inset_axes(ax_main, width="30%", height="50%", loc=2)
-		#ax_inset.set_xlim([-1, 1])
-		ax_inset.set_ylim([0, len(data_lines) + (2 + 1) * 10])
+			# silhouette를 각 sample에 대해 계산
+			silhouette_avg = silhouette_score(data_lines, clustered_list)
+			sample_silhouette_values = silhouette_samples(data_lines, clustered_list)
 
-		# 각 분류끼리의 간격 설정
-		y_lower = 10
+			# inset 그래프 설정
+			ax_inset = inset_axes(ax_main, width="30%", height="50%", loc=2)
+			#ax_inset.set_xlim([-1, 1])
+			ax_inset.set_ylim([0, len(data_lines) + (2 + 1) * 10])
 
-		# clustering evaluation drawing
-		for i in range(2):
-			# i번째 분류에 대한 silhouette 계산 및 정렬
-			ith_cluster_silhouette_values = sample_silhouette_values[clustered_list == i]
-			ith_cluster_silhouette_values.sort()
+			# 각 분류끼리의 간격 설정
+			y_lower = 10
 
-			# sample 갯수 계산 뒤 그릴 범위지정
-			size_cluster_i = ith_cluster_silhouette_values.shape[0]
-			y_upper = y_lower + size_cluster_i
+			# clustering evaluation drawing
+			for i in range(2):
+				# i번째 분류에 대한 silhouette 계산 및 정렬
+				ith_cluster_silhouette_values = sample_silhouette_values[clustered_list == i]
+				ith_cluster_silhouette_values.sort()
 
-			# i가 1이면 boths이다.
-			# color = c2c if i == 1 else c1c
-			color = 'red' if i == 1 else 'g'
-			# 해당 분류의 그래프를 채운다.
-			ax_inset.fill_betweenx(np.arange(y_lower, y_upper),
-				0, ith_cluster_silhouette_values,
-				facecolor=color, edgecolor=color, alpha=0.5)
+				# sample 갯수 계산 뒤 그릴 범위지정
+				size_cluster_i = ith_cluster_silhouette_values.shape[0]
+				y_upper = y_lower + size_cluster_i
 
-			# 해당 분류에 텍스트를 단다.
-			ax_inset.text(-0.05, y_lower + 0.5 * size_cluster_i, 'clustered' if i == 1 else 'non-clustered')
+				# i가 1이면 boths이다.
+				# color = c2c if i == 1 else c1c
+				color = 'red' if i == 1 else 'g'
+				# 해당 분류의 그래프를 채운다.
+				ax_inset.fill_betweenx(np.arange(y_lower, y_upper),
+					0, ith_cluster_silhouette_values,
+					facecolor=color, edgecolor=color, alpha=0.5)
 
-			y_lower = y_upper + 10
+				# 해당 분류에 텍스트를 단다.
+				ax_inset.text(-0.05, y_lower + 0.5 * size_cluster_i, 'clustered' if i == 1 else 'non-clustered')
 
-		# silhouette 값의 평균을 표시하고 0 값을 표시한다.
-		ax_inset.axvline(x=silhouette_avg, color="red", linestyle="--")
-		ax_inset.axvline(x=0, color="black", linestyle="-")
+				y_lower = y_upper + 10
 
-		ax_inset.set_yticks([])  # Clear the yaxis labels / ticks
-		#ax_inset.set_xticks([-1, 0, 0.2, 0.4, 0.6, 0.8, 1])
+			# silhouette 값의 평균을 표시하고 0 값을 표시한다.
+			ax_inset.axvline(x=silhouette_avg, color="red", linestyle="--")
+			ax_inset.axvline(x=0, color="black", linestyle="-")
+
+			ax_inset.set_yticks([])  # Clear the yaxis labels / ticks
+			#ax_inset.set_xticks([-1, 0, 0.2, 0.4, 0.6, 0.8, 1])
 
 
 
@@ -1857,91 +1863,91 @@ else :
 				else :
 					ax_main.plot(df_b, color='r', alpha=0.5)
 
-			'''
-			Special Plot print
-			'''
-			ax_main.plot(df_special.iloc[st-start:stop_n-start], color='cyan', linewidth = 3.0)
+		'''
+		Special Plot print
+		'''
+		ax_main.plot(df_special.iloc[st-start:stop_n-start], color='cyan', linewidth = 3.0)
 
 
+		
+		'''
+		Draw Generic Variants Data
+		'''
+		df_var_p = df_var[df_var['pos'] >= st]
+		df_var_p = df_var_p[df_var_p['pos'] < stop_n]
+
+		
+
+		c_m = '#A0ffA0'
+		marker_colors = ['red', 'g']
+		m_pos_list = []
+		m_col_list = []
+		
+
+		# generic variants 그리고 각 데이터 위치와 색상 저장
+		for vp_i, vp in df_var_p.iterrows() :
+		#	if vp['bam'] in triple :
+
+			# 마커 모양 지정 
+			var_mark = var_markers[effect_list.index(vp['effect'])%len(var_markers)]
+			# 마커 색상 지정
+			var_col = ''
+			if boths_01[int(vp['bam'])] == 1 :
+				var_col = 'red'
+			else :
+				var_col = 'g'
+			# 마커 위치와 색상 저장
+			m_pos_list.append(vp['pos'])
+			m_col_list.append(var_col)
+			# 마커 그리기
+			ax_main.plot(vp['pos'], coverage[int(vp['pos']-start)][int(vp['bam'])], marker=var_mark,
+						markeredgecolor='black', markeredgewidth=2, color=var_col, markersize=marker_size, alpha=0.5)
+
+		# 마커 위치 중복 제거 후 색상 비율을 결정하는 배열 생성
+		marker_positions = list(set(m_pos_list))
+		marker_ratio = [np.zeros(len(marker_colors)) for i in marker_positions]
+
+		# 비율 표시 위치 지정
+		marker_y = ax_main.get_ylim()[1]/100	
+
+		# 각 마커의 정보를 marker_ratio배열에 저장
+		for m_i, m_pos in enumerate(m_pos_list) :
 			
-			'''
-			Draw Generic Variants Data
-			'''
-			df_var_p = df_var[df_var['pos'] >= st]
-			df_var_p = df_var_p[df_var_p['pos'] < stop_n]
+			# 해당 variant의 색상 불러오기
+			m_col = m_col_list[m_i]
 
+			# 위치와 색상 지정
+			if m_pos in marker_positions :
+				index_p = marker_positions.index(m_pos)
+
+			if m_col in marker_colors :
+				index_c = marker_colors.index(m_col)
 			
+			# ++1
+			marker_ratio[index_p][index_c] += 1
 
-			c_m = '#A0ffA0'
-			marker_colors = ['red', 'g']
-			m_pos_list = []
-			m_col_list = []
-			
+		# 배열 정보에 따라 비율 표시
+		for r_i, ratio_list in enumerate(marker_ratio) :
+			r1 = ratio_list[0] / sum(ratio_list)
 
-			# generic variants 그리고 각 데이터 위치와 색상 저장
-			for vp_i, vp in df_var_p.iterrows() :
-			#	if vp['bam'] in triple :
+			# non-boths 마커 모양 설정
+			x = [0] + np.cos(np.linspace(0, 2 * np.pi * r1, 10)).tolist()
+			y = [0] + np.sin(np.linspace(0, 2 * np.pi * r1, 10)).tolist()
+			xy1 = np.column_stack([x, y])
 
-				# 마커 모양 지정 
-				var_mark = var_markers[effect_list.index(vp['effect'])%len(var_markers)]
-				# 마커 색상 지정
-				var_col = ''
-				if boths_01[int(vp['bam'])] == 1 :
-					var_col = 'red'
-				else :
-					var_col = 'g'
-				# 마커 위치와 색상 저장
-				m_pos_list.append(vp['pos'])
-				m_col_list.append(var_col)
-				# 마커 그리기
-				ax_main.plot(vp['pos'], coverage[int(vp['pos']-start)][int(vp['bam'])], marker=var_mark,
-							markeredgecolor='black', markeredgewidth=2, color=var_col, markersize=marker_size, alpha=0.5)
+			# boths 마커 모양 설정
+			x = [0] + np.cos(np.linspace(2 * np.pi * r1, 2 * np.pi, 10)).tolist()
+			y = [0] + np.sin(np.linspace(2 * np.pi * r1, 2 * np.pi, 10)).tolist()
+			xy2 = np.column_stack([x, y])
 
-			# 마커 위치 중복 제거 후 색상 비율을 결정하는 배열 생성
-			marker_positions = list(set(m_pos_list))
-			marker_ratio = [np.zeros(len(marker_colors)) for i in marker_positions]
+			# 마커 표시
+			if not ratio_list[0] == 0 : 
+				ax_main.plot(marker_positions[r_i], marker_y, marker=xy1, markersize=marker_size, color='#ffA0A0')
+			if not ratio_list[1] == 0 : 
+				ax_main.plot(marker_positions[r_i], marker_y, marker=xy2, markersize=marker_size, color=c_m)
 
-			# 비율 표시 위치 지정
-			marker_y = ax_main.get_ylim()[1]/100	
-
-			# 각 마커의 정보를 marker_ratio배열에 저장
-			for m_i, m_pos in enumerate(m_pos_list) :
-				
-				# 해당 variant의 색상 불러오기
-				m_col = m_col_list[m_i]
-
-				# 위치와 색상 지정
-				if m_pos in marker_positions :
-					index_p = marker_positions.index(m_pos)
-
-				if m_col in marker_colors :
-					index_c = marker_colors.index(m_col)
-				
-				# ++1
-				marker_ratio[index_p][index_c] += 1
-
-			# 배열 정보에 따라 비율 표시
-			for r_i, ratio_list in enumerate(marker_ratio) :
-				r1 = ratio_list[0] / sum(ratio_list)
-
-				# non-boths 마커 모양 설정
-				x = [0] + np.cos(np.linspace(0, 2 * np.pi * r1, 10)).tolist()
-				y = [0] + np.sin(np.linspace(0, 2 * np.pi * r1, 10)).tolist()
-				xy1 = np.column_stack([x, y])
-
-				# boths 마커 모양 설정
-				x = [0] + np.cos(np.linspace(2 * np.pi * r1, 2 * np.pi, 10)).tolist()
-				y = [0] + np.sin(np.linspace(2 * np.pi * r1, 2 * np.pi, 10)).tolist()
-				xy2 = np.column_stack([x, y])
-
-				# 마커 표시
-				if not ratio_list[0] == 0 : 
-					ax_main.plot(marker_positions[r_i], marker_y, marker=xy1, markersize=marker_size, color='#ffA0A0')
-				if not ratio_list[1] == 0 : 
-					ax_main.plot(marker_positions[r_i], marker_y, marker=xy2, markersize=marker_size, color=c_m)
-
-				# 마커 테두리 표시
-				ax_main.plot(marker_positions[r_i], marker_y, color='None', marker='o', markersize=marker_size, markeredgecolor='#888888', markeredgewidth=2)
+			# 마커 테두리 표시
+			ax_main.plot(marker_positions[r_i], marker_y, color='None', marker='o', markersize=marker_size, markeredgecolor='#888888', markeredgewidth=2)
 
 		
 
