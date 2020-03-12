@@ -63,6 +63,7 @@ parser.add_argument('--silhouette_dintv', type=int, default=30, help='clustering
 
 parser.add_argument('--select_CI', default='', help='clustering silhouette 모드에서 신뢰구간(CI)을 선택합니다.')
 parser.add_argument('--select_tau', default='', help='silouette clustering일 때 tau값을 고정합니다.')
+parser.add_argument('--variant_pos', type=int, default=None, help='clustering mode가 silhouette일때, clustering ratio를 확인할 variant의위치를 정합니다.')
 
 args = parser.parse_args()
 bam_dir = args.bam_path
@@ -98,6 +99,7 @@ silhouette_dintv = args.silhouette_dintv
 
 select_tau = args.select_tau
 select_CI = args.select_CI
+variant_pos = args.variant_pos
 
 # set title
 
@@ -327,7 +329,7 @@ for bamn, bam in enumerate(bam_list) :
 		sys.stderr.write('\r'+bam+':'+str(bamn+1)+'/'+str(len(bam_list))+': coverage calculating...')
 		sys.stderr.write("\033[K")
 		assdfe = samfile.count_coverage(contig, start=start, stop=stop+1)
-
+ 
 		sys.stderr.write('\r'+bam+':'+str(bamn+1)+'/'+str(len(bam_list))+': converting coverage to array...')
 		sys.stderr.write("\033[K")
 		cv_original = np.array(assdfe)
@@ -434,31 +436,33 @@ bam_all_list = [file for file in bam_list if file.endswith(".bam")]
 
 # variants를 모두 불러온다.
 var_list = os.listdir(variants_dir)
-var_list = [file for file in var_list if file.endswith(".txt")]
+var_files = [file for file in var_list if file.endswith(".txt")]
 
-# variants 데이터를 저장할 dataframe
-df_var = pd.DataFrame(columns=['bam', 'pos', 'effect'])
-# 실제 불러온 bam list의 파일명을 추출
-bam_list_c = [b[:b.find('.')] for b in real_bam_list]
+# variants 데이터를 저장할 dataframe 생성
+df_var = pd.DataFrame(columns=['index','sample','pos','effect'])
+
+# 실제 불러온 bam list의 sample 이름을 추출
+bam_names = [b[:b.find('.')] for b in real_bam_list]
 
 # 마커 모양 지정
 var_markers = ['D', '*', 'v', 's', 'P', 'h', 'x']
+
 # 마커 색 지정
 var_colors = ['blue', 'yellow', 'magenta', 'black']
 
 # Variants 데이터 수집
-for varf in var_list :
+for varf in var_files :
 	sys.stderr.write('\r'+varf+' variants loading.')
 	sys.stderr.write("\033[K")
 
 
 	# 파일 csv로 불러오기
 	df_var_list = pd.DataFrame.from_csv(variants_dir+'/'+varf, sep='\t')
-	varf_c = varf[:varf.find('.')]
+	varf_name = varf[:varf.find('.')] # var file명에서 sample명 추출 
 
 	# 그러나 해당 varinats의 sample이 앞서 불러온 sample에 없으면 넘김
-	if varf_c in bam_list_c :
-		index_bam = bam_list_c.index(varf_c)
+	if varf_name in bam_names :
+		bam_index = bam_names.index(varf_name)
 	else :
 		continue
 	
@@ -466,27 +470,39 @@ for varf in var_list :
 	for i, var in df_var_list.iterrows() :
 		# Refseq 정보 읽어들이기
 		var_refseq = var['Refseq']
+		
 		if var_refseq == var_refseq :
 			var_refseq = var_refseq[:var_refseq.find('.')]
 
 			# 선택한 NMID의 variants만 표시
 			if var_refseq.strip() == nmid_to_draw.strip() :
-			#if var_refseq.strip() == 'NM_005228' :
 				# Effect 앞부분만 표시
-				var_ef = var['Effect']
-				if not var_ef.find('+') == -1 :
-					var_ef = var_ef[:var_ef.find('+')]
-				# bam 번호, position, effect 정보를 한 row에 저장
-				df_var = df_var.append({'bam':index_bam ,'pos' : var['Pos'], 'effect' : var_ef}, ignore_index=True)
+				var_effect = var['Effect']
+				if not var_effect.find('+') == -1 :
+					var_effect = var_effect[:var_effect.find('+')]
+				# sample 번호, position, effect 정보를 한 row에 저장
+				df_var = df_var.append({'index':bam_index,'sample':varf_name,'pos' : var['Pos'], 'effect' : var_effect}, ignore_index=True)
 
 
+#pos별 variant를 가진sample 개수 저장하는 dataframe 저장
+pos_var = pd.DataFrame(columns=['pos','cnt'])
 
+for pos in range(start,stop+1):
+	cnt = 0
+	for var_pos in df_var['pos']:
+		if pos == var_pos:
+			cnt=cnt+1		
+	if cnt == 0:
+		continue
+	
+	pos_var = pos_var.append({'pos':pos, 'cnt':cnt},ignore_index=True)
 
+ 
 # Generic Variants의 Effect 종류를 모두 모아놓은 배열
 effect_list = sorted(list(set(np.array(df_var['effect'].tolist()).squeeze())))
 
 # Generic Variants가 있는 bam을 모두 모아놓은 배열
-bam_num_list = list(set(np.array(df_var['bam'].tolist()).squeeze()))
+bam_num_list = list(set(np.array(df_var['index'].tolist()).squeeze()))
 
 print('\n----------------------------------------------')
 for b in bam_num_list :
@@ -810,7 +826,6 @@ if view_mode :
 			
 			# 둘 중 하나라도 없으면 break
 			if len(drops_t) < 1 or len(rises_t) < 1 :
-				print("There are no drops and rises")
 				break
 
 
@@ -855,8 +870,8 @@ if view_mode :
 						if tau < rise_mean:
 							rises_cp.remove(rise_index)
 							del rise_means_cp[rn]
-					
-					
+								
+
 					boths_t=[]
 					boths_01 = np.zeros(len(coverage[0]))
 				
@@ -870,7 +885,7 @@ if view_mode :
 					
 					# silhouette score를 계산할 부분 추출
 					df_silhouette = df_drop.iloc[(e1_l-dintv):(e1_l+1)] 
-					df_silhouette = df_silhouette.append(df_drop.iloc[e1_r:(e2_s_d+dintv+1)]) 
+					df_silhouette = df_silhouette.append(df_drop.iloc[e1_r:(e1_r+dintv+1)]) 
 					df_silhouette = df_silhouette.append(df_drop.iloc[(e2_l-dintv):(e2_l+1)])
 					df_silhouette = df_silhouette.append(df_drop.iloc[e2_r:(e2_r+dintv+1)])
 
@@ -883,15 +898,35 @@ if view_mode :
 					#각 구간의 silhoutte score 계산/ silhouette_score(sample array,label)
 					score = silhouette_score(df_silhouette, boths_01)
 
-
 					# 그래프를 그리기 위해 해당 결과 저장
 					ci_list.append(ci)
 					tau_list.append(tau)
 					score_list.append(score)
-					ratio_list.append(len(boths_t)/len(coverage[0])) # clustering의 비율
-					ratio_list_t.append("{0:.2f}".format(len(boths_t)/len(coverage[0])))
 
-					print(ci, tau, len(boths_t)/len(coverage[0]), score)
+					
+					# 입력위치에서 cluster 그룹에 속하는 variant의 비율을 알고 싶을 때
+					if not variant_pos == None:			
+						#variant 비율 계산을 위한 작업
+						cluster_var = 0 #cluster 그룹에 속하는 특정위치의 variant 개수
+						cnt_var = int(pos_var[pos_var['pos']==variant_pos]['cnt']) # 입력위치에 variant를 가진 sample의 수
+							
+						# 입력위치에  variant가 있는 sample을 하나씩 볼거에요
+						for i, var in df_var[df_var['pos']==variant_pos].iterrows() :
+							# cluster 된 sample일 때
+							if boths_01[int(var['index'])] == 1 :						
+								cluster_var = cluster_var+1
+							
+						var_ratio = cluster_var/cnt_var
+					
+						ratio_list.append(var_ratio)
+						ratio_list_t.append("{0:.2f}".format(var_ratio))
+						print(ci,tau,var_ratio,score)
+					
+					else:
+						ratio_list.append(len(boths_t)/len(coverage[0]))
+						ratio_list_t.append("{0:.2f}".format(len(boths_t)/len(coverage[0])))
+						print(ci,tau,len(boths_t)/len(coverage[0]),score)
+					
 
 					# silhouette score가 highest score보다 높다면 결과 갱신
 					if score > highest_score :
@@ -904,7 +939,7 @@ if view_mode :
 						highest_ci = ci
 						highest_tau = tau
 						highest_tnum = tn
-						highest_ratio = len(boths)/len(coverage[0])
+						highest_ratio = len(boths)/len(coverage[0]) if variant_pos == None else var_ratio
 					
 				
 			else:
@@ -967,10 +1002,33 @@ if view_mode :
 					ci_list.append(ci)
 					tau_list.append(tau)
 					score_list.append(score)
-					ratio_list.append(len(boths_t)/len(coverage[0])) # clustering의 비율
-					ratio_list_t.append("{0:.2f}".format(len(boths_t)/len(coverage[0])))
 
-					print(ci, tau, len(boths_t)/len(coverage[0]), score)
+					#cluster 그룹에 속하는 variant의 비율을 알고 싶을 때
+					if not variant_pos == None:
+						#variant 비율 계산을 위한 작업
+						cluster_var = 0 #cluster 그룹에 속하는 특정위치의 variant 개수
+						cnt_var = int(pos_var[pos_var['pos']==variant_pos]['cnt']) # 입력위치에 variant를 가진 sample의 수
+                                               
+						 # 입력위치에  variant가 있는 sample을 하나씩 볼거에요
+						for i, var in df_var[df_var['pos']==variant_pos].iterrows() :
+							# cluster 된 sample일 때
+							if boths_01[int(var['index'])] == 1 :
+								cluster_var = cluster_var+1
+
+						var_ratio = cluster_var/cnt_var
+
+						ratio_list.append(var_ratio)
+						ratio_list_t.append("{0:.2f}".format(var_ratio))
+
+						print(ci,tau,var_ratio,score)
+
+					else:
+						ratio_list.append(len(boths_t)/len(coverage[0]))
+						ratio_list_t.append("{0:.2f}".format(len(boths_t)/len(coverage[0])))
+
+						print(ci,tau,len(boths_t)/len(coverage[0]), score)
+
+
 
 					# silhouette score가 highest score보다 높다면 결과 갱신
 					if score > highest_score :
@@ -983,7 +1041,7 @@ if view_mode :
 						highest_ci = ci
 						highest_tau = tau
 						highest_tnum = tnum
-						highest_ratio = len(boths)/len(coverage[0])
+						highest_ratio = len(boths)/len(coverage[0]) if variant_pos == None else var_ratio
 	
 		# for문 끝
 
@@ -1004,7 +1062,7 @@ if view_mode :
 
 	#	Make ci/tau/score scatter plot
 
-		print('plot drawing...')
+		print('silhouette plot drawing...')
 
 		# plot size & font
 		plt.figure(figsize=(score_plot_width, score_plot_height))
@@ -1173,7 +1231,6 @@ if view_mode :
 
 
 
-
 nl = len(name_nm)
 
 
@@ -1244,7 +1301,6 @@ if combine :
 			else :
 				ax_main.plot(df_nb, color='g', alpha=0.5)	
 
-
 			# y축과 x축 표시할 부분 지정
 			ax_main.set_ylim([0, max_whole])
 			ax_main.set_xlim([st, stop_n])
@@ -1298,7 +1354,7 @@ if combine :
 			var_mark = var_markers[effect_list.index(vp['effect'])%len(var_markers)]
 			# 마커 색상 지정
 			var_col = ''
-			if boths_01[int(vp['bam'])] == 1 :
+			if boths_01[int(vp['index'])] == 1 :
 				var_col = 'red'
 			else :
 				var_col = 'g'
@@ -1306,7 +1362,7 @@ if combine :
 			m_pos_list.append(vp['pos'])
 			m_col_list.append(var_col)
 			# 마커 그리기
-			ax_main.plot(vp['pos'], coverage[int(vp['pos']-start)][int(vp['bam'])], marker=var_mark,
+			ax_main.plot(vp['pos'], coverage[int(vp['pos']-start)][int(vp['index'])], marker=var_mark,
 						markeredgecolor='black', markeredgewidth=2, color=var_col, markersize=marker_size, alpha=0.5)
 
 		# 마커 위치 중복 제거 후 색상 비율을 결정하는 배열 생성
@@ -1572,7 +1628,7 @@ else :
 				ax_main.plot(df_nb.min(axis=1), color='g', linewidth=3.0)
 			else :
 				ax_main.plot(df_nb, color='g', alpha=0.5)	
-
+			
 
 			# y축과 x축 표시할 부분 지정
 			ax_main.set_xlim([st, stop_n])
@@ -1614,7 +1670,7 @@ else :
 			var_mark = var_markers[effect_list.index(vp['effect'])%len(var_markers)]
 			# 마커 색상 지정
 			var_col = ''
-			if boths_01[int(vp['bam'])] == 1 :
+			if boths_01[int(vp['index'])] == 1 :
 				var_col = 'red'
 			else :
 				var_col = 'g'
@@ -1622,7 +1678,7 @@ else :
 			m_pos_list.append(vp['pos'])
 			m_col_list.append(var_col)
 			# 마커 그리기
-			ax_main.plot(vp['pos'], coverage[int(vp['pos']-draw_start)][int(vp['bam'])], marker=var_mark,
+			ax_main.plot(vp['pos'], coverage[int(vp['pos']-draw_start)][int(vp['index'])], marker=var_mark,
 						markeredgecolor='black', markeredgewidth=2, color=var_col, markersize=marker_size, alpha=0.5)
 
 		# 마커 위치 중복 제거 후 색상 비율을 결정하는 배열 생성
@@ -1824,6 +1880,5 @@ else :
 		plt.savefig(output_prefix+'_'+str(n+1)+'.pdf')
 		plt.close(fig2)
 		print(output_prefix+'_'+str(n+1)+'.pdf saved!')
-
 
 
