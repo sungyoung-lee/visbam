@@ -860,21 +860,21 @@ if view_mode :
 					#rise와 tau 비교 # rise_means_t = [[index,cl_mean,cr_mean],...]
 					
 					rises_cp = rises_t.copy()
-					rise_means_cp = rise_means_t.copy()
-					for rn,rise_set in enumerate(rise_means_cp):
-
-						rise_index = rise_set[0]
-						rise_mean = rise_set[1]			
-
+#					rise_means_cp = rise_means_t.copy()
+#					for rn,rise_set in enumerate(rise_means_cp):
+#
+#						rise_index = rise_set[0]
+#						rise_mean = rise_set[1]			
+#
 						#rise의 cl_mean과 tau를 비교해서 cl_mean이 크면 rise 아님
-						if tau < rise_mean:
-							rises_cp.remove(rise_index)
-							del rise_means_cp[rn]
+#						if tau < rise_mean:
+#							rises_cp.remove(rise_index)
+#							del rise_means_cp[rn]
 								
 
 					boths_t=[]
 					boths_01 = np.zeros(len(coverage[0]))
-				
+					# drop과 rise에 공통적으로 있는 것만 both에 추가
 					for dn in drops_cp:
 						if dn in rises_cp:
 							boths_t.append(dn)
