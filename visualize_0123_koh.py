@@ -65,6 +65,11 @@ parser.add_argument('--select_CI', default='', help='clustering silhouette 모�
 parser.add_argument('--select_tau', default='', help='silouette clustering일 때 tau값을 고정합니다.')
 parser.add_argument('--variant_pos', type=int, default=None, help='clustering mode가 silhouette일때, clustering ratio를 확인할 variant의위치를 정합니다.')
 
+parser.add_argument('--input_space',type=int, default=None, help='scatter plot을 그릴 때 계산하는 간격')
+parser.add_argument('--x_division', type=float, default=None, help='scatter로 clustering을 할 때 x 기준점을 정합니다.')
+parser.add_argument('--y_division', type=float, default=None, help='scatter로 clustering을 할 때 y 기준점을 정합니다.')
+
+
 args = parser.parse_args()
 bam_dir = args.bam_path
 sample_list_path = args.sample_path
@@ -96,10 +101,13 @@ limit_tau_low = args.limit_tau_low
 font_size = args.font_size
 marker_size = args.marker_size
 silhouette_dintv = args.silhouette_dintv
+input_space = args.input_space
 
 select_tau = args.select_tau
 select_CI = args.select_CI
 variant_pos = args.variant_pos
+x_div = args.x_division
+y_div = args.y_division
 
 # set title
 
@@ -365,6 +373,7 @@ for bamn, bam in enumerate(bam_list) :
 print()
 
 
+pos = np.arange(start, stop+1)
 
 
 
@@ -377,10 +386,10 @@ print('loading special sample...')
 coverage_special = [[] for i in range(stop-start+1)]
 
 # special sample의 파일 이름
-bam = 'MS190001468_S12.bwamem.sorted.dedup.realn.recal.dedup.bam' 
+bam = 'MS190001468_S12.bwamem.sorted.dedup.realn.recal.dedup.bam'
 
 # special sample의 경로
-sam_path = '200116_work/'+bam	
+sam_path = '200116_work/'+bam
 
 
 
@@ -563,7 +572,7 @@ if flag :
 
 	#draw_range[0] = draw_start if draw_range[0]+100 < draw_start else draw_range[0]+100
 	draw_range[0] = draw_start if draw_range[0] <= draw_start else ess_nm[0]
-	draw_range_e[-1] = draw_stop if draw_range_e[-1]+100 > draw_stop else draw_range_e[-1]+100
+	draw_range_e[-1] = draw_stop if draw_range_e[-1] > draw_stop else draw_range_e[-1]
 
 else :
 	draw_range = list(range(draw_start, draw_stop+1, draw_span))
@@ -663,7 +672,7 @@ else :
 
 xticks = np.arange(start, stop+1)
 
-
+cv_mean = pd.DataFrame(df2_mean.mean(axis=1),index=xticks)
 df = pd.DataFrame(cv_whole)
 df_special = pd.DataFrame(coverage_special, index=xticks) # Special Plot의 dataframe
 
@@ -672,14 +681,11 @@ df_T = df.T
 data_lines = df_T.values
 
 
-
-
+print(df2_mean.shape)
 
 
 
 ##Clustering Test
-
-
 # 최종 결과 저장
 drops = []
 rises = []
@@ -704,9 +710,13 @@ if view_mode :
 	score_list = []
 	ratio_list = []
 	ratio_list_t = []
-	
+	green_list = []
+	red_list = []
+	variant_list=[]
+	var_index = []
+	tmp_ci = []	
+	tmp_tau = []
 
-	print(select_list)
 
 	# 선택된 exon number 불러오기
 	# 배열에 들어갈 값이므로 1을 빼줍니다. (0부터 시작)
@@ -714,7 +724,6 @@ if view_mode :
 	rise_n = select_list[1]-1
 	# exon 계산 범위 앞뒤 간격
 	dintv = silhouette_dintv
-
 
 	# 계산을 진행할 dataframe
 	xticks = np.arange(start, stop+1)
@@ -726,11 +735,7 @@ if view_mode :
 	e2_l = Exon_e_list[rise_n]-start
 	e2_r = Exon_s_list[rise_n+1]-start
 
-
-	print(e1_l, e1_r, e2_l, e2_r)			
-	print(len(df_drop.columns), len(df_drop.iloc[:][0]))
 	
-
 
 	# 1번째 방법 silhouette
 	if filt_mode == 'silhouette' : 
@@ -739,7 +744,7 @@ if view_mode :
 			CI = CI_list
 			
 		else:
-			CI=[0.5,1,1.5]+list(range(2,26,1))
+			CI=[0.5,1,1.5]+list(np.arange(2,26,0.5))
 		
 	
 		print("Confidence interval is",CI)
@@ -751,18 +756,11 @@ if view_mode :
 			rises_t = []
 			boths_t = []
 			drop_means_t = []
-			rise_means_t = []
-			
+			rise_means_t = []	
+
+		
 			# Drops 계산
 			for cn, c in enumerate(df_drop.columns) :
-
-				
-			
-#				 1번쨰 exon     1번째 exon + 1
-#				             ||
-#				-------------||---------------
-#				             ||
-#			
 
 				# 1번째 exon 끝에서 dintv 만큼 간격의 값 계산(left) 
 				e1_cl = df_drop.iloc[(e1_l-dintv):(e1_l+1)][c]
@@ -791,14 +789,6 @@ if view_mode :
 
 			# Rises 계산
 			for cn, c in enumerate(df_drop.columns) :
-
-#				
-#				 2번쨰 exon     2번째 exon + 1
-#				             ||
-#				-------------||---------------
-#				             ||
-#
-
 
 				# 2번째 exon 끝에서 dintv 만큼 간격의 값 계산(left) 
 				e2_cl = df_drop.iloc[(e2_l-dintv):(e2_l+1)][c]
@@ -860,17 +850,6 @@ if view_mode :
 					#rise와 tau 비교 # rise_means_t = [[index,cl_mean,cr_mean],...]
 					
 					rises_cp = rises_t.copy()
-#					rise_means_cp = rise_means_t.copy()
-#					for rn,rise_set in enumerate(rise_means_cp):
-#
-#						rise_index = rise_set[0]
-#						rise_mean = rise_set[1]			
-#
-						#rise의 cl_mean과 tau를 비교해서 cl_mean이 크면 rise 아님
-#						if tau < rise_mean:
-#							rises_cp.remove(rise_index)
-#							del rise_means_cp[rn]
-								
 
 					boths_t=[]
 					boths_01 = np.zeros(len(coverage[0]))
@@ -879,7 +858,8 @@ if view_mode :
 						if dn in rises_cp:
 							boths_t.append(dn)
 							boths_01[dn]=1
-					
+							
+									
 					if len(boths_t) < 1:
 						continue	
 					
@@ -905,7 +885,7 @@ if view_mode :
 
 					
 					# 입력위치에서 cluster 그룹에 속하는 variant의 비율을 알고 싶을 때
-					if not variant_pos == None:			
+					if not variant_pos == None:
 						#variant 비율 계산을 위한 작업
 						cluster_var = 0 #cluster 그룹에 속하는 특정위치의 variant 개수
 						cnt_var = int(pos_var[pos_var['pos']==variant_pos]['cnt']) # 입력위치에 variant를 가진 sample의 수
@@ -915,7 +895,11 @@ if view_mode :
 							# cluster 된 sample일 때
 							if boths_01[int(var['index'])] == 1 :						
 								cluster_var = cluster_var+1
-							
+								var_index.append(int(var['index']))
+								variant_list.append(var['sample'])
+
+
+
 						var_ratio = cluster_var/cnt_var
 					
 						ratio_list.append(var_ratio)
@@ -935,7 +919,7 @@ if view_mode :
 						rises = rises_t[:]
 						boths = boths_t[:]
 
-						highest_score = score
+
 						highest_ci = ci
 						highest_tau = tau
 						highest_tnum = tn
@@ -966,22 +950,23 @@ if view_mode :
 					if not limit_tau_low == None and (tnum == 0 or tau < limit_tau_low) :
 						continue
 
-		
+	
 					# 임시 sample로 boths 계산
 					boths_t = []
 					boths_01 = np.zeros(len(coverage[0]))	
-		
+	
 					for dn in drops_t :
 						if dn in rises_t :
 							boths_t.append(dn)
 							boths_01[dn] = 1
 
+
 					if len(boths_t) < 1 :
 						continue
-
-
-
 	
+
+
+
 					# silhouette score를 계산할 부분 추출
 					df_silhouette = df_drop.iloc[(e1_l-dintv):(e1_l+1)] 
 					df_silhouette = df_silhouette.append(df_drop.iloc[e1_r:(e1_r+dintv+1)]) 
@@ -991,9 +976,9 @@ if view_mode :
 
 					df_silhouette = df_silhouette.T.values
 		
-				
+			
 
-				
+			
 					#각 구간의 silhoutte score 계산/ silhouette_score(sample array,label)
 					score = silhouette_score(df_silhouette, boths_01)
 
@@ -1008,18 +993,20 @@ if view_mode :
 						#variant 비율 계산을 위한 작업
 						cluster_var = 0 #cluster 그룹에 속하는 특정위치의 variant 개수
 						cnt_var = int(pos_var[pos_var['pos']==variant_pos]['cnt']) # 입력위치에 variant를 가진 sample의 수
-                                               
+				       
 						 # 입력위치에  variant가 있는 sample을 하나씩 볼거에요
 						for i, var in df_var[df_var['pos']==variant_pos].iterrows() :
 							# cluster 된 sample일 때
 							if boths_01[int(var['index'])] == 1 :
 								cluster_var = cluster_var+1
+								var_index.append(int(var['index']))
+								variant_list.append(var['sample'])
 
 						var_ratio = cluster_var/cnt_var
-
+	
 						ratio_list.append(var_ratio)
 						ratio_list_t.append("{0:.2f}".format(var_ratio))
-
+	
 						print(ci,tau,var_ratio,score)
 
 					else:
@@ -1036,13 +1023,14 @@ if view_mode :
 						drops = drops_t[:]
 						rises = rises_t[:]
 						boths = boths_t[:]
-	
+
+
 						highest_score = score
 						highest_ci = ci
 						highest_tau = tau
 						highest_tnum = tnum
 						highest_ratio = len(boths)/len(coverage[0]) if variant_pos == None else var_ratio
-	
+
 		# for문 끝
 
 		print('-------------------------------------------------')
@@ -1054,10 +1042,13 @@ if view_mode :
 		print('rises : '+str(len(rises)))
 		print('boths : '+str(len(boths)))
 
+
 		# boths 01 계산
 		boths_01 = np.zeros(len(coverage[0]))
 		for dn in boths :
 			boths_01[dn] = 1
+	
+
 
 
 	#	Make ci/tau/score scatter plot
@@ -1069,13 +1060,13 @@ if view_mode :
 		score_fontsize = np.sqrt(score_plot_width*score_plot_height)
 		score_fontsize_big = np.sqrt(score_plot_width*score_plot_height)*2
 
-		# scatter size
+	# 	scatter size
 		size_cmap = plt.cm.viridis
 		size_list = [pow((s+1), 4)*100 for s in score_list]
 
 		
 
-		# make scatter plot
+	# 	make scatter plot
 		plt.scatter(ci_list, tau_list, s=size_list, c=score_list, cmap=size_cmap, alpha=0.5)
 		# 우측에 color bar 생성 후 폰트 크기 조정
 		cbar = plt.colorbar()
@@ -1108,7 +1099,7 @@ if view_mode :
 			# size와 score list 불러오기
 			size_sort = sorted(size_list[:])
 			score_sort = [round(pow(s/100, 1/4)-1, 2) for s in size_sort]
-
+	
 			# legends를 5분위로 나누어 저장
 			lnum_size = size_sort[int((len(size_sort)-1)/4*lnum)]
 			lnum_score = score_sort[int((len(score_sort)-1)/4*lnum)]
@@ -1131,8 +1122,8 @@ if view_mode :
 		print()
 
 		
-	#	Make ratio(proportion)/score scatter plot
-
+		#Make ratio(proportion)/score scatter plot
+	
 		print('ratio/score scatter plot drawing...')
 
 		plt.scatter(ratio_list, score_list, s=9)
@@ -1146,7 +1137,7 @@ if view_mode :
 
 
 	# nmf 계산
-	elif filt_mode == 'nmf' :
+	elif filt_mode == 'nmf':
 
 		# nmf는 exon 사이 간격으로 최적화 시킨다.
 		highest_dintv = 0
@@ -1195,6 +1186,13 @@ if view_mode :
 				boths = boths_t[:]
 				boths_01 = boths_01_t[:]
 
+		if not variant_pos == None:
+			# 입력위치에  variant가 있는 sample을 하나씩 볼거에요
+			for i, var in df_var[df_var['pos'] == variant_pos].iterrows():
+				# cluster 된 sample일 때
+				if boths_01[int(var['index'])] == 1:
+					var_index.append(int(var['index']))
+					variant_list.append(var['sample'])
 
 		print()
 		print(highest_dintv, highest_score)
@@ -1213,24 +1211,131 @@ if view_mode :
 		# 해당하는 bam을 추가
 		for vp_i, vp in df_var_p.iterrows() :
 			if 'SPLICE_SITE' in str(vp['effect']) :
-				boths.append(int(vp['bam']))
+				boths.append(int(vp['index']))
 		
+
 		# boths 생성
 		boths = sorted(list(set(boths)))
 		boths_01 = np.zeros(len(coverage[0]))
 		for dn in boths :
 			boths_01[dn] = 1
 
+		if not variant_pos == None:
+			# 입력위치에  variant가 있는 sample을 하나씩 볼거에요
+			for i, var in df_var[df_var['pos'] == variant_pos].iterrows():
+				# cluster 된 sample일 때
+				if boths_01[int(var['index'])] == 1:
+					var_index.append(int(var['index']))
+					variant_list.append(var['sample'])
 
-		print(len(boths)/len(boths_01))
+		print(len(boths),len(boths_01))
+
+	# scatter plot을 그려서 clustering
+	elif filt_mode == 'scatter':
+		scatter_tau =[]
+		scatter_ci = []
+		v_tau = []
+		v_ci = []
+
+		boths_01 = np.zeros(len(coverage[0]))
+		space = input_space
+
+		for cn, c in enumerate(df_drop.columns):	
+			cluster1 = df_drop.iloc[(e1_l-space):(e1_l+1)][c]
+			cluster2 = df_drop.iloc[e1_r:(e1_r+space+1)][c]
+			
+			cl_mean = cluster1.mean()
+			cr_mean = cluster2.mean()
+			
+			gap = cl_mean-cr_mean
+
+			scatter_tau.append(cr_mean)
+			scatter_ci.append(gap)
+		
+			if (gap >= x_div) & (cr_mean <= y_div):
+				boths.append(cn)
+				boths_01[cn] = 1
+
+		if not variant_pos == None:
+			# 입력위치에  variant가 있는 sample을 하나씩 볼거에요
+			for i, var in df_var[df_var['pos'] == variant_pos].iterrows():
+				v_index = int(var['index'])
+				# cluster 된 sample일 때
+				if boths_01[v_index] == 1:
+					var_index.append(v_index)
+					variant_list.append(var['sample'])
+					v_tau.append(scatter_tau[v_index])
+					v_ci.append(scatter_ci[v_index])					
+
+
+		
+
+		print(len(v_tau),len(v_ci))
+
+		# ci/tau scatter plot을 그려보자
+		print('scatter plot drawing...')
+
+		# plot size
+		plt.figure(figsize=(score_plot_width, score_plot_height))
+
+		# scatter size
+		size_cmap = plt.cm.viridis
+
+		# make scatter plot
+		plt.scatter(scatter_ci, scatter_tau, s=marker_size*10 , c='#7ac5cd', edgecolor='green', linewidth=1.5, cmap=size_cmap, alpha=0.5)
+
+		# variant sample의 plot을 강조표시함
+		plt.scatter(v_ci, v_tau, s=marker_size*10, c='#e52a59')
+
+		# scatter x & y label
+		plt.xlabel('CI', fontsize=font_size*2.5)
+		plt.ylabel('Tau', fontsize=font_size*2.5)
+
+		plt.xticks(np.arange(int(min(scatter_ci)) - 1, int(max(scatter_ci)) + 1, 0.5), fontsize=font_size*1.5)
+		plt.yticks(np.arange(int(min(scatter_tau)) - 1, int(max(scatter_tau)) + 1, 0.5), fontsize=font_size*1.5)
+
+#		for tn, text in enumerate(bam_names):
+#			if tn not in boths:
+#				plt.text(scatter_ci[tn], scatter_tau[tn], bam_names[tn], color='black',
+#						 fontsize=10, ha='center', va='center')
+
+		plt.savefig(output_prefix + '_scatter_plot.pdf', bbox_inches='tight', pad_inches=3)
+		plt.close()
+		print(output_prefix + '_sctter_plot.pdf saved!')
+
 
 	# filter mode를 잘못 입력했을 때
 	else :
 		print('Wrong Filtering Mode : '+filt_mode)
 		exit()
 
+	# 각 cluster의 sample list 생성
+	for i, c in enumerate(boths_01):
+		if c == 1:
+			red_list.append(bam_names[i])
+		else:
+			green_list.append(bam_names[i])
+
+	# 각 cluster의 sample list 출력
+	print("<Green cluster list>"+'\n'+str(len(green_list)))
+	for i,n in enumerate(green_list):
+		print(n)
+	
+	print("<Red cluster list>"+'\n'+str(len(red_list)))
+	for i,n in enumerate(red_list):
+		print(n)
+
+	if not variant_pos == None:
+		v = df_var[df_var['pos']==variant_pos]['sample'].values.tolist()
+
+		print("\n*List of samples with variant on "+str(variant_pos)+' :', v)
+		print("*Variant list in red cluster : ", variant_list,'\n')
 
 
+
+
+
+# 최종 출력 plot 생성
 nl = len(name_nm)
 
 
@@ -1239,16 +1344,14 @@ matplotlib.rcParams.update({'font.size': font_size})
 
 
 
-
-
 if combine :
 
 	# figure 설정
 	# 여러 칸으로 나눈다.
 
-	fig = plt.figure(figsize=(120, 2+12+1*nl))
+	fig = plt.figure(figsize=(50, 2+12+1))
 	gs = gridspec.GridSpec(nrows=2, ncols=len(draw_range), height_ratios=[4+(nl-1)*0.2, nl])
-	gs.update(wspace=0, hspace=0.05)
+	gs.update(wspace=0, hspace=0.1)
 	fig.suptitle(title)
 
 	for n, st in enumerate(draw_range) :
@@ -1290,7 +1393,7 @@ if combine :
 			else :
 				ax_main.plot(df2_mean_p, color='g', alpha=0.5)
 			if draw_average_line :
-				ax_main.plot(df2_mean_p, color='red', linewidth=3.0)
+				ax_main.plot(cv_mean[st-draw_start:stop_draw_start],color='yellow',linewidth=3.0)
 		else :
 			# boths가 아닌 부분 draw
 			df_nb = df2_mean_p.iloc[:, [b for b in range(len(coverage[0])) if not b in boths]]
@@ -1300,6 +1403,8 @@ if combine :
 				ax_main.plot(df_nb.min(axis=1), color='g', linewidth=3.0)
 			else :
 				ax_main.plot(df_nb, color='g', alpha=0.5)	
+			if draw_average_line:
+				ax_main.plot(cv_mean[st-draw_start:stop_n-draw_start],color='yellow',linewidth=3.0)
 
 			# y축과 x축 표시할 부분 지정
 			ax_main.set_ylim([0, max_whole])
@@ -1309,11 +1414,14 @@ if combine :
 			real_bam_list_s = [r[:r.find('.')] for r in real_bam_list]
 			
 			
-
 			
 			if len(boths) > 0:
 			# boths인 부분 draw
+				df_v = df2_mean_p.iloc[:,var_index]
 				df_b = df2_mean_p.iloc[:, boths]
+				ax_main.plot(df_b.mean(axis=1), color='cyan', linewidth=3.0)
+				ax_main.plot(df_v.mean(axis=1), color='blue',linewidth=3.0)
+			
 				if min_max :
 					ax_main.fill_between(xticks, df_b.max(axis=1), df_b.min(axis=1), facecolor='red', alpha=0.5)
 					ax_main.plot(df_b.max(axis=1), color='red', linewidth=3.0)
@@ -1326,27 +1434,18 @@ if combine :
 
 ##		Special Plot print
 		
-
-		ax_main.plot(df_special.iloc[st-draw_start:stop_n-draw_start], color='cyan', linewidth = 3.0)
-
-
+#		ax_main.plot(df_special.iloc[st-draw_start:stop_n-draw_start], color='magenta', linewidth = 3.0)
 		
-	
-
 ##		Draw Generic Variants Data
 
-		
 		df_var_p = df_var[df_var['pos'] >= st]
 		df_var_p = df_var_p[df_var_p['pos'] < stop_n]
-
-		
 
 		c_m = '#A0ffA0'
 		marker_colors = ['red', 'g']
 		m_pos_list = []
 		m_col_list = []
 		
-
 		# generic variants 그리고 각 데이터 위치와 색상 저장
 		for vp_i, vp in df_var_p.iterrows() :
 
@@ -1484,7 +1583,7 @@ if combine :
 		# refseq가 표시될 이름을 정한다.
 		ytlbs = [name_n+"\n"+name2_nm[0]]
 		ax_bottom = plt.subplot(gs[n+len(draw_range)], yticks=byts, xticklabels=[], yticklabels=list(reversed(ytlbs)))
-		ax_bottom.yaxis.set_tick_params(labelsize=font_size*2)
+		ax_bottom.yaxis.set_tick_params(labelsize=font_size*1.5)
 		ax_bottom.tick_params(axis='both', which='both', bottom=False, top=False, labelbottom=False)
 		ax_bottom.set_ylim(2-nl-0.4, 1+0.4)
 
@@ -1528,8 +1627,6 @@ if combine :
 				ax_bottom.text((leftt+rightt)/2, 1-j, str(exons[k]), horizontalalignment='center', verticalalignment='center', color='white', fontsize=font_size*3)
 
 
-
-
 	# legend 표시
 	var_legends = []
 	var_names = []
@@ -1557,8 +1654,9 @@ if combine :
 
 	# pdf로 저장한 뒤 닫는다.
 
-	plt.savefig(output_prefix+'.pdf')
+	plt.savefig(output_prefix+'.pdf',bbox_inches='tight',pad_inches=3)
 	plt.close(fig)
+
 	print(output_prefix+'.pdf saved!')
 
 
@@ -1590,7 +1688,7 @@ else :
 		# figure 초기화(크기 조정, 간격 조정)
 		fig2 = plt.figure(figsize=(30, 2+12+1*nl))
 		gs = gridspec.GridSpec(nrows=2, ncols=1, height_ratios=[4+(nl-1)*0.2, nl])
-		gs.update(wspace=0, hspace=0.05)
+		gs.update(wspace=0, hspace=2)
 
 		# coverage의 dataframe을 만들고 plot의 윗 부분을 불러온다.i
 		df2 = pd.DataFrame(coverage[st-draw_start:stop_n-draw_start], index=xticks)
@@ -1618,7 +1716,7 @@ else :
 			else :
 				ax_main.plot(df2_mean_p, color='g', alpha=0.5)
 			if draw_average_line :
-				ax_main.plot(df2_mean_p, color='red', linewidth=3.0)
+				ax_main.plot(cv_mean[st-draw_start:stop_n-draw_start],color='yellow',linewidth=3.0)
 		else :
 			# both가 아닌부분 draw
 			df_nb = df2_mean_p.iloc[:, [b for b in range(len(coverage[0])) if not b in boths]]
@@ -1628,7 +1726,8 @@ else :
 				ax_main.plot(df_nb.min(axis=1), color='g', linewidth=3.0)
 			else :
 				ax_main.plot(df_nb, color='g', alpha=0.5)	
-			
+			if draw_average_line :
+				ax_main.plot(cv_mean[st-draw_start:stop_n-draw_strat],color='yellow',linewidth=3.0)
 
 			# y축과 x축 표시할 부분 지정
 			ax_main.set_xlim([st, stop_n])
@@ -1636,6 +1735,9 @@ else :
 			if len(boths) > 0:
 			# boths인 부분 draw
 				df_b = df2_mean_p.iloc[:, boths]
+				print(len(df_b))
+				ax_main.plot(df_b.mean(axis=1),color='cyan',linewidth=3.0)
+		
 				if min_max :
 					ax_main.fill_between(xticks, df_b.max(axis=1), df_b.min(axis=1), facecolor='red', alpha=0.5)
 					ax_main.plot(df_b.max(axis=1), color='red', linewidth=3.0)
@@ -1646,7 +1748,7 @@ else :
 
 ##		Special Plot print
 
-		ax_main.plot(df_special.iloc[st-draw_start:stop_n-draw_start], color='cyan', linewidth = 3.0)
+#		ax_main.plot(df_special.iloc[st-draw_start:stop_n-draw_start], color='cyan', linewidth = 3.0)
 
 
 		
@@ -1820,7 +1922,7 @@ else :
 		# tx, cds의 시작 부분을 얇은 네모로 그린다.
 		cds_s = cds_s_nm[0]
 		if (st<=start and cds_s <= stop_n):
-			rect = pathches.Rectangle((start,0.9),cds_s-start,0.2,edgecolor='none',facecolor='black')
+			rect = patches.Rectangle((start,0.9),cds_s-start,0.2,edgecolor='none',facecolor='black')
 			ax_bottom.add_patch(rect)
 
 		# tx, cds의 끝 부분을 얇은 네모로 그린다.
@@ -1880,5 +1982,3 @@ else :
 		plt.savefig(output_prefix+'_'+str(n+1)+'.pdf')
 		plt.close(fig2)
 		print(output_prefix+'_'+str(n+1)+'.pdf saved!')
-
-
