@@ -97,7 +97,6 @@ exon_space = args.exon_space
 view_mode = args.clustering
 filt_mode = args.clustering_mode
 draw_average_line = args.draw_average_line
-threshold = args.threshold
 select = args.select_exon
 average = args.average
 smooth = args.smoothing
