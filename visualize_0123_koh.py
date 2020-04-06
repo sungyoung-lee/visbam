@@ -58,7 +58,7 @@ parser.add_argument('--exclude_sample', default='', help='출력에서 제외할
 
 # clustering
 parser.add_argument('--clustering', action='store_true', help='주어진 그래프를 두 그룹으로 clustering합니다.')
-parser.add_argument('--clustering_mode', default='silhouette', help='view_mode 2에서 filtering할 method 설정(silhouette, nmf, splice_site)')
+parser.add_argument('--clustering_mode', default='', help='view_mode 2에서 filtering할 method 설정(silhouette, nmf, splice_site)')
 parser.add_argument('--select_exon', default='', help='clustering에서 select할 exon 정의')
 
 # silhouette clustering 
@@ -293,11 +293,13 @@ print('\nAnalyzing cancer bam information...')
 # sample list가 들어있는 파일을 불러온다.
 sample_file = open(sample_list_path, 'r')
 sample_list = sample_file.read().splitlines()
+sample_list = list(set(sample_list))
 
 if not exc_samples == '':
 	for n, s in enumerate(sample_list):
 		if s in exc_samples:
 			sample_list.remove(s)
+
 
 
 bam_list = []
@@ -307,6 +309,7 @@ real_bam_list = []
 # 목록을 불러온 뒤 유효한 파일 이름으로 바꾸어준다.
 for sl in sample_list:
 	bam_list.append(sl+'.bwamem.sorted.dedup.realn.recal.dedup.bam')
+
 
 
 
@@ -383,7 +386,7 @@ print('Loading special sample...')
 coverage_special = [[] for i in range(stop-start+1)]
 
 # special sample의 파일 이름
-bam = 'MS190000674_S13.bwamem.sorted.dedup.realn.recal.dedup.bam'
+bam = 'MS200000148_S15.bwamem.sorted.dedup.realn.recal.dedup.bam'
 
 # special sample의 경로
 sam_path = '200116_work/'+bam
@@ -1160,7 +1163,17 @@ if view_mode :
 					var_index.append(int(var['index']))
 					variant_list.append(var['MSID'])
 
-		print(len(boths),len(boths_01))
+		df_silhouette = df_drop.iloc[(e1_l-dintv):(e1_r+1)]
+		df_silhouette = df_silhouette.append(df_drop.iloc[e1_r:(e1_r+dintv+1)])
+		df_silhouette = df_silhouette.append(df_drop.iloc[(e2_l-dintv):(e2_l+1)])
+		df_silhouette = df_silhouette.append(df_drop.iloc[e2_r:(e2_r+dintv+1)])
+		df_silhouette = df_silhouette.T.values
+
+		score = silhouette_score(df_silhouette,boths_01)
+
+		print("silhouette score :", score)
+		print(len(boths),len(boths)/len(boths_01))
+
 
 
 	# scatter plot을 그려서 clustering
@@ -1186,7 +1199,7 @@ if view_mode :
 			scatter_tau.append(cr_mean)
 			scatter_ci.append(gap)
 		
-			if (gap >= x_div) & (cr_mean <= y_div):
+			if (gap <= x_div) & (cr_mean <= y_div):
 				boths.append(cn)
 				boths_01[cn] = 1
 
@@ -1224,17 +1237,28 @@ if view_mode :
 		size_cmap = plt.cm.viridis
 
 		# make scatter plot
-		plt.scatter(scatter_ci, scatter_tau, s=marker_size*10 , c='#7ac5cd', edgecolor='green', linewidth=1.5, cmap=size_cmap, alpha=0.5)
+		for n, b in enumerate(boths_01):
+			if b == 0:		
+				plt.scatter(scatter_ci[n], scatter_tau[n], s=marker_size*50 , c='#7ac5cd', edgecolor='green', linewidth=1.5, cmap=size_cmap, alpha=0.5)
+			else:
+				plt.scatter(scatter_ci[n], scatter_tau[n], s=marker_size*50, c='#ff0000', edgecolor='red', linewidth=1.5, cmap=size_cmap, alpha=0.5)		
+
+
+		# make text
+		for bn, b in enumerate(boths_01) :
+			if b == 0:
+				plt.text(scatter_ci[bn], scatter_tau[bn]+0.2, bam_names[bn], color='black', fontsize=font_size, ha='center', va='center')
+
 
 		# variant sample의 plot을 강조표시함
-		plt.scatter(v_ci, v_tau, s=marker_size*10, c='#e52a59')
+		plt.scatter(v_ci, v_tau, s=marker_size*10, c='#e52a59', edgecolor='yellow', linewidth=2)
 
 		# scatter x & y label
-		plt.xlabel('CI', fontsize=font_size*2.5)
-		plt.ylabel('Tau', fontsize=font_size*2.5)
+		plt.xlabel('CI', fontsize=font_size*5)
+		plt.ylabel('Tau', fontsize=font_size*5)
 
-		plt.xticks(np.arange(int(min(scatter_ci)) - 1, int(max(scatter_ci)) + 1, 1), fontsize=font_size*1.5)
-		plt.yticks(np.arange(int(min(scatter_tau)) - 1, int(max(scatter_tau)) + 1, 1), fontsize=font_size*1.5)
+		plt.xticks(np.arange(int(min(scatter_ci)) - 1, int(max(scatter_ci)) + 1, 1), fontsize=font_size*3)
+		plt.yticks(np.arange(int(min(scatter_tau)) - 1, int(max(scatter_tau)) + 1, 1), fontsize=font_size*3)
 
 		# plot 저장
 		plt.savefig(output_prefix + '_scatter_plot.pdf', bbox_inches='tight', pad_inches=3)
@@ -1401,7 +1425,7 @@ if combine :
 
 		## special Plot print ##
 		
-#		ax_main.plot(df_special.iloc[st-draw_start:stop_n-draw_start], color='orange', linewidth = 3.0)
+			ax_main.plot(df_special.iloc[st-draw_start:stop_n-draw_start], color='orange', linewidth = 5.0)
 		
 
 
@@ -1937,8 +1961,6 @@ else :
 		plt.close(fig2)
 
 		print(output_prefix+'_'+str(n+1)+'.pdf saved!')
-
-
 
 
 
